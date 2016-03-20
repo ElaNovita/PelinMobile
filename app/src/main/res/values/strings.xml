@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PelinMobile</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="message_display">What I have now is a ListView of TextView elements. each TextView element displays a text (the text length varies from 12 words to 100+).</string>
+</resources>

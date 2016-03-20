@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:padding="16dp"
+        android:background="@drawable/border"
+        android:layout_marginBottom="1dp">
+        <TextView
+            android:id="@+id/judulTugas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Judul Tugas"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/dueTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 Hari Tersisa"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@id/judulTugas"/>
+        <ImageView
+            android:id="@+id/upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_file_upload_black_48dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

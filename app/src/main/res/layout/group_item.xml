@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp">
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/groupCv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:layout_marginBottom="2dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
+            <ImageView
+                android:id="@+id/group_pict"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:src="@drawable/people"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Android Programming"
+                android:layout_toRightOf="@id/group_pict"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"/>
+            <ImageView
+                android:id="@+id/icon_dosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_black_24dp"
+                android:layout_toRightOf="@id/group_pict"
+                android:layout_below="@id/group_name"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"/>
+            <TextView
+                android:id="@+id/nama_dosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pak Dosen, M.kom"
+                android:layout_toRightOf="@id/icon_dosen"
+                android:layout_below="@id/group_name"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="22dp"/>
+            <ImageView
+                android:id="@+id/group_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_group_black_24dp"
+                android:layout_toRightOf="@id/group_pict"
+                android:layout_below="@id/icon_dosen"
+                android:layout_marginLeft="16dp"/>
+            <TextView
+                android:id="@+id/member_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:layout_toRightOf="@id/group_icon"
+                android:layout_below="@id/nama_dosen"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="8dp"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+

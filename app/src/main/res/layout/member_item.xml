@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="2dp">
+    <ImageView
+        android:id="@+id/userImg"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/sei"
+        android:adjustViewBounds="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:background="#AA000000">
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userImg"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+
+        <!--<ImageView-->
+            <!--android:id="@+id/userImg"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/dayat"-->
+            <!--android:adjustViewBounds="true"/>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:padding="8dp"-->
+            <!--android:background="#AA000000"-->
+            <!--android:layout_gravity="bottom">-->
+            <!--<TextView-->
+                <!--android:id="@+id/username"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Bahrul Hidayat"-->
+                <!--android:textSize="28sp"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textColor="@android:color/white"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/nim"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="1210520070"-->
+                <!--android:textSize="14sp"-->
+                <!--android:textStyle="normal"-->
+                <!--android:layout_marginTop="3dp"-->
+                <!--android:textColor="@android:color/white"/>-->
+        <!--</LinearLayout>-->
+
+</FrameLayout>

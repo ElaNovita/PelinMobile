@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#dedede">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="16dp"
+        android:background="@drawable/border"
+        android:layout_marginBottom="1dp">
+
+        <ImageView
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_bookmark_border_black_24dp"/>
+        <TextView
+            android:id="@+id/materiTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Judul Materi 1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/bookmark"
+            android:layout_marginLeft="8dp"/>
+        <ImageView
+            android:id="@+id/timeIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/materiTitle"
+            android:src="@drawable/ic_access_time_black_24dp"
+            android:layout_marginTop="12dp"/>
+        <TextView
+            android:id="@+id/posted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/materiTitle"
+            android:layout_toRightOf="@id/timeIcon"
+            android:text="17 March 16 09.30 AM"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="8dp"/>
+        <ImageView
+            android:id="@+id/downloadmateri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_file_download_black_48dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
