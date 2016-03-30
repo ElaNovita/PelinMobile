@@ -1,15 +1,19 @@
 package com.example.ela.pelinmobile.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.MessagesAdapter;
+import com.example.ela.pelinmobile.MessageDetail;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
@@ -40,8 +44,25 @@ public class MessagesFragment extends Fragment {
         View inflated = inflater.inflate(R.layout.fragment_messages, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.messageRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        MessagesAdapter adapter = new MessagesAdapter(messages);
+        FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addMessage);
+        MessagesAdapter adapter = new MessagesAdapter(messages, new MessagesAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(MyMessage message) {
+//                Intent intent = new Intent(getActivity(), MessageDetail.class);
+//                startActivity(intent);
+                Toast.makeText(getActivity(), "tes", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         recyclerView.setAdapter(adapter);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MessageDetail.class);
+                startActivity(intent);
+            }
+        });
+
         return inflated;
     }
 

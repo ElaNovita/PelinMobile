@@ -19,9 +19,11 @@ import java.util.List;
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
 
     List<MessagesFragment.MyMessage> messages;
+    OnItemClickListener listener;
 
-    public MessagesAdapter(List<MessagesFragment.MyMessage> messages) {
+    public MessagesAdapter(List<MessagesFragment.MyMessage> messages, OnItemClickListener listener) {
         this.messages = messages;
+        this.listener = listener;
     }
 
     @Override
@@ -58,5 +60,18 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             messageContent = (TextView) itemView.findViewById(R.id.messageContent);
             sendAt = (TextView) itemView.findViewById(R.id.sendAt);
         }
+
+        public void bind(final MessagesFragment.MyMessage message, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.OnItemClick(message);
+                }
+            });
+        }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(MessagesFragment.MyMessage message);
     }
 }
