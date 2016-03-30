@@ -1,168 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/tile_bg">
-
-    <!--<ListView-->
-        <!--android:id="@+id/list_view_messages"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@null"-->
-        <!--android:divider="@null"-->
-        <!--android:transcriptMode="alwaysScroll"-->
-        <!--android:stackFromBottom="true">-->
-    <!--</ListView>-->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/top"
         android:orientation="vertical"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp">
-
-        <TextView
-            android:id="@+id/lblMsgFrom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="#777777"
-            android:padding="5dp"
-            android:text="sender"/>
-        <TextView
-            android:id="@+id/txtMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginRight="80dp"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="@string/app_name"
-            android:background="@drawable/bg_msg_from"/>
-
-    </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="right"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp">
+        android:layout_height="wrap_content"
+        android:background="@drawable/tile_bg">
 
-        <TextView
-            android:id="@+id/lblMsgFrom1"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/messageDetailRv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#777777"
-            android:padding="5dp"
-            android:textSize="12sp"
-            android:text="@string/app_name"/>
-        <TextView
-            android:id="@+id/txtMsg1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:background="@drawable/bg_msg_u"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/assignt"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp">
-
-        <TextView
-            android:id="@+id/lblMsgFrom2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="#777777"
-            android:padding="5dp"
-            android:text="sender"/>
-        <TextView
-            android:id="@+id/txtMsg2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginRight="80dp"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="@string/message_display"
-            android:background="@drawable/bg_msg_from"/>
-
-    </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="right"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp">
-
-        <TextView
-            android:id="@+id/lblMsgFrom12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#777777"
-            android:padding="5dp"
-            android:textSize="12sp"
-            android:text="@string/app_name"/>
-        <TextView
-            android:id="@+id/txtMsg12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:background="@drawable/bg_msg_u"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="oh okay"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-    <!--<LinearLayout-->
+            android:layout_marginBottom="48dp"/>
+        <!--<LinearLayout-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:background="@android:color/white"-->
         <!--android:orientation="horizontal"-->
         <!--android:weightSum="3">-->
         <!--<EditText-->
-            <!--android:id="@+id/inputMsg"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="2"-->
-            <!--android:background="#e8e8e8"-->
-            <!--android:textColor="#626262"-->
-            <!--android:paddingLeft="6dp"-->
-            <!--android:paddingRight="6dp"/>-->
+        <!--android:id="@+id/inputMsg"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="2"-->
+        <!--android:background="#e8e8e8"-->
+        <!--android:textColor="#626262"-->
+        <!--android:paddingLeft="6dp"-->
+        <!--android:paddingRight="6dp"/>-->
 
         <!--<Button-->
-            <!--android:id="@+id/btnSend"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="#1e6258"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:text="Send" />-->
+        <!--android:id="@+id/btnSend"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="#1e6258"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:text="Send" />-->
 
-    <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
 
-</LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/sendLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="top|left"
+                android:inputType="textMultiLine|textCapSentences"
+                android:scrollHorizontally="false" />
+
+        </android.support.design.widget.TextInputLayout>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_near_me_black_36dp"/>
+    </LinearLayout>
+</RelativeLayout>

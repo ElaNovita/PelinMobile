@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="right"
     android:paddingBottom="5dp"
@@ -9,7 +9,7 @@
     android:paddingRight="10dp">
 
     <TextView
-        android:id="@+id/lblMsgFrom"
+        android:id="@+id/sentAts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#777777"
@@ -17,7 +17,7 @@
         android:textSize="12sp"
         android:text="@string/app_name"/>
     <TextView
-        android:id="@+id/txtMsg"
+        android:id="@+id/txtMsgs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
