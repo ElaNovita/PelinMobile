@@ -27,6 +27,7 @@
         <activity android:name=".Collapsing" android:theme="@style/CustomTheme">
 
         </activity>
+        <activity android:name=".Fragment.GroupDetail.DiskusiDetail"/>
     </application>
 
 </manifest>

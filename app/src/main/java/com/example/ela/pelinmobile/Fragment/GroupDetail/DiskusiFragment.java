@@ -1,7 +1,9 @@
 package com.example.ela.pelinmobile.Fragment.GroupDetail;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +24,8 @@ public class DiskusiFragment extends Fragment {
 
     private List<Diskusi> diskusis;
 
+    FloatingActionButton fab;
+
     public DiskusiFragment() {
         // Required empty public constructor
     }
@@ -39,8 +43,23 @@ public class DiskusiFragment extends Fragment {
         View inflated = inflater.inflate(R.layout.fragment_diskusi, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.dRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DiskusiAdapter adapter = new DiskusiAdapter(diskusis);
+        DiskusiAdapter adapter = new DiskusiAdapter(diskusis, new DiskusiAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Diskusi diskusi) {
+                Intent intent = new Intent(getActivity(), DiskusiDetail.class);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
+        fab = (FloatingActionButton) inflated.findViewById(R.id.addMessage);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DiskusiDetail.class);
+                startActivity(intent);
+            }
+        });
 
         return inflated;
     }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiFragment;
 import com.example.ela.pelinmobile.R;
 
@@ -21,9 +22,15 @@ import java.util.List;
 public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHolder> {
 
     List<DiskusiFragment.Diskusi> diskusis;
+    private final OnItemClickListener listener;
 
-    public DiskusiAdapter(List<DiskusiFragment.Diskusi> diskusis) {
+    public interface OnItemClickListener {
+        void OnItemClick(DiskusiFragment.Diskusi diskusi);
+    }
+
+    public DiskusiAdapter(List<DiskusiFragment.Diskusi> diskusis, OnItemClickListener listener) {
         this.diskusis = diskusis;
+        this.listener = listener;
     }
 
     @Override
@@ -40,6 +47,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(diskusis.get(position), listener);
         holder.dSender.setText(diskusis.get(position).sender);
         holder.dSendAt.setText(diskusis.get(position).dSendAt);
         holder.dContent.setText(diskusis.get(position).dContent);
@@ -63,6 +71,16 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
             dLike = (TextView) itemView.findViewById(R.id.likeCount);
             dCount = (TextView) itemView.findViewById(R.id.replyDiskusicount);
             dSenderImg = (ImageView) itemView.findViewById(R.id.senderImg);
+        }
+
+
+        public void bind(final DiskusiFragment.Diskusi diskusi, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.OnItemClick(diskusi);
+                }
+            });
         }
 
 
