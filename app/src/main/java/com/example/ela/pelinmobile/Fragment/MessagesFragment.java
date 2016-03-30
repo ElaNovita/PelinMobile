@@ -48,8 +48,8 @@ public class MessagesFragment extends Fragment {
         MessagesAdapter adapter = new MessagesAdapter(messages, new MessagesAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(MyMessage message) {
-//                Intent intent = new Intent(getActivity(), MessageDetail.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), MessageDetail.class);
+                startActivity(intent);
                 Toast.makeText(getActivity(), "tes", Toast.LENGTH_SHORT).show();
             }
         });
