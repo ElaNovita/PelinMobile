@@ -18,9 +18,11 @@ import java.util.List;
 public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.ViewHolder> {
 
     List<AssigntFragment.Assignt> assignts;
+    OnItemClickListener listener;
 
-    public AssigntListAdapter(List<AssigntFragment.Assignt> assignts) {
+    public AssigntListAdapter(List<AssigntFragment.Assignt> assignts, OnItemClickListener listener) {
         this.assignts = assignts;
+        this.listener = listener;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(assignts.get(position), listener);
         holder.title.setText(assignts.get(position).title);
         holder.dueTime.setText(assignts.get(position).due);
     }
@@ -50,5 +53,18 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
             title = (TextView) itemView.findViewById(R.id.judulTugas);
             dueTime = (TextView) itemView.findViewById(R.id.dueTime);
         }
+
+        public void bind(final AssigntFragment.Assignt assignt, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.OnItemClick(assignt);
+                }
+            });
+        }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(AssigntFragment.Assignt assignt);
     }
 }

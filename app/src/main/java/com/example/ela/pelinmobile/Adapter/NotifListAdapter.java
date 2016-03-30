@@ -18,9 +18,11 @@ import java.util.List;
 public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.ViewHolder> {
 
     List<NotifFragment.Notif> notifs;
+    OnItemClickListener listener;
 
-    public NotifListAdapter(List<NotifFragment.Notif> notifs) {
+    public NotifListAdapter(List<NotifFragment.Notif> notifs, OnItemClickListener listener) {
         this.notifs = notifs;
+        this.listener = listener;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(notifs.get(position), listener);
         holder.title.setText(notifs.get(position).title);
         holder.content.setText(notifs.get(position).content);
     }
@@ -50,5 +53,18 @@ public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.View
             title = (TextView) itemView.findViewById(R.id.notifTitle);
             content = (TextView) itemView.findViewById(R.id.notifContent);
         }
+
+        public void bind(final NotifFragment.Notif notif, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.OnItemClick(notif);
+                }
+            });
+        }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(NotifFragment.Notif notif);
     }
 }

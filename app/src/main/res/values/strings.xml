@@ -4,5 +4,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="assignt">
+You’ll first need an interface that specifies listener’s behaviour. In this example, there is a sample model called ContentItem, so the click will return an item of that type</string>
     <string name="message_display">What I have now is a ListView of TextView elements. each TextView element displays a text (the text length varies from 12 words to 100+).</string>
 </resources>

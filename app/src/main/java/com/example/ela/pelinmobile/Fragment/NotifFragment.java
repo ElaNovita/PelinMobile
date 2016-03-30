@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.ela.pelinmobile.Adapter.AssigntListAdapter;
 import com.example.ela.pelinmobile.Adapter.NotifListAdapter;
+import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
@@ -41,7 +43,13 @@ public class NotifFragment extends Fragment {
         View inflated = inflater.inflate(R.layout.fragment_notif, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.notifRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        NotifListAdapter adapter = new NotifListAdapter(notifs);
+        NotifListAdapter adapter = new NotifListAdapter(notifs, new NotifListAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Notif notif) {
+                Intent intent = new Intent(getActivity(), GroupDetail.class);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         return inflated;

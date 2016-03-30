@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.ela.pelinmobile.Adapter.AssigntListAdapter;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
+import com.example.ela.pelinmobile.AssigntDetail;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
@@ -42,7 +44,13 @@ public class AssigntFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        AssigntListAdapter adapter = new AssigntListAdapter(assignts);
+        AssigntListAdapter adapter = new AssigntListAdapter(assignts, new AssigntListAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Assignt assignt) {
+                Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
         return inflated;
     }
