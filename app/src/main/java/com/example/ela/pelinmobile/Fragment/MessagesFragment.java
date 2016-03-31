@@ -1,10 +1,12 @@
 package com.example.ela.pelinmobile.Fragment;
 
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.MessagesAdapter;
+import com.example.ela.pelinmobile.Fragment.GroupDetail.CreateMessage;
 import com.example.ela.pelinmobile.MessageDetail;
 import com.example.ela.pelinmobile.R;
 
@@ -58,8 +61,7 @@ public class MessagesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MessageDetail.class);
-                startActivity(intent);
+                showDialog();
             }
         });
 
@@ -85,6 +87,13 @@ public class MessagesFragment extends Fragment {
         messages.add(new MyMessage("Akashi Seijūrō", "If you oppose me, I will kill you no matter who you are", "Thur 09.10 PM", R.drawable.sei));
         messages.add(new MyMessage("Haise Sasaki", "Rather than a person who hurts others, become the person getting hurt", "Thur 05.47 PM", R.drawable.haise));
         messages.add(new MyMessage("Levi Ackerman", "Now behave or else I’m going to have to carve you into pretty little pieces", "wed 05.30 AM", R.drawable.levi));
+    }
+
+    public void showDialog() {
+        FragmentManager fragmentManager = getFragmentManager();
+        CreateMessage createMessage = CreateMessage.newInstance("Enter Username");
+
+        createMessage.show(fragmentManager, "Enter Username");
     }
 
 }

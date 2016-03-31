@@ -32,8 +32,6 @@ public class HomeDosen extends BaseDrawer {
     @Bind(R.id.tabViewPager)
     ViewPager tabViewPager;
     String tab_badges;
-    @Bind(R.id.addGroup)
-    FloatingActionButton addGroup;
 
     private BadgeView badgeView;
     int buttonCounter = 2;
@@ -49,12 +47,6 @@ public class HomeDosen extends BaseDrawer {
         ImageView imageView = new ImageView(this);
         tab.setCustomView(imageView);
 
-        addGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });
 //        badgeView = new BadgeView(this, imageView);
 //        badgeView.setText("1");
 //        badgeView.show();
@@ -122,13 +114,6 @@ public class HomeDosen extends BaseDrawer {
     public void refreshBagde() {
         counter(buttonCounter);
         badgeView.setText(Integer.toString(buttonCounter));
-    }
-
-
-    public void showDialog() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        CreateGroupDialog createGroupDialog = CreateGroupDialog.newInstance("title");
-        createGroupDialog.show(fragmentManager, "title");
     }
 
 
