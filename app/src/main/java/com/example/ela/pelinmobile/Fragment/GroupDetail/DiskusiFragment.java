@@ -24,8 +24,6 @@ public class DiskusiFragment extends Fragment {
 
     private List<Diskusi> diskusis;
 
-    FloatingActionButton fab;
-
     public DiskusiFragment() {
         // Required empty public constructor
     }
@@ -51,15 +49,6 @@ public class DiskusiFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
-        fab = (FloatingActionButton) inflated.findViewById(R.id.addMessage);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DiskusiDetail.class);
-                startActivity(intent);
-            }
-        });
 
         return inflated;
     }

@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -8,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.R;
 
 import butterknife.Bind;
@@ -25,6 +28,7 @@ public class CreateGroupDialog extends DialogFragment {
     EditText group_name;
     @Bind(R.id.group_desc)
     EditText group_desc;
+
 
 
     public CreateGroupDialog() {
@@ -44,6 +48,15 @@ public class CreateGroupDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflated = inflater.inflate(R.layout.create_group, container);
+        Button button = (Button) inflated.findViewById(R.id.btn_create);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), GroupDetail.class);
+                startActivity(intent);
+                dismiss();
+            }
+        });
         return inflated;
     }
 

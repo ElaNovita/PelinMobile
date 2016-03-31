@@ -53,7 +53,6 @@ public class MessagesFragment extends Fragment {
             public void OnItemClick(MyMessage message) {
                 Intent intent = new Intent(getActivity(), MessageDetail.class);
                 startActivity(intent);
-                Toast.makeText(getActivity(), "tes", Toast.LENGTH_SHORT).show();
             }
         });
 

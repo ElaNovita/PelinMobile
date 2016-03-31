@@ -40,6 +40,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(messages.get(position), listener);
         holder.sender.setText(messages.get(position).sender);
         holder.messageContent.setText(messages.get(position).content);
         holder.sendAt.setText(messages.get(position).sendAt);

@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+
 
 import com.example.ela.pelinmobile.Adapter.MessageDetailAdapter;
 
@@ -22,6 +25,8 @@ public class MessageDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message);
         initData();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Dayat Eds");
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.messageDetailRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         MessageDetailAdapter adapter = new MessageDetailAdapter(messagesDetails);
@@ -49,5 +54,19 @@ public class MessageDetail extends AppCompatActivity {
         messagesDetails.add(new MessagesDetail("08.11", "Okay", 2));
         messagesDetails.add(new MessagesDetail("08.15", "Next, override the onBindViewHolder method to configure the ViewHolder with actual data that needs to be displayed. ", 1));
         messagesDetails.add(new MessagesDetail("08.30", "The following methods are used for configuring the individual RecyclerView.ViewHolder objects", 2));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                this.finish();
+            case R.id.action_settings:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
