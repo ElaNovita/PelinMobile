@@ -25,13 +25,13 @@ public class Group {
 
         List<Group> datas;
         datas = new ArrayList<>();
-        datas.add(new Group("Nama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Sama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Dama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Yama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Kama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Lama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Jama Group 1", "Nama Dosen 1", 15));
+        datas.add(new Group("ANALISIS & DESAIN PERANGAKAT LUNAK", "Ahmat Adil, S.kom.,M.Sc.", 15));
+        datas.add(new Group("JARINGAN KOMPUTER ", "Raisul Azhar,S.T., M.T.", 15));
+        datas.add(new Group("PEMROGRAMAN II", "Dwi Ratnasari, MT", 15));
+        datas.add(new Group("ATRIFICIAL INTELEGENCE ", "Khasnur Hidjah, S.Kom.,M.Cs", 15));
+        datas.add(new Group("METODE NUMERIK ", "Uswatun H, M.Si", 15));
+        datas.add(new Group("GRAFIKA KOMPUTER", "Sarifah fitriana M.Sn", 15));
+        datas.add(new Group("ALJABAR LINIER", "Budiman Sani, M.Pd", 15));
 
 
         return datas;

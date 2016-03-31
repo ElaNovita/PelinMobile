@@ -62,7 +62,7 @@ public class MemberFragment extends Fragment {
 
 
         members = new ArrayList<>();
-        members.add(new Member("Akashi Seijuro",  R.drawable.seb));
+        members.add(new Member("Akashi Seijuro",  R.drawable.eren));
         members.add(new Member("Akashi Seijuro", R.drawable.levi));
         members.add(new Member("Akashi Seijuro", R.drawable.eren));
         members.add(new Member("Akashi Seijuro",  R.drawable.ciel));

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ela.pelinmobile.Adapter.DiskusiAdapter;
+import com.example.ela.pelinmobile.Fragment.CreatePost;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
@@ -41,6 +43,13 @@ public class DiskusiFragment extends Fragment {
         View inflated = inflater.inflate(R.layout.fragment_diskusi, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.dRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addDiskusi);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
         DiskusiAdapter adapter = new DiskusiAdapter(diskusis, new DiskusiAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Diskusi diskusi) {
@@ -81,4 +90,10 @@ public class DiskusiFragment extends Fragment {
         diskusis.add(new Diskusi("Haruka Nanase", "Thur 06.45 AM", "What about mackarel?", "17", "16", R.drawable.haruka));
     }
 
+    public void showDialog() {
+        FragmentManager fragmentManager = getFragmentManager();
+        CreatePost createPost = CreatePost.newInstance("Enter Post");
+
+        createPost.show(fragmentManager, "Enter Post");
+    }
 }
