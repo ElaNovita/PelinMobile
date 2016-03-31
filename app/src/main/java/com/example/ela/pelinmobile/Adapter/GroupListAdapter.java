@@ -1,12 +1,16 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.example.ela.pelinmobile.Fragment.GroupListFragment;
 import com.example.ela.pelinmobile.Model.Group;
 import com.example.ela.pelinmobile.OnItemClickListener;
@@ -22,6 +26,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
 
     List<Group> groups;
     private final OnItemClickListener listener;
+
 
     public GroupListAdapter(List<Group> groups, OnItemClickListener listener) {
         this.groups = groups;
@@ -46,19 +51,26 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         holder.groupTitle.setText(groups.get(position).title);
         holder.dosenName.setText(groups.get(position).name);
         holder.countMember.setText(Integer.toString(groups.get(position).count));
+        String chars = new StringBuilder().append("").append(holder.groupTitle.getText().charAt(0)).toString();
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int randomColor = generator.getRandomColor();
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRound(chars, randomColor);
+        holder.groupPict.setImageDrawable(drawable);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView groupCv;
+
         TextView groupTitle, dosenName, countMember;
+        ImageView groupPict;
 
         ViewHolder(View view) {
             super(view);
 
-            groupCv = (CardView) view.findViewById(R.id.groupCv);
             groupTitle = (TextView) view.findViewById(R.id.group_name);
             dosenName = (TextView) view.findViewById(R.id.nama_dosen);
             countMember = (TextView) view.findViewById(R.id.member_count);
+            groupPict = (ImageView) view.findViewById(R.id.group_pict);
         }
 
         public void bind(final Group group, final OnItemClickListener listener) {
@@ -70,7 +82,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             });
         }
     }
-
 
 
 }

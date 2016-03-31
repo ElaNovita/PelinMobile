@@ -1,5 +1,9 @@
 package com.example.ela.pelinmobile.Model;
 
+import android.graphics.Color;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ public class Group {
         this.title = title;
         this.name = name;
         this.count = count;
+
     }
 
     public static List<Group> initData() {
@@ -21,17 +26,13 @@ public class Group {
         List<Group> datas;
         datas = new ArrayList<>();
         datas.add(new Group("Nama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Nama Group 2", "Nama Dosen 2", 39));
-        datas.add(new Group("Nama Group 3", "Nama Dosen 3", 45));
-        datas.add(new Group("Nama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Nama Group 2", "Nama Dosen 2", 39));
-        datas.add(new Group("Nama Group 3", "Nama Dosen 3", 45));
-        datas.add(new Group("Nama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Nama Group 2", "Nama Dosen 2", 39));
-        datas.add(new Group("Nama Group 3", "Nama Dosen 3", 45));
-        datas.add(new Group("Nama Group 1", "Nama Dosen 1", 15));
-        datas.add(new Group("Nama Group 2", "Nama Dosen 2", 39));
-        datas.add(new Group("Nama Group 3", "Nama Dosen 3", 45));
+        datas.add(new Group("Sama Group 1", "Nama Dosen 1", 15));
+        datas.add(new Group("Dama Group 1", "Nama Dosen 1", 15));
+        datas.add(new Group("Yama Group 1", "Nama Dosen 1", 15));
+        datas.add(new Group("Kama Group 1", "Nama Dosen 1", 15));
+        datas.add(new Group("Lama Group 1", "Nama Dosen 1", 15));
+        datas.add(new Group("Jama Group 1", "Nama Dosen 1", 15));
+
 
         return datas;
     }
