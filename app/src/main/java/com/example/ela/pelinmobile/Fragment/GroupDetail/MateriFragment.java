@@ -1,7 +1,9 @@
 package com.example.ela.pelinmobile.Fragment.GroupDetail;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.ela.pelinmobile.Adapter.MateriAdapter;
 import com.example.ela.pelinmobile.R;
+import com.example.ela.pelinmobile.UploadMateri;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,14 @@ public class MateriFragment extends Fragment {
         View inflated =  inflater.inflate(R.layout.fragment_materi, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.materiRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addMateri);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UploadMateri.class);
+                startActivity(intent);
+            }
+        });
         MateriAdapter adapter = new MateriAdapter(materis);
         recyclerView.setAdapter(adapter);
 

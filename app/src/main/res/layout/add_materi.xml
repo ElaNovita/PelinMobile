@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="4"
+        android:hint="Description..."/>
+    <RelativeLayout
+        android:id="@+id/upMateri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp">
+        <TextView
+            android:id="@+id/uploadMateri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih File"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentLeft="true"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/uploadMateri"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/ic_file_upload_black_24dp"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/sendMateri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:text="Send File"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"/>
+
+</LinearLayout>

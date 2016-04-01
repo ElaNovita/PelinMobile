@@ -30,6 +30,8 @@
         <activity android:name=".Fragment.GroupDetail.DiskusiDetail"/>
         <activity android:name=".AssigntDetail"/>
         <activity android:name=".MessageDetail" />
+        <activity android:name=".UploadMateri"/>
+        <activity android:name=".AddTugas"/>
     </application>
 
 </manifest>
