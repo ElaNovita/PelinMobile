@@ -24,7 +24,7 @@
             android:theme="@style/CustomTheme"/>
         <activity android:name=".GroupDetail"
             android:theme="@style/CustomTheme"/>
-        <activity android:name=".Collapsing" android:theme="@style/CustomTheme">
+        <activity android:name=".Collapsing" android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity android:name=".Fragment.GroupDetail.DiskusiDetail"/>

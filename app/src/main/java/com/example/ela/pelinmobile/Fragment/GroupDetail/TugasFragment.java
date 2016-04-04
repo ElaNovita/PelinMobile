@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class TugasFragment extends Fragment {
         // Inflate the layout for this fragment
         View inflated = inflater.inflate(R.layout.fragment_tugas, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.tugastRv);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.tugas);
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addTugas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         TugasAdapter adapter = new TugasAdapter(tugases);

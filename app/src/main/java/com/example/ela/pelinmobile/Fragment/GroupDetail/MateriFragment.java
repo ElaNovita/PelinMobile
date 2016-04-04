@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,6 +45,7 @@ public class MateriFragment extends Fragment {
         View inflated =  inflater.inflate(R.layout.fragment_materi, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.materiRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.materi);
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addMateri);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

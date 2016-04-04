@@ -7,14 +7,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,6 +40,8 @@ import butterknife.Bind;
 public class GroupListFragment extends Fragment {
     RecyclerView groupRv;
     private FragmentActivity myContenxt;
+    @Bind(R.id.tablayout)
+    TabLayout tabLayout;
 
     private List<Group> groups;
 
@@ -49,6 +54,8 @@ public class GroupListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         groups = Group.initData();
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,10 +88,13 @@ public class GroupListFragment extends Fragment {
 //            }
 //        });
 
+
+
         return inflated;
 
 
     }
+
 
 
 
@@ -96,3 +106,12 @@ public class GroupListFragment extends Fragment {
 
 
 }
+
+
+
+
+
+
+
+
+

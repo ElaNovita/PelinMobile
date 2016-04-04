@@ -3,6 +3,7 @@ package com.example.ela.pelinmobile.Fragment.GroupDetail;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.MessageDetail;
 import com.example.ela.pelinmobile.R;
 
 import butterknife.Bind;
@@ -50,7 +52,9 @@ public class CreateMessage extends DialogFragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(CreateMessage.this).commit();
+                Intent intent = new Intent(getActivity(), MessageDetail.class);
+                startActivity(intent);
+                dismiss();
             }
         });
         return inflated;

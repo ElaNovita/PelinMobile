@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ public class UploadMateri extends AppCompatActivity {
 
     TextView TextuploadMateri;
     Button btnSendMateri;
-    RelativeLayout upMateri;
+    ImageButton upMateri;
     private static final int PICKFILE_RESULT_CODE = 1;
 
     @Override
@@ -29,7 +30,7 @@ public class UploadMateri extends AppCompatActivity {
 
         TextuploadMateri = (TextView) findViewById(R.id.uploadMateri);
         btnSendMateri = (Button) findViewById(R.id.sendMateri);
-        upMateri = (RelativeLayout) findViewById(R.id.upMateri);
+        upMateri = (ImageButton) findViewById(R.id.upMateri);
 
         upMateri.setOnClickListener(new View.OnClickListener() {
             @Override

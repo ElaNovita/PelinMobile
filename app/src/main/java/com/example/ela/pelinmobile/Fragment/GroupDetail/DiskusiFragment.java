@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class DiskusiFragment extends Fragment {
         View inflated = inflater.inflate(R.layout.fragment_diskusi, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.dRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.diskusi);
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addDiskusi);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

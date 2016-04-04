@@ -1,13 +1,21 @@
 package com.example.ela.pelinmobile;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupDetailAdapter;
+import com.example.ela.pelinmobile.Fragment.CreateGroupDialog;
+import com.example.ela.pelinmobile.Fragment.GroupInfo;
+import com.example.ela.pelinmobile.Model.Group;
 
 import butterknife.Bind;
 
@@ -28,7 +36,7 @@ public class GroupDetail extends BaseDrawer {
         setContentView(R.layout.group_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Nama Group");
+        getSupportActionBar().setTitle("Diskusi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tabViewPager.setAdapter(new GroupDetailAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(tabViewPager);
@@ -48,18 +56,35 @@ public class GroupDetail extends BaseDrawer {
         tabLayout.getTabAt(2).setIcon(tabIcon[2]);
         tabLayout.getTabAt(3).setIcon(tabIcon[3]);
     }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        switch (id) {
-//            case android.R.id.home:
-//                this.finish();
-//            case R.id.action_settings:
-//                return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                this.finish();
+            case R.id.action_settings:
+                showDialog();
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_settings);
+        item.setTitle(R.string.about);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showDialog() {
+        FragmentManager fragmentManager = getFragmentManager();
+        GroupInfo groupInfo = GroupInfo.newInstance("Info Group");
+        groupInfo.show(fragmentManager, "title");
+    }
 }

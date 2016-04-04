@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import butterknife.Bind;
  */
 public class AssigntDetail extends AppCompatActivity {
     TextView timer;
-    ImageView uploadImg;
+    ImageButton uploadImg;
     TextView namaFile;
     Button assigntSend;
     private static final int PICKFILE_RESULT_CODE = 1;
@@ -27,7 +28,7 @@ public class AssigntDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.assignt_detail);
         timer = (TextView) findViewById(R.id.timer);
-        uploadImg = (ImageView) findViewById(R.id.uploadImg);
+        uploadImg = (ImageButton) findViewById(R.id.uploadImg);
         namaFile = (TextView) findViewById(R.id.nmFile);
         assigntSend = (Button) findViewById(R.id.assigntUpload);
 

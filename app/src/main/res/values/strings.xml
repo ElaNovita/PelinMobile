@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">PelinMobile</string>
     <string name="action_settings">Settings</string>
+    <string name="about">Tentang Group</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="assignt">
 You’ll first need an interface that specifies listener’s behaviour. In this example, there is a sample model called ContentItem, so the click will return an item of that type</string>
     <string name="message_display">What I have now is a ListView of TextView elements. each TextView element displays a text (the text length varies from 12 words to 100+).</string>
+    <string name="diskusi">Diskusi</string>
+    <string name="materi">Materi</string>
+    <string name="tugas">Tugas</string>
+    <string name="member">Anggota</string>
+    <string name="dummy">This is typically used for displaying an alert dialog, a confirm dialog, or prompting the user for information within an overlay without having to switch to another Activity.</string>
 </resources>

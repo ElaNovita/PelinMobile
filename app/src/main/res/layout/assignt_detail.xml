@@ -54,23 +54,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="ssss"
         android:textStyle="bold"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
         android:textSize="24sp"/>
-    <ImageView
-        android:id="@+id/uploadImg"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:src="@drawable/upload"/>
-    <TextView
-        android:id="@+id/nmFile"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="nama file.docx"/>
+        android:paddingLeft="12dp">
+        <TextView
+            android:id="@+id/nmFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:text="Pilih file"
+            android:layout_marginTop="24dp"/>
+        <ImageButton
+            android:id="@+id/uploadImg"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_file_upload_black_24dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_toRightOf="@id/nmFile"
+            android:layout_marginLeft="8dp"/>
+    </RelativeLayout>
     <Button
         android:id="@+id/assigntUpload"
         android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package com.example.ela.pelinmobile.Fragment.GroupDetail;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +43,7 @@ public class MemberFragment extends Fragment {
         View inflated = inflater.inflate(R.layout.fragment_member, container, false);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.memberRv);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
         MemberAdapter adapter = new MemberAdapter(getContext(), members);
         recyclerView.setAdapter(adapter);
         return inflated;
