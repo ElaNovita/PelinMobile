@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Fragment.GroupDetail;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.MemberAdapter;
+import com.example.ela.pelinmobile.Profile;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
@@ -44,7 +46,13 @@ public class MemberFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.memberRv);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
-        MemberAdapter adapter = new MemberAdapter(getContext(), members);
+        MemberAdapter adapter = new MemberAdapter(getContext(), members, new MemberAdapter.OnitemClickListener() {
+            @Override
+            public void OnItemClick(Member member) {
+                Intent intent = new Intent(getActivity(), Profile.class);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
         return inflated;
     }

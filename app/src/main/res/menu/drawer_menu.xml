@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_item_attachment"
+            android:id="@+id/allGroup"
             android:checked="true"
-            android:title="title"/>
+            android:title="Semua Grup"/>
         <item
-            android:id="@+id/navigation_item_images"
-            android:title="title"/>
+            android:id="@+id/search_group"
+            android:title="Cari Grup"/>
         <item
             android:id="@+id/navigation_item_location"
             android:title="title"/>

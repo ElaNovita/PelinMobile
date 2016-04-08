@@ -32,6 +32,8 @@
         <activity android:name=".MessageDetail" />
         <activity android:name=".UploadMateri"/>
         <activity android:name=".AddTugas"/>
+        <activity android:name=".AllGroups"/>
+        <activity android:name=".Fragment.GroupDetail.ListTugas"/>
     </application>
 
 </manifest>

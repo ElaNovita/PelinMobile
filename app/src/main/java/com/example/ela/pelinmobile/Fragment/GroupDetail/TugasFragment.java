@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.ela.pelinmobile.Adapter.TugasAdapter;
 import com.example.ela.pelinmobile.AddTugas;
+import com.example.ela.pelinmobile.AssigntDetail;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
@@ -45,7 +46,13 @@ public class TugasFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.tugas);
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addTugas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        TugasAdapter adapter = new TugasAdapter(tugases);
+        TugasAdapter adapter = new TugasAdapter(tugases, new TugasAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Tugas tugas) {
+                Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

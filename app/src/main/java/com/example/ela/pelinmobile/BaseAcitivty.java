@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,10 +64,17 @@ public class BaseAcitivty extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 return true;
+            case R.id.allGroup:
+                Toast.makeText(this, "tes", Toast.LENGTH_SHORT).show();
+            case R.id.search_group:
+                Intent intents = new Intent(getApplicationContext(), AllGroups.class);
+                startActivity(intents);
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     public Toolbar getToolbar() {
         return toolbar;

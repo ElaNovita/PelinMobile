@@ -53,9 +53,6 @@ public class HomeDosenAdapter extends FragmentPagerAdapter {
             case 3:
                 fragment = new MessagesFragment();
                 break;
-            default:
-                fragment = null;
-                break;
         }
         return fragment;
     }

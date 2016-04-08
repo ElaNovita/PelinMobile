@@ -87,4 +87,6 @@ public class GroupDetail extends BaseDrawer {
         GroupInfo groupInfo = GroupInfo.newInstance("Info Group");
         groupInfo.show(fragmentManager, "title");
     }
+
+
 }

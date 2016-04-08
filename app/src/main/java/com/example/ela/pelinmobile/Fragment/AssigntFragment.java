@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.ela.pelinmobile.Adapter.AssigntListAdapter;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.AssigntDetail;
+import com.example.ela.pelinmobile.Fragment.GroupDetail.ListTugas;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class AssigntFragment extends Fragment {
         AssigntListAdapter adapter = new AssigntListAdapter(assignts, new AssigntListAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Assignt assignt) {
-                Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                Intent intent = new Intent(getActivity(), ListTugas.class);
                 startActivity(intent);
             }
         });

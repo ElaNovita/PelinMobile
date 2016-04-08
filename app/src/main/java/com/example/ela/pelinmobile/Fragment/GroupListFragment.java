@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
+import com.example.ela.pelinmobile.AllGroups;
 import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.HomeDosen;
 import com.example.ela.pelinmobile.Model.Group;
@@ -103,7 +106,6 @@ public class GroupListFragment extends Fragment {
         CreateGroupDialog createGroupDialog = CreateGroupDialog.newInstance("Create New Group");
         createGroupDialog.show(fragmentManager, "title");
     }
-
 
 }
 

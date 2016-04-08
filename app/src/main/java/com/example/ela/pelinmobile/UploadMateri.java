@@ -3,6 +3,7 @@ package com.example.ela.pelinmobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,6 +28,8 @@ public class UploadMateri extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_materi);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextuploadMateri = (TextView) findViewById(R.id.uploadMateri);
         btnSendMateri = (Button) findViewById(R.id.sendMateri);
@@ -62,5 +65,19 @@ public class UploadMateri extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                this.finish();
+            case R.id.action_settings:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

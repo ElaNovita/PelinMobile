@@ -20,11 +20,13 @@ import java.util.List;
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
     private List<MemberFragment.Member> members;
+    OnitemClickListener listener;
 
     Context context;
 
-    public MemberAdapter(Context context, List<MemberFragment.Member> members) {
+    public MemberAdapter(Context context, List<MemberFragment.Member> members, OnitemClickListener listener) {
         this.members = members;
+        this.listener = listener;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(members.get(position), listener);
         holder.username.setText(members.get(position).name);
         holder.userImg.setImageResource(members.get(position).userImg);
     }
@@ -56,5 +59,18 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
             userImg = (ImageView) itemView.findViewById(R.id.userImg);
             userImg.setScaleType(ImageView.ScaleType.FIT_XY);
         }
+
+        public void bind(final MemberFragment.Member member, final OnitemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.OnItemClick(member);
+                }
+            });
+        }
+    }
+
+    public interface OnitemClickListener {
+        void OnItemClick(MemberFragment.Member member);
     }
 }

@@ -17,9 +17,11 @@ import java.util.List;
 public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> {
 
     private List<TugasFragment.Tugas> tugases;
+    OnItemClickListener listener;
 
-    public TugasAdapter(List<TugasFragment.Tugas> tugases) {
+    public TugasAdapter(List<TugasFragment.Tugas> tugases, OnItemClickListener listener) {
         this.tugases = tugases;
+        this.listener = listener;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(tugases.get(position), listener);
         holder.title.setText(tugases.get(position).title);
         holder.dueTime.setText(tugases.get(position).due);
     }
@@ -49,6 +52,19 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
             title = (TextView) itemView.findViewById(R.id.judulTugas);
             dueTime = (TextView) itemView.findViewById(R.id.dueTime);
         }
+
+        public void bind(final TugasFragment.Tugas tugas, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.OnItemClick(tugas);
+                }
+            });
+        }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(TugasFragment.Tugas tugas);
     }
 }
 

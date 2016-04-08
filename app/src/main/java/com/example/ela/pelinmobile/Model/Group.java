@@ -37,5 +37,9 @@ public class Group {
         return datas;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
 
 }
