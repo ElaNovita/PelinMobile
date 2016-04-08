@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.ela.pelinmobile.Adapter.AssigntListAdapter;
 import com.example.ela.pelinmobile.Adapter.NotifListAdapter;
+import com.example.ela.pelinmobile.Fragment.GroupDetail.ConfirmMember;
 import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.R;
 
@@ -46,7 +47,7 @@ public class NotifFragment extends Fragment {
         NotifListAdapter adapter = new NotifListAdapter(notifs, new NotifListAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Notif notif) {
-                Intent intent = new Intent(getActivity(), GroupDetail.class);
+                Intent intent = new Intent(getActivity(), ConfirmMember.class);
                 startActivity(intent);
             }
         });

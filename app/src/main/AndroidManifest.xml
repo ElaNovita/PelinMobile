@@ -34,6 +34,7 @@
         <activity android:name=".AddTugas"/>
         <activity android:name=".AllGroups"/>
         <activity android:name=".Fragment.GroupDetail.ListTugas"/>
+        <activity android:name=".Fragment.GroupDetail.ConfirmMember"/>
     </application>
 
 </manifest>

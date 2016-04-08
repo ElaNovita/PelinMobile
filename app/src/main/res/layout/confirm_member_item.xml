@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingBottom="2dp"
     android:background="#dedede"
-    android:layout_marginBottom="2dp">
+    android:layout_marginBottom="1dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,19 +26,21 @@
                 android:layout_height="wrap_content"
                 android:text="Bahrul Hidayat"/>
             <TextView
-                android:id="@+id/nim"
+                android:id="@+id/confirm_nim"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1210520070"/>
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/confirm"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_gravity="bottom"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_check_black_24dp"/>
         <ImageButton
+            android:id="@+id/reject"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_gravity="bottom"
