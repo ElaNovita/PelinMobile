@@ -31,6 +31,11 @@
                 android:layout_height="wrap_content"
                 android:text="1210520070"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/itemPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <ImageButton
             android:id="@+id/confirm"
@@ -47,5 +52,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close_black_24dp"/>
     </LinearLayout>
+
+
 
 </LinearLayout>

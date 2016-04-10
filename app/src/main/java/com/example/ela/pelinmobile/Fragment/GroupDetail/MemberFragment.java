@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.MemberAdapter;
@@ -26,6 +29,8 @@ import java.util.List;
 public class MemberFragment extends Fragment {
 
     List<Member> members;
+    Button kick;
+    LinearLayout wrap;
 
 
     public MemberFragment() {
@@ -43,19 +48,37 @@ public class MemberFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflated = inflater.inflate(R.layout.fragment_member, container, false);
+        kick = (Button) inflated.findViewById(R.id.kick);
+        wrap = (LinearLayout) inflated.findViewById(R.id.wrap);
         RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.memberRv);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
-        MemberAdapter adapter = new MemberAdapter(getContext(), members, new MemberAdapter.OnitemClickListener() {
+        final MemberAdapter adapter = new MemberAdapter(getContext(), members);
+        adapter.setOnItemClickListener(new MemberAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(Member member) {
-                Intent intent = new Intent(getActivity(), Profile.class);
-                startActivity(intent);
+            public void onItemClick(View view, final int position, boolean isLongClick) {
+                if (isLongClick) {
+                    kick.setText("Delete " + members.get(position).name.toLowerCase() + "?");
+                    kick.setVisibility(View.VISIBLE);
+                    kick.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                           adapter.removeItem(position);
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(getActivity(), Profile.class);
+                    startActivity(intent);
+                }
             }
         });
+
         recyclerView.setAdapter(adapter);
+
         return inflated;
     }
+
+
 
     public class Member {
         public String name, nim;
@@ -72,11 +95,11 @@ public class MemberFragment extends Fragment {
 
 
         members = new ArrayList<>();
-        members.add(new Member("Akashi Seijuro",  R.drawable.eren));
-        members.add(new Member("Akashi Seijuro", R.drawable.levi));
+        members.add(new Member("Eren",  R.drawable.eren));
+        members.add(new Member("Levi", R.drawable.levi));
         members.add(new Member("Akashi Seijuro", R.drawable.eren));
-        members.add(new Member("Akashi Seijuro",  R.drawable.ciel));
-        members.add(new Member("Akashi Seijuro",  R.drawable.haise));
+        members.add(new Member("Ciel",  R.drawable.ciel));
+        members.add(new Member("Haise",  R.drawable.haise));
 
     }
 

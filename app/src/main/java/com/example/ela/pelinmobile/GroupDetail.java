@@ -78,7 +78,9 @@ public class GroupDetail extends BaseDrawer {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.action_settings);
+        MenuItem item1 = menu.findItem(R.id.leave);
         item.setTitle(R.string.about);
+        item1.setTitle("Leave Group");
         return super.onPrepareOptionsMenu(menu);
     }
 

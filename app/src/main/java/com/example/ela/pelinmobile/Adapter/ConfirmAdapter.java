@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.ConfirmMember;
 import com.example.ela.pelinmobile.R;
@@ -34,19 +36,42 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.name.setText(confirms.get(position).name);
         holder.nim.setText(confirms.get(position).nim);
+        holder.id.setText(confirms.get(position).id);
+        holder.confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, nim;
 
-        public ViewHolder(View itemView) {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name, nim, id;
+        ImageButton confirm, reject;
+
+        public ViewHolder(final View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.confimr_nm);
             nim = (TextView) itemView.findViewById(R.id.confirm_nim);
+            id = (TextView) itemView.findViewById(R.id.itemPosition);
+            confirm = (ImageButton) itemView.findViewById(R.id.confirm);
+            reject = (ImageButton) itemView.findViewById(R.id.reject);
+
         }
+
+
     }
+
+    public void removeItem(int position) {
+        confirms.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+    }
+
+
 }

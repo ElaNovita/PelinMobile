@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:title="leave group"
+        android:id="@+id/leave"
+        android:orderInCategory="101"
+        android:showAsAction="never"/>
 </menu>

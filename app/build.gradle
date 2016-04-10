@@ -35,4 +35,5 @@ dependencies {
     compile 'com.github.clans:fab:1.6.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'com.hudomju:swipe-to-dismiss-undo:1.0'
 }

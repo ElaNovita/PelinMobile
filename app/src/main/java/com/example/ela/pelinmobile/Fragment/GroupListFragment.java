@@ -4,7 +4,11 @@ package com.example.ela.pelinmobile.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -12,8 +16,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,6 +51,10 @@ public class GroupListFragment extends Fragment {
     private FragmentActivity myContenxt;
     @Bind(R.id.tablayout)
     TabLayout tabLayout;
+    RecyclerView recyclerView;
+    boolean undoOn;
+    List<String> items;
+    List<String> itemsPendingRemoval;
 
     private List<Group> groups;
 
@@ -65,7 +75,7 @@ public class GroupListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflated = inflater.inflate(R.layout.fragment_group_list, container, false);
-        RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.groupRv);
+        recyclerView = (RecyclerView) inflated.findViewById(R.id.groupRv);
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addGroup);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -99,13 +109,12 @@ public class GroupListFragment extends Fragment {
     }
 
 
-
-
     public void showDialog() {
         FragmentManager fragmentManager = getFragmentManager();
         CreateGroupDialog createGroupDialog = CreateGroupDialog.newInstance("Create New Group");
         createGroupDialog.show(fragmentManager, "title");
     }
+
 
 }
 

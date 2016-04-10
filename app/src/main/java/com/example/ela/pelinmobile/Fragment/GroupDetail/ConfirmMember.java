@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.ConfirmAdapter;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * Created by e on 9/04/16.
@@ -23,16 +28,17 @@ public class ConfirmMember extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirm_member);
         initdata();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.confirmRv);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.confirmRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ConfirmAdapter adapter = new ConfirmAdapter(confirms);
+        final ConfirmAdapter adapter = new ConfirmAdapter(confirms);
         recyclerView.setAdapter(adapter);
+
     }
 
     public class Confirm {
-        public String name, nim;
+        public String name, nim, id;
 
-        public Confirm(String nim, String name) {
+        public Confirm(String nim, String name, int id) {
             this.nim = nim;
             this.name = name;
         }
@@ -40,12 +46,14 @@ public class ConfirmMember extends AppCompatActivity {
 
     private void initdata() {
         confirms = new ArrayList<>();
-        confirms.add(new Confirm("1210520070", "Ela Novita"));
-        confirms.add(new Confirm("1210520070", "Ela Novita"));
-        confirms.add(new Confirm("1210510006", "Bahrul Hidayat"));
-        confirms.add(new Confirm("1210510006", "Bahrul Hidayat"));
-        confirms.add(new Confirm("1210510006", "Bahrul Hidayat"));
-        confirms.add(new Confirm("1210510006", "Bahrul Hidayat"));
+        confirms.add(new Confirm("1210520070", "Ela Novita", 1));
+        confirms.add(new Confirm("1210520070", "Ela Novita", 2));
+        confirms.add(new Confirm("1210520070", "Ela Novita", 3));
+        confirms.add(new Confirm("1210520070", "Ela Novita", 4));
+        confirms.add(new Confirm("1210520070", "Ela Novita", 5));
+        confirms.add(new Confirm("1210520070", "Ela Novita", 6));
 
     }
+
+
 }
