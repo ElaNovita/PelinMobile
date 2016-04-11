@@ -1,6 +1,9 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +21,11 @@ import java.util.List;
  */
 public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHolder> {
     private List<ConfirmMember.Confirm> confirms;
+    Context context;
 
-    public ConfirmAdapter(List<ConfirmMember.Confirm> confirms) {
+    public ConfirmAdapter(List<ConfirmMember.Confirm> confirms, Context context) {
         this.confirms = confirms;
+        this.context = context;
     }
 
     @Override
@@ -36,17 +41,19 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.name.setText(confirms.get(position).name);
         holder.nim.setText(confirms.get(position).nim);
         holder.id.setText(confirms.get(position).id);
         holder.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(context, "you click "+ holder.name.getText(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

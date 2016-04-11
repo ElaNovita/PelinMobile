@@ -30,7 +30,7 @@ public class ConfirmMember extends AppCompatActivity {
         initdata();
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.confirmRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final ConfirmAdapter adapter = new ConfirmAdapter(confirms);
+        final ConfirmAdapter adapter = new ConfirmAdapter(confirms, getApplicationContext());
         recyclerView.setAdapter(adapter);
 
     }
@@ -46,12 +46,12 @@ public class ConfirmMember extends AppCompatActivity {
 
     private void initdata() {
         confirms = new ArrayList<>();
-        confirms.add(new Confirm("1210520070", "Ela Novita", 1));
-        confirms.add(new Confirm("1210520070", "Ela Novita", 2));
-        confirms.add(new Confirm("1210520070", "Ela Novita", 3));
-        confirms.add(new Confirm("1210520070", "Ela Novita", 4));
-        confirms.add(new Confirm("1210520070", "Ela Novita", 5));
-        confirms.add(new Confirm("1210520070", "Ela Novita", 6));
+        confirms.add(new Confirm("1210520070", "Novita", 1));
+        confirms.add(new Confirm("1210520070", "Dayat", 2));
+        confirms.add(new Confirm("1210520070", "Bahrul", 3));
+        confirms.add(new Confirm("1210520070", "Ela ", 4));
+        confirms.add(new Confirm("1210520070", "Lestari", 5));
+        confirms.add(new Confirm("1210520070", "Hidayat", 6));
 
     }
 
