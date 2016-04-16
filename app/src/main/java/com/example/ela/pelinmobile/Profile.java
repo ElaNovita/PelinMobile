@@ -1,9 +1,12 @@
 package com.example.ela.pelinmobile;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -42,6 +45,7 @@ import butterknife.Bind;
 public class Profile extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    public static final String myPref = "myPrefs";
 
     private List<Group> groups;
 
@@ -50,8 +54,12 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
         groups = Group.initData();
+        TextView kode = (TextView) findViewById(R.id.code);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences(myPref, MODE_PRIVATE);
+        String getToken = (sharedPreferences.getString("token", ""));
+        kode.setText(getToken);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Ciel Phantomhive");
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
