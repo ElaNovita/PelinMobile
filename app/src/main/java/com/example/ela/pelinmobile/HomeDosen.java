@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +36,8 @@ public class HomeDosen extends BaseDrawer {
     @Bind(R.id.tabViewPager)
     ViewPager tabViewPager;
     String tab_badges;
+    @Bind(R.id.navigationView)
+    NavigationView navigationView;
 
     private BadgeView badgeView;
     int buttonCounter = 2;
@@ -47,6 +52,7 @@ public class HomeDosen extends BaseDrawer {
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         ImageView imageView = new ImageView(this);
         tab.setCustomView(imageView);
+        setupDrawerContent(navigationView);
 
 //        badgeView = new BadgeView(this, imageView);
 //        badgeView.setText("1");
@@ -121,5 +127,7 @@ public class HomeDosen extends BaseDrawer {
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
     }
+
+
 }
 

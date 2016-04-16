@@ -24,5 +24,14 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="LoginTheme" parent="AppTheme.NoActionBar">
+        <item name="android:colorControlNormal">#ffffff</item>
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="android:colorControlActivated">#ffffff</item>
+        <item name="colorControlActivated">#ffffff</item>
+        <item name="android:colorControlHighlight">#fff</item>
+        <item name="colorControlHighlight">#fff</item>
+        <item name="android:textColorHint">#fff</item>
+    </style>
 
 </resources>

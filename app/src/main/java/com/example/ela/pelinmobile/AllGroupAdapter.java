@@ -35,7 +35,7 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.group_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_group_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -46,12 +46,7 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
         holder.groupTitle.setText(groups.get(position).title);
         holder.dosenName.setText(groups.get(position).name);
         holder.countMember.setText(Integer.toString(groups.get(position).count));
-        String chars = new StringBuilder().append("").append(holder.groupTitle.getText().charAt(0)).toString();
-        ColorGenerator generator = ColorGenerator.MATERIAL;
-        int randomColor = generator.getRandomColor();
-        TextDrawable drawable = TextDrawable.builder()
-                .buildRound(chars, randomColor);
-        holder.groupPict.setImageDrawable(drawable);
+        holder.semester.setText(groups.get(position).semester);
     }
 
     public interface OnItemClickListener {
@@ -59,16 +54,15 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView groupTitle, dosenName, countMember;
-        ImageView groupPict;
+        TextView groupTitle, dosenName, countMember, semester;
 
         ViewHolder(View view) {
             super(view);
 
-            groupTitle = (TextView) view.findViewById(R.id.group_name);
+            groupTitle = (TextView) view.findViewById(R.id.nama_group);
             dosenName = (TextView) view.findViewById(R.id.nama_dosen);
-            countMember = (TextView) view.findViewById(R.id.member_count);
-            groupPict = (ImageView) view.findViewById(R.id.group_pict);
+            countMember = (TextView) view.findViewById(R.id.memberCount);
+            semester = (TextView) view.findViewById(R.id.semester_class);
         }
 
         public void bind(final Group group, final OnItemClickListener listener) {

@@ -40,6 +40,7 @@ public class GroupDetail extends BaseDrawer {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tabViewPager.setAdapter(new GroupDetailAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(tabViewPager);
+        setupDrawerContent(navigationView);
         setTabIcon();
     }
 

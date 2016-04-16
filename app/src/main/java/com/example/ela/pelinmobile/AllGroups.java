@@ -48,6 +48,7 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_groups);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         groups = Group.initData();
         recyclerView = (RecyclerView) findViewById(R.id.allGroupRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -101,4 +102,14 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
         return filteredGroup;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

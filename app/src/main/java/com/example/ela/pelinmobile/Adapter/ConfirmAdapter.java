@@ -45,10 +45,10 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
         holder.name.setText(confirms.get(position).name);
         holder.nim.setText(confirms.get(position).nim);
         holder.id.setText(confirms.get(position).id);
-        holder.confirm.setOnClickListener(new View.OnClickListener() {
+        holder.reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "you click "+ holder.name.getText(), Toast.LENGTH_SHORT).show();
+                removeItem(position);
             }
         });
     }
@@ -78,6 +78,11 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
         confirms.remove(position);
         notifyItemRemoved(position);
         notifyDataSetChanged();
+    }
+
+
+    public void addToGroup(int position) {
+
     }
 
 

@@ -2,10 +2,12 @@ package com.example.ela.pelinmobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -22,12 +24,26 @@ public class BaseAcitivty extends AppCompatActivity {
     Toolbar toolbar;
     @Bind(R.id.drawerLayout)
     DrawerLayout drawerLayout;
+    @Bind(R.id.navigationView)
+    NavigationView navigationView;
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+                Intent intent = new Intent(getApplicationContext(), AllGroups.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
         bindView();
+        setupDrawerContent(navigationView);
     }
 
     protected void bindView() {
@@ -64,16 +80,40 @@ public class BaseAcitivty extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 return true;
-            case R.id.allGroup:
-                Toast.makeText(this, "tes", Toast.LENGTH_SHORT).show();
-            case R.id.search_group:
-                Intent intents = new Intent(getApplicationContext(), AllGroups.class);
-                startActivity(intents);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    public void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                selectDrawerItem(item);
+                return true;
+            }
+        });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.allGroupMenu:
+                Intent intent = new Intent(BaseAcitivty.this, AllGroups.class);
+                startActivity(intent);
+                break;
+            case R.id.search_group_menu:
+                Intent intent1 = new Intent(BaseAcitivty.this, AllGroups.class);
+                startActivity(intent1);
+                break;
+            case R.id.logout:
+                Intent intent2 = new Intent(BaseAcitivty.this, Login.class);
+                startActivity(intent2);
+            default:
+                Toast.makeText(getApplicationContext(), "tes", Toast.LENGTH_SHORT).show();
+        }
+        menuItem.setChecked(true);
+        drawerLayout.closeDrawers();
+    }
 
 
     public Toolbar getToolbar() {

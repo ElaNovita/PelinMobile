@@ -91,6 +91,7 @@ public class GroupListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialog();
+
             }
         });
 //        addGroupFab.setOnClickListener(new View.OnClickListener() {
