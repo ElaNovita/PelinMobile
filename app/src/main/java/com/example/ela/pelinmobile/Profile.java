@@ -3,41 +3,34 @@ package com.example.ela.pelinmobile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
-import com.example.ela.pelinmobile.Fragment.GroupListFragment;
+import com.example.ela.pelinmobile.Interface.UserInterface;
 import com.example.ela.pelinmobile.Model.Group;
+import com.example.ela.pelinmobile.Model.User;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+
 import butterknife.Bind;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ela on 14/03/16.
@@ -45,26 +38,78 @@ import butterknife.Bind;
 public class Profile extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    String TAG = "respon";
     public static final String myPref = "myPrefs";
+    public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
 
     private List<Group> groups;
+
+    public static Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+
         groups = Group.initData();
-        TextView kode = (TextView) findViewById(R.id.code);
+
+        context = getApplicationContext();
+
+        final TextView kode = (TextView) findViewById(R.id.code);
+        final TextView username = (TextView) findViewById(R.id.user_name);
+
+//        com.example.ela.pelinmobile.Interface.UserInterface user =
+//                RetrofitBuilder.retrofit.create(com.example.ela.pelinmobile.Interface.UserInterface.class);
+//        Interceptor interceptor = new Interceptor() {
+//            @Override
+//            public okhttp3.Response intercept(Chain chain) throws IOException {
+//                Request req = chain.request().newBuilder().addHeader("Authorization", "Token f0367a1b6b0b68356775626b0e2a99991dd3861f").build();
+//                return chain.proceed(req);
+//            }
+//        };
+
+//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//        builder.interceptors().add(interceptor);
+//        OkHttpClient client = builder.build();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(BaseUrl)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(client)
+//                .build();
+
+        UserInterface user = new RetrofitBuilder(Profile.this).getRetrofit().create(UserInterface.class);
+        Call<User> call = user.getUser();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                try {
+                    User user = response.body();
+                    String name = user.getName();
+                    String nik = user.getEmail();
+                    kode.setText(nik);
+                    username.setText(name);
+                } catch (Exception e) {
+                    Log.e(TAG, "error", e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("respon", "gagal", t);
+            }
+        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        SharedPreferences sharedPreferences = getSharedPreferences(myPref, MODE_PRIVATE);
-        String getToken = (sharedPreferences.getString("token", ""));
-        kode.setText(getToken);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Ciel Phantomhive");
+        getSupportActionBar().setTitle("");
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+
         GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
             @Override
             public void onItemClick(Group group) {
@@ -72,7 +117,9 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         recyclerView.setAdapter(adapter);
+
     }
 
 
@@ -90,5 +137,8 @@ public class Profile extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static Context getContext() {
+        return context;
+    }
 
 }

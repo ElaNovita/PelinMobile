@@ -3,12 +3,12 @@ package com.example.ela.pelinmobile.Model;
 /**
  * Created by e on 16/04/16.
  */
-public class Users {
+public class User {
     String status, name, email;
-    Users.Token token;
-    Users.Student student;
-    Users.Teacher teacher;
-    Users.Photo photo;
+    User.Token token;
+    User.Student student;
+    User.Teacher teacher;
+    User.Photo photo;
     int id;
 
     static class Token {

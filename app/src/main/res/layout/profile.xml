@@ -38,16 +38,24 @@
                     android:layout_height="90dp"
                     android:src="@drawable/ciel"
                     android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
                     app:civ_border_color="@android:color/white"
                     app:civ_border_width="2dp"/>
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="30dp"/>
                 <TextView
                     android:id="@+id/code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1210520070"
                     android:layout_gravity="center"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="60dp"/>
+                    android:layout_marginTop="10dp"/>
 
             </LinearLayout>
 

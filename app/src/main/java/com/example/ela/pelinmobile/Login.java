@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -46,24 +47,30 @@ public class Login extends AppCompatActivity {
         username = (TextView) findViewById(R.id.username_login);
         password = (TextView) findViewById(R.id.password_login);
         login = (Button) findViewById(R.id.login);
+
         sharedPref = getSharedPreferences(myPref, Context.MODE_PRIVATE);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AsyncHttpClient client = new AsyncHttpClient();
+                startAnim();
 
                 RequestParams params = new RequestParams();
                 params.put("email", username.getText().toString());
                 params.put("password", password.getText().toString());
-                final SharedPreferences.Editor editor = sharedPref.edit();
+
                 client.post(BaseUrl, params, new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             String token = response.getString("token");
-                            editor.putString("token", token);
-                            editor.commit();
-                            Intent intent = new Intent(Login.this, Profile.class);
+
+                            MySharedPreferences mf = new MySharedPreferences(Login.this);
+                            mf.setToken(token);
+                            stopAnim();
+
+                            Intent intent = new Intent(Login.this, HomeDosen.class);
                             startActivity(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -72,6 +79,7 @@ public class Login extends AppCompatActivity {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        stopAnim();
                         Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -79,7 +87,17 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    public void setLogin() {
+    public void startAnim() {
+        findViewById(R.id.wrap).setVisibility(View.VISIBLE);
+        username.setEnabled(false);
+        password.setEnabled(false);
+        login.setEnabled(false);
+    }
 
+    public void stopAnim() {
+        findViewById(R.id.wrap).setVisibility(View.GONE);
+        username.setEnabled(true);
+        password.setEnabled(true);
+        login.setEnabled(true);
     }
 }
