@@ -14,6 +14,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.example.ela.pelinmobile.Fragment.GroupListFragment;
 import com.example.ela.pelinmobile.Model.Group;
+import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
@@ -25,11 +26,11 @@ import java.util.List;
  */
 public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.ViewHolder> {
 
-    List<Group> groups;
+    List<GroupModel> groups;
     private final OnItemClickListener listener;
 
 
-    public GroupListAdapter(List<Group> groups, OnItemClickListener listener) {
+    public GroupListAdapter(List<GroupModel> groups, OnItemClickListener listener) {
         this.groups = groups;
         this.listener = listener;
     }
@@ -49,9 +50,9 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(groups.get(position), listener);
-        holder.groupTitle.setText(groups.get(position).title);
-        holder.dosenName.setText(groups.get(position).name);
-        holder.countMember.setText(Integer.toString(groups.get(position).count));
+        holder.groupTitle.setText(groups.get(position).getTitle());
+        holder.dosenName.setText(groups.get(position).getTeacher().getName());
+        holder.countMember.setText(Integer.toString(groups.get(position).getMember()));
         String chars = new StringBuilder().append("").append(holder.groupTitle.getText().charAt(0)).toString();
         ColorGenerator generator = ColorGenerator.MATERIAL;
         int randomColor = generator.getRandomColor();
@@ -74,7 +75,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             groupPict = (ImageView) view.findViewById(R.id.group_pict);
         }
 
-        public void bind(final Group group, final OnItemClickListener listener) {
+        public void bind(final GroupModel group, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

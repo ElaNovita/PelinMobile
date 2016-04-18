@@ -6,9 +6,34 @@ package com.example.ela.pelinmobile.Model;
 public class User {
     String status, name, email;
     User.Token token;
-    User.Student student;
-    User.Teacher teacher;
-    User.Photo photo;
+    Student student;
+    Teacher teacher;
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    Photo photo;
     int id;
 
     static class Token {
@@ -21,18 +46,6 @@ public class User {
 
     public void setToken(Token token) {
         this.token = token;
-    }
-
-    static class Student {
-        String major, nim;
-    }
-
-    static class Teacher {
-        String nik, username;
-    }
-
-    static class Photo {
-        String full, medium, small, thumbnail;
     }
 
     public String getStatus() {
@@ -57,30 +70,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public Photo getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
     }
 
     public int getId() {

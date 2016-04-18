@@ -11,26 +11,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
+import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Interface.UserInterface;
-import com.example.ela.pelinmobile.Model.Group;
+import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.Model.User;
-
-import java.io.IOException;
 import java.util.List;
 
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 
 import butterknife.Bind;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ela on 14/03/16.
@@ -42,7 +37,9 @@ public class Profile extends AppCompatActivity {
     public static final String myPref = "myPrefs";
     public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
 
-    private List<Group> groups;
+    private List<GroupModel> groups;
+
+    RecyclerView recyclerView;
 
     public static Context context;
 
@@ -52,7 +49,6 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        groups = Group.initData();
 
         context = getApplicationContext();
 
@@ -87,7 +83,7 @@ public class Profile extends AppCompatActivity {
                 try {
                     User user = response.body();
                     String name = user.getName();
-                    String nik = user.getEmail();
+                    String nik = user.getTeacher().getNik();
                     kode.setText(nik);
                     username.setText(name);
                 } catch (Exception e) {
@@ -101,24 +97,41 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        GroupInterface groupInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(GroupInterface.class);
+        Call<List<GroupModel>> callGroup = groupInterface.getGroups();
+        callGroup.enqueue(new Callback<List<GroupModel>>() {
+            @Override
+            public void onResponse(Call<List<GroupModel>> call, Response<List<GroupModel>> response) {
+                try {
+                    List<GroupModel> groups = response.body();
+
+                    GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(GroupModel group) {
+                            Toast.makeText(getApplicationContext(), "tes", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    recyclerView.setAdapter(adapter);
+                } catch (Exception e) {
+                    Log.e("respon", "onResponse: error", e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<GroupModel>> call, Throwable t) {
+
+            }
+        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
+        recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Group group) {
-                Intent intent = new Intent(Profile.this, GroupDetail.class);
-                startActivity(intent);
-            }
-        });
-
-        recyclerView.setAdapter(adapter);
 
     }
 

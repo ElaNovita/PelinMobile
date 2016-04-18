@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,8 +34,11 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.AllGroups;
 import com.example.ela.pelinmobile.GroupDetail;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.HomeDosen;
+import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Model.Group;
+import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
@@ -42,6 +46,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +63,7 @@ public class GroupListFragment extends Fragment {
     List<String> items;
     List<String> itemsPendingRemoval;
 
-    private List<Group> groups;
+    private List<GroupModel> groups;
 
     public GroupListFragment() {
         // Required empty public constructor
@@ -65,7 +72,34 @@ public class GroupListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        groups = Group.initData();
+
+        GroupInterface groupInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(GroupInterface.class);
+        Call<List<GroupModel>> call = groupInterface.getGroups();
+        call.enqueue(new Callback<List<GroupModel>>() {
+            @Override
+            public void onResponse(Call<List<GroupModel>> call, Response<List<GroupModel>> response) {
+                try {
+                    List<GroupModel> groups = response.body();
+
+                    GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(GroupModel group) {
+                            Toast.makeText(getActivity(), "tes", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    recyclerView.setAdapter(adapter);
+                } catch (Exception e) {
+                    Log.e("respon", "onResponse: error", e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<GroupModel>> call, Throwable t) {
+
+            }
+        });
+
     }
 
 
@@ -79,14 +113,14 @@ public class GroupListFragment extends Fragment {
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addGroup);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Group group) {
-                Intent intent = new Intent(getActivity(), GroupDetail.class);
-                startActivity(intent);
-            }
-        });
-        recyclerView.setAdapter(adapter);
+//        GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(Group group) {
+//                Intent intent = new Intent(getActivity(), GroupDetail.class);
+//                startActivity(intent);
+//            }
+//        });
+//        recyclerView.setAdapter(adapter);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
