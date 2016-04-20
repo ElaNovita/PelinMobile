@@ -15,9 +15,17 @@ import android.widget.Toast;
 import com.example.ela.pelinmobile.Adapter.GroupDetailAdapter;
 import com.example.ela.pelinmobile.Fragment.CreateGroupDialog;
 import com.example.ela.pelinmobile.Fragment.GroupInfo;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Model.Group;
+import com.example.ela.pelinmobile.Model.GroupModel;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ela on 18/03/16.
@@ -30,18 +38,49 @@ public class GroupDetail extends BaseDrawer {
     @Bind(R.id.tabViewPager)
     ViewPager tabViewPager;
 
+    private String TAG = "respon";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_detail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Diskusi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        tabViewPager.setAdapter(new GroupDetailAdapter(getSupportFragmentManager()));
+
+
+
+        int groupId = getIntent().getIntExtra("groupId", 1);
+        Log.d(TAG, Integer.toString(groupId));
+        Bundle bundle = new Bundle();
+        bundle.putInt("groupId", groupId);
+
+
+        tabViewPager.setAdapter(new GroupDetailAdapter(getSupportFragmentManager(), bundle));
         tabLayout.setupWithViewPager(tabViewPager);
         setupDrawerContent(navigationView);
         setTabIcon();
+
+        GroupInterface groupInterface = new RetrofitBuilder(this).getRetrofit().create(GroupInterface.class);
+        Call<GroupModel> call = groupInterface.getSingleGroup(groupId);
+        call.enqueue(new Callback<GroupModel>() {
+            @Override
+            public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
+                GroupModel group = response.body();
+                Log.d(TAG, "onResponse: " + group.getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<GroupModel> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+            }
+        });
+
+
+
+
     }
 
     final int tabIcon[] = new int[]{

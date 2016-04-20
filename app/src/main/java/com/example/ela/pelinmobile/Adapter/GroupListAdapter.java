@@ -79,7 +79,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(group);
+                    listener.onItemClick(group, getLayoutPosition());
                 }
             });
         }

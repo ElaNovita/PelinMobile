@@ -81,7 +81,7 @@ public class CreateGroupDialog extends DialogFragment {
                     @Override
                     public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
                         GroupModel group = response.body();
-                        Log.d("respon", title);
+                        Log.d("respon", group.getTitle());
                     }
 
                     @Override

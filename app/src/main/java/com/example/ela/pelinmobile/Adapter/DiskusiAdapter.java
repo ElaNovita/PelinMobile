@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiFragment;
+import com.example.ela.pelinmobile.Model.DiskusiModel;
 import com.example.ela.pelinmobile.R;
 
+import java.text.DateFormat;
 import java.util.List;
 
 /**
@@ -21,14 +23,14 @@ import java.util.List;
  */
 public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHolder> {
 
-    List<DiskusiFragment.Diskusi> diskusis;
+    List<DiskusiModel> diskusis;
     private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void OnItemClick(DiskusiFragment.Diskusi diskusi);
+        void OnItemClick(DiskusiModel diskusi);
     }
 
-    public DiskusiAdapter(List<DiskusiFragment.Diskusi> diskusis, OnItemClickListener listener) {
+    public DiskusiAdapter(List<DiskusiModel> diskusis, OnItemClickListener listener) {
         this.diskusis = diskusis;
         this.listener = listener;
     }
@@ -48,12 +50,11 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(diskusis.get(position), listener);
-        holder.dSender.setText(diskusis.get(position).sender);
-        holder.dSendAt.setText(diskusis.get(position).dSendAt);
-        holder.dContent.setText(diskusis.get(position).dContent);
-        holder.dLike.setText(diskusis.get(position).dLike);
-        holder.dCount.setText(diskusis.get(position).dCount);
-        holder.dSenderImg.setImageResource(diskusis.get(position).dImgSender);
+        holder.dSender.setText(diskusis.get(position).getUser().getTeacher().getName());
+        holder.dSendAt.setText(diskusis.get(position).getCreated_at());
+        holder.dContent.setText(diskusis.get(position).getText());
+        holder.dLike.setText(Integer.toString(diskusis.get(position).getVotesCount()));
+//        holder.dCount.setText(diskusis.get(position).dCount);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +75,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
         }
 
 
-        public void bind(final DiskusiFragment.Diskusi diskusi, final OnItemClickListener listener) {
+        public void bind(final DiskusiModel diskusi, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,6 +83,8 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
                 }
             });
         }
+
+
 
 
     }

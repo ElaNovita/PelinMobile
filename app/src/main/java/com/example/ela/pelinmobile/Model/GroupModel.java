@@ -5,7 +5,7 @@ package com.example.ela.pelinmobile.Model;
  */
 public class GroupModel {
     String title;
-    int members;
+    int members, id;
     Teacher teacher;
 
     public Teacher getTeacher() {
@@ -32,8 +32,11 @@ public class GroupModel {
         this.members = member;
     }
 
+    public int getId() {
+        return id;
+    }
 
-
-
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }

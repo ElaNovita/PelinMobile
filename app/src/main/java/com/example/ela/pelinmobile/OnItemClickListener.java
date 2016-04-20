@@ -7,5 +7,5 @@ import com.example.ela.pelinmobile.Model.GroupModel;
  * Created by ela on 19/03/16.
  */
 public interface OnItemClickListener {
-    void onItemClick(GroupModel group);
+    void onItemClick(GroupModel group, int position);
 }

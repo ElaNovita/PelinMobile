@@ -53,6 +53,7 @@ public class HomeDosen extends BaseDrawer {
         ImageView imageView = new ImageView(this);
         tab.setCustomView(imageView);
         setupDrawerContent(navigationView);
+        reqUser();
 
 //        badgeView = new BadgeView(this, imageView);
 //        badgeView.setText("1");

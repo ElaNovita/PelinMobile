@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
-import com.example.ela.pelinmobile.Interface.UserInterface;
+import com.example.ela.pelinmobile.Interface.MyInterface;
 import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.Model.User;
 import java.util.List;
@@ -55,45 +55,28 @@ public class Profile extends AppCompatActivity {
         final TextView kode = (TextView) findViewById(R.id.code);
         final TextView username = (TextView) findViewById(R.id.user_name);
 
-//        com.example.ela.pelinmobile.Interface.UserInterface user =
-//                RetrofitBuilder.retrofit.create(com.example.ela.pelinmobile.Interface.UserInterface.class);
-//        Interceptor interceptor = new Interceptor() {
-//            @Override
-//            public okhttp3.Response intercept(Chain chain) throws IOException {
-//                Request req = chain.request().newBuilder().addHeader("Authorization", "Token f0367a1b6b0b68356775626b0e2a99991dd3861f").build();
-//                return chain.proceed(req);
-//            }
-//        };
-
-//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-//        builder.interceptors().add(interceptor);
-//        OkHttpClient client = builder.build();
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(BaseUrl)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .client(client)
-//                .build();
-
-        UserInterface user = new RetrofitBuilder(Profile.this).getRetrofit().create(UserInterface.class);
+        MyInterface user = new RetrofitBuilder(Profile.this).getRetrofit().create(MyInterface.class);
         Call<User> call = user.getUser();
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 try {
                     User user = response.body();
+
                     String name = user.getName();
                     String nik = user.getTeacher().getNik();
-                    kode.setText(nik);
+
                     username.setText(name);
+                    kode.setText(nik);
+
                 } catch (Exception e) {
-                    Log.e(TAG, "error", e);
+                    Log.e(TAG, "gagal", e);
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("respon", "gagal", t);
+                Log.e(TAG, "failure: " + t.getMessage() , t);
             }
         });
 
@@ -107,8 +90,9 @@ public class Profile extends AppCompatActivity {
 
                     GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
                         @Override
-                        public void onItemClick(GroupModel group) {
-                            Toast.makeText(getApplicationContext(), "tes", Toast.LENGTH_SHORT).show();
+                        public void onItemClick(GroupModel group, int position) {
+                            Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
+                            startActivity(intent);
                         }
                     });
 

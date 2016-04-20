@@ -10,10 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MyInterface;
+import com.example.ela.pelinmobile.Model.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ela on 13/03/16.
@@ -108,8 +115,9 @@ public class BaseAcitivty extends AppCompatActivity {
             case R.id.logout:
                 Intent intent2 = new Intent(BaseAcitivty.this, Login.class);
                 startActivity(intent2);
-            default:
-                Toast.makeText(getApplicationContext(), "tes", Toast.LENGTH_SHORT).show();
+            case R.id.home:
+                Intent intent3 = new Intent(BaseAcitivty.this, HomeDosen.class);
+                startActivity(intent3);
         }
         menuItem.setChecked(true);
         drawerLayout.closeDrawers();
@@ -118,5 +126,31 @@ public class BaseAcitivty extends AppCompatActivity {
 
     public Toolbar getToolbar() {
         return toolbar;
+    }
+
+    public void reqUser() {
+
+        final TextView username = (TextView) findViewById(R.id.user_nav_name);
+
+        MyInterface myInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MyInterface.class);
+        Call<User> call = myInterface.getUser();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                try {
+                    User user = response.body();
+                    String name = "nama";
+                    Log.d("respon", "onResponse: " + user.getName());
+                } catch (Exception e) {
+                    Log.e("respon", "onResponse: ", e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("respon", "onFailure: ", t);
+            }
+        });
+
     }
 }

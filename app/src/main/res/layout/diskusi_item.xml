@@ -12,8 +12,8 @@
             android:layout_height="wrap_content">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/senderImg"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/ciel"

@@ -59,9 +59,8 @@ public class GroupListFragment extends Fragment {
     @Bind(R.id.tablayout)
     TabLayout tabLayout;
     RecyclerView recyclerView;
-    boolean undoOn;
-    List<String> items;
-    List<String> itemsPendingRemoval;
+    ArrayList<Integer> groupId;
+    String TAG = "respon";
 
     private List<GroupModel> groups;
 
@@ -81,10 +80,29 @@ public class GroupListFragment extends Fragment {
                 try {
                     List<GroupModel> groups = response.body();
 
+//                    Log.d(TAG, "onResponse: " + groups.get(2).getId());
+
+                    groupId = new ArrayList<Integer>();
+
+
+
+                    for (GroupModel group : groups) {
+
+
+
+                        groupId.add(group.getId());
+
+                    }
+
+                    Log.d(TAG, "onResponse: " + groupId);
+
+
                     GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
                         @Override
-                        public void onItemClick(GroupModel group) {
-                            Toast.makeText(getActivity(), "tes", Toast.LENGTH_SHORT).show();
+                        public void onItemClick(GroupModel group, int position) {
+                            Intent intent = new Intent(getActivity(), GroupDetail.class);
+                            intent.putExtra("groupId", group.getId());
+                            startActivity(intent);
                         }
                     });
 
@@ -128,21 +146,9 @@ public class GroupListFragment extends Fragment {
 
             }
         });
-//        addGroupFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), GroupDetail.class);
-//                startActivity(intent);
-//            }
-//        });
-
-
 
         return inflated;
-
-
     }
-
 
     public void showDialog() {
         FragmentManager fragmentManager = getFragmentManager();
@@ -150,14 +156,4 @@ public class GroupListFragment extends Fragment {
         createGroupDialog.show(fragmentManager, "title");
     }
 
-
 }
-
-
-
-
-
-
-
-
-

@@ -15,6 +15,7 @@
         android:onClick="goToProfile"/>
 
     <TextView
+        android:id="@+id/user_nav_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nama User"
