@@ -2,13 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.ela.pelinmobile.Fragment.AssigntFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/assigntRv"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#E5EAED"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/assigntRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E5EAED"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/failed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Failed. Pull to Refresh"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/load"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical|center_horizontal"
+        app:indicator_color="@color/colorAccent" />
 
 </FrameLayout>

@@ -40,7 +40,8 @@ public class DiskusiFragment extends Fragment {
 
     RecyclerView recyclerView;
     int groupId;
-    Bundle bundle;
+    Bundle bundle, bundleObj;
+    ArrayList<Integer> postId;
 
     public DiskusiFragment() {
         // Required empty public constructor
@@ -51,21 +52,26 @@ public class DiskusiFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         groupId = getArguments().getInt("groupId");
-        Log.d("groupId", "onCreate: " + Integer.toString(groupId));
 
         DiskusiInterface diskusiInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(DiskusiInterface.class);
         Call<List<DiskusiModel>> call = diskusiInterface.getPost(groupId);
         call.enqueue(new Callback<List<DiskusiModel>>() {
             @Override
-            public void onResponse(Call<List<DiskusiModel>> call, Response<List<DiskusiModel>> response) {
+            public void onResponse(Call<List<DiskusiModel>> call, final Response<List<DiskusiModel>> response) {
                 try {
-                    List<DiskusiModel> diskusiModels = response.body();
+                    final List<DiskusiModel> diskusiModels = response.body();
+
+                    postId = new ArrayList<Integer>();
 
                     DiskusiAdapter adapter = new DiskusiAdapter(diskusiModels, new DiskusiAdapter.OnItemClickListener() {
                         @Override
-                        public void OnItemClick(DiskusiModel diskusi) {
+                        public void OnItemClick(DiskusiModel diskusi, int position) {
+
                             Intent intent = new Intent(getActivity(), DiskusiDetail.class);
+                            intent.putExtra("postId", diskusi.getId());
+                            intent.putExtra("groupId", groupId);
                             startActivity(intent);
+
                         }
                     });
                     recyclerView.setAdapter(adapter);

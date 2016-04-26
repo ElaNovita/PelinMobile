@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -37,6 +39,7 @@ import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.HomeDosen;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
+import com.example.ela.pelinmobile.Interface.MyGroups;
 import com.example.ela.pelinmobile.Model.Group;
 import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.OnItemClickListener;
@@ -61,6 +64,9 @@ public class GroupListFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<Integer> groupId;
     String TAG = "respon";
+    View inflated;
+    TextView failed;
+    SwipeRefreshLayout refreshLayout;
 
     private List<GroupModel> groups;
 
@@ -72,9 +78,70 @@ public class GroupListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GroupInterface groupInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(GroupInterface.class);
-        Call<List<GroupModel>> call = groupInterface.getGroups();
+
+//        stopAnim();
+
+    }
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        inflated = inflater.inflate(R.layout.fragment_group_list, container, false);
+        recyclerView = (RecyclerView) inflated.findViewById(R.id.groupRv);
+        failed = (TextView) inflated.findViewById(R.id.failed);
+        refreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
+
+        reqJson();
+
+        FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addGroup);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reqJson();
+            }
+        });
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+
+            }
+        });
+
+        return inflated;
+    }
+
+    public void showDialog() {
+        FragmentManager fragmentManager = getFragmentManager();
+        CreateGroupDialog createGroupDialog = CreateGroupDialog.newInstance("Create New Group");
+        createGroupDialog.show(fragmentManager, "title");
+    }
+
+    public void startAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.VISIBLE);
+    }
+
+    public void stopAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.GONE);
+    }
+
+    public void reqJson() {
+        MyGroups groupInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MyGroups.class);
+        Call<List<GroupModel>> call = groupInterface.getMyGroups();
+
+        startAnim();
+
         call.enqueue(new Callback<List<GroupModel>>() {
+
             @Override
             public void onResponse(Call<List<GroupModel>> call, Response<List<GroupModel>> response) {
                 try {
@@ -107,6 +174,11 @@ public class GroupListFragment extends Fragment {
                     });
 
                     recyclerView.setAdapter(adapter);
+
+                    refreshLayout.setRefreshing(false);
+                    stopAnim();
+                    failed.setVisibility(View.GONE);
+
                 } catch (Exception e) {
                     Log.e("respon", "onResponse: error", e);
                 }
@@ -114,46 +186,12 @@ public class GroupListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<GroupModel>> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+                refreshLayout.setRefreshing(false);
+                stopAnim();
+                failed.setVisibility(View.VISIBLE);
 
             }
         });
-
     }
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View inflated = inflater.inflate(R.layout.fragment_group_list, container, false);
-        recyclerView = (RecyclerView) inflated.findViewById(R.id.groupRv);
-        FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addGroup);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-//        GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(Group group) {
-//                Intent intent = new Intent(getActivity(), GroupDetail.class);
-//                startActivity(intent);
-//            }
-//        });
-//        recyclerView.setAdapter(adapter);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-
-            }
-        });
-
-        return inflated;
-    }
-
-    public void showDialog() {
-        FragmentManager fragmentManager = getFragmentManager();
-        CreateGroupDialog createGroupDialog = CreateGroupDialog.newInstance("Create New Group");
-        createGroupDialog.show(fragmentManager, "title");
-    }
-
 }

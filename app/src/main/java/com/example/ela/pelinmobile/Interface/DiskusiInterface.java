@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile.Interface;
 
+import com.example.ela.pelinmobile.Model.DetailDiskusiModel;
 import com.example.ela.pelinmobile.Model.DiskusiModel;
 import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.Model.NewPostModel;
@@ -23,4 +24,5 @@ public interface DiskusiInterface {
 
     @POST("groups/{groupId}/posts")
     Call<DiskusiModel> createPost(@Path("groupId") int groupId, @Body NewPostModel diskusiModel);
+
 }

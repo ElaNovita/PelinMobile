@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +17,26 @@ import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.MessagesAdapter;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.CreateMessage;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MessageInterface;
 import com.example.ela.pelinmobile.MessageDetail;
+import com.example.ela.pelinmobile.Model.MessageModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MessagesFragment extends Fragment {
 
-    private List<MyMessage> messages;
+    private List<MessageModel> messages;
+    RecyclerView recyclerView;
 
 
     public MessagesFragment() {
@@ -37,7 +46,6 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
     }
 
     @Override
@@ -45,14 +53,41 @@ public class MessagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflated = inflater.inflate(R.layout.fragment_messages, container, false);
-        RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.messageRv);
+
+        MessageInterface messageInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MessageInterface.class);
+        Call<List<MessageModel>> call = messageInterface.getMessages();
+        call.enqueue(new Callback<List<MessageModel>>() {
+            @Override
+            public void onResponse(Call<List<MessageModel>> call, Response<List<MessageModel>> response) {
+                List<MessageModel> messageModels = response.body();
+
+                MessagesAdapter adapter = new MessagesAdapter(messageModels, new MessagesAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(MessageModel messages) {
+                        Intent intent = new Intent(getActivity(), MessageDetail.class);
+                        startActivity(intent);
+                    }
+                });
+
+                recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<MessageModel>> call, Throwable t) {
+
+            }
+        });
+
+        recyclerView = (RecyclerView) inflated.findViewById(R.id.messageRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addMessage);
+
         MessagesAdapter adapter = new MessagesAdapter(messages, new MessagesAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(MyMessage message) {
-                Intent intent = new Intent(getActivity(), MessageDetail.class);
-                startActivity(intent);
+            public void OnItemClick(MessageModel messages) {
+
             }
         });
 
@@ -67,26 +102,6 @@ public class MessagesFragment extends Fragment {
         return inflated;
     }
 
-    public class MyMessage {
-        public String sender, content, sendAt;
-        public int senderImg;
-
-        MyMessage(String sender, String content, String sendAt, int senderImg) {
-            this.sender = sender;
-            this.sendAt = sendAt;
-            this.content = content;
-            this.senderImg = senderImg;
-        }
-
-    }
-
-    private void initData() {
-        messages = new ArrayList<>();
-        messages.add(new MyMessage("Haruka Nanase", "I only swim freestyle", "07.35 AM", R.drawable.haruka));
-        messages.add(new MyMessage("Akashi Seijūrō", "If you oppose me, I will kill you no matter who you are", "Thur 09.10 PM", R.drawable.sei));
-        messages.add(new MyMessage("Haise Sasaki", "Rather than a person who hurts others, become the person getting hurt", "Thur 05.47 PM", R.drawable.haise));
-        messages.add(new MyMessage("Levi Ackerman", "Now behave or else I’m going to have to carve you into pretty little pieces", "wed 05.30 AM", R.drawable.levi));
-    }
 
     public void showDialog() {
         FragmentManager fragmentManager = getFragmentManager();

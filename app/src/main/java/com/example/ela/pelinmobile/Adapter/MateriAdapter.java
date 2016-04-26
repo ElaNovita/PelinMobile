@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriFragment;
+import com.example.ela.pelinmobile.Model.MateriModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -17,15 +18,15 @@ import java.util.List;
  */
 public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder> {
 
-    List<MateriFragment.Materi> materis;
+    List<MateriModel> materiModels;
 
-    public MateriAdapter(List<MateriFragment.Materi> materis) {
-        this.materis = materis;
+    public MateriAdapter(List<MateriModel> materiModels) {
+        this.materiModels = materiModels;
     }
 
     @Override
     public int getItemCount() {
-        return materis.size();
+        return materiModels.size();
     }
 
     @Override
@@ -37,8 +38,8 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(materis.get(position).title);
-        holder.time.setText(materis.get(position).posted);
+        holder.title.setText(materiModels.get(position).getTitle());
+        holder.time.setText(materiModels.get(position).getCreatedAt());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

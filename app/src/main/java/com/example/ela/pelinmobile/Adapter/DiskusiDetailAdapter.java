@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
+import com.example.ela.pelinmobile.Model.DiskusiModel;
+import com.example.ela.pelinmobile.Model.ReplyModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -17,9 +19,9 @@ import java.util.List;
  */
 public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdapter.ViewHolder> {
 
-    private List<DiskusiDetail.DetailDiskusi> detailDiskusis;
+    private List<ReplyModel> detailDiskusis;
 
-    public DiskusiDetailAdapter(List<DiskusiDetail.DetailDiskusi> detailDiskusis) {
+    public DiskusiDetailAdapter(List<ReplyModel> detailDiskusis) {
         this.detailDiskusis = detailDiskusis;
     }
 
@@ -38,10 +40,10 @@ public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.nama.setText(detailDiskusis.get(position).name);
-        holder.content.setText(detailDiskusis.get(position).content);
-        holder.time.setText(detailDiskusis.get(position).time);
-        holder.img.setImageResource(detailDiskusis.get(position).img);
+        holder.nama.setText(detailDiskusis.get(position).getUser().getName());
+        holder.content.setText(detailDiskusis.get(position).getText());
+        holder.time.setText(detailDiskusis.get(position).getCreatedAt());
+//        holder.img.setImageResource(detailDiskusis.get(position).img);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

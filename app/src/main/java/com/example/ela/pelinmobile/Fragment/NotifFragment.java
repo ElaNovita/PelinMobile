@@ -75,4 +75,6 @@ public class NotifFragment extends Fragment {
         notifs.add(new Notif("Notif 3", "ini adalah isi dari notifikasi yang ketiga"));
     }
 
+
+
 }

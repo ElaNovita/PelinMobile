@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
+import com.example.ela.pelinmobile.Interface.MyGroups;
 import com.example.ela.pelinmobile.Interface.MyInterface;
 import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.Model.User;
@@ -80,8 +81,8 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        GroupInterface groupInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(GroupInterface.class);
-        Call<List<GroupModel>> callGroup = groupInterface.getGroups();
+        MyGroups groupInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MyGroups.class);
+        Call<List<GroupModel>> callGroup = groupInterface.getMyGroups();
         callGroup.enqueue(new Callback<List<GroupModel>>() {
             @Override
             public void onResponse(Call<List<GroupModel>> call, Response<List<GroupModel>> response) {

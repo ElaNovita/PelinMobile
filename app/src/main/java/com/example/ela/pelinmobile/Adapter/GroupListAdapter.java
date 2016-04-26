@@ -37,7 +37,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
 
     @Override
     public int getItemCount() {
-        return groups.size();
+        return groups == null ? 0 : groups.size();
     }
 
     @Override
@@ -83,6 +83,8 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                 }
             });
         }
+
+
     }
 
 

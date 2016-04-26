@@ -5,55 +5,70 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.example.ela.pelinmobile.Adapter.MessageDetailAdapter;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MessageInterface;
+import com.example.ela.pelinmobile.Model.MessageDetailModel;
+import com.example.ela.pelinmobile.Model.ReplyMsgModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by e on 30/03/16.
  */
 public class MessageDetail extends AppCompatActivity {
 
-    List<MessagesDetail> messagesDetails;
+    String TAG = "respon", msgContent;
+    ImageView send;
+    RecyclerView recyclerView;
+    TextView txtMsg;
+    MessageDetailAdapter adapter;
+    LinearLayoutManager llm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message);
-        initData();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Dayat Eds");
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.messageDetailRv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        MessageDetailAdapter adapter = new MessageDetailAdapter(messagesDetails);
-        recyclerView.setAdapter(adapter);
-    }
 
-    public class MessagesDetail {
-        public String time, content;
-        public int id;
+        send = (ImageView) findViewById(R.id.sendMsg);
+        txtMsg = (TextView) findViewById(R.id.txtMsg);
+        recyclerView = (RecyclerView) findViewById(R.id.messageDetailRv);
 
-        public MessagesDetail(String time, String content, int id) {
-            this.time = time;
-            this.content = content;
-            this.id = id;
-        }
-    }
+        llm = new LinearLayoutManager(getApplicationContext());
+        llm.setStackFromEnd(true);
+        recyclerView.setLayoutManager(llm);
 
-    private void initData() {
-        messagesDetails = new ArrayList<>();
-        messagesDetails.add(new MessagesDetail("08.00", "Hey", 1));
-        messagesDetails.add(new MessagesDetail("08.01", "Import the downloaded android websockets library into Eclipse workspace", 2));
-        messagesDetails.add(new MessagesDetail("08.03", "Now add this project as a Library to our project.", 1));
-        messagesDetails.add(new MessagesDetail("08.05", "Finally open the main activity class ", 2));
-        messagesDetails.add(new MessagesDetail("08.10", " A web socket is created using WebSocketClient class and it has all the callback methods like onConnect, onMessage and onDisconnect.", 1));
-        messagesDetails.add(new MessagesDetail("08.11", "Okay", 2));
-        messagesDetails.add(new MessagesDetail("08.15", "Next, override the onBindViewHolder method to configure the ViewHolder with actual data that needs to be displayed. ", 1));
-        messagesDetails.add(new MessagesDetail("08.30", "The following methods are used for configuring the individual RecyclerView.ViewHolder objects", 2));
+        reqJson();
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                sendMsg();
+
+
+                txtMsg.setText("");
+            }
+        });
+
     }
 
     @Override
@@ -68,5 +83,55 @@ public class MessageDetail extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void reqJson() {
+        MessageInterface messageInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MessageInterface.class);
+        Call<List<MessageDetailModel>> call = messageInterface.getMessageDetail("putu");
+        call.enqueue(new Callback<List<MessageDetailModel>>() {
+            @Override
+            public void onResponse(Call<List<MessageDetailModel>> call, Response<List<MessageDetailModel>> response) {
+                List<MessageDetailModel> messageDetail = response.body();
+
+                adapter = new MessageDetailAdapter(messageDetail);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<MessageDetailModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void sendMsg() {
+
+        ReplyMsgModel replyMsgModel = new ReplyMsgModel();
+        msgContent = txtMsg.getText().toString();
+        replyMsgModel.setText(msgContent);
+
+        MessageDetailModel m = new MessageDetailModel();
+        m.setMe(true);
+        m.setText(msgContent);
+        adapter.addItem(m);
+        llm.scrollToPositionWithOffset(adapter.getItemCount()-1, 0);
+
+        MessageInterface messageInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MessageInterface.class);
+        Call<ReplyMsgModel> call = messageInterface.sendMsg("putu", replyMsgModel);
+        call.enqueue(new Callback<ReplyMsgModel>() {
+            @Override
+            public void onResponse(Call<ReplyMsgModel> call, Response<ReplyMsgModel> response) {
+                ReplyMsgModel reply = response.body();
+//                reqJson();
+                Log.d(TAG, "onResponse: " + msgContent);
+
+            }
+
+            @Override
+            public void onFailure(Call<ReplyMsgModel> call, Throwable t) {
+
+                Log.e(TAG, "onFailure: ", t);
+            }
+        });
     }
 }

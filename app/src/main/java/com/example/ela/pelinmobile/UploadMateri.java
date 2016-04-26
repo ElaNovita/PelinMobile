@@ -3,6 +3,7 @@ package com.example.ela.pelinmobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,18 +12,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriFragment;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MateriInterface;
+import com.example.ela.pelinmobile.Model.MateriModel;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by e on 31/03/16.
  */
 public class UploadMateri extends AppCompatActivity {
 
-    TextView TextuploadMateri;
+    TextView TextuploadMateri, title;
     Button btnSendMateri;
     ImageButton upMateri;
     private static final int PICKFILE_RESULT_CODE = 1;
+
+    String materiTitle, desc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +40,14 @@ public class UploadMateri extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        final int groupId = getIntent().getIntExtra("groupId", 0);
+
+        Log.d("respon", Integer.toString(groupId));
+
         TextuploadMateri = (TextView) findViewById(R.id.uploadMateri);
         btnSendMateri = (Button) findViewById(R.id.sendMateri);
         upMateri = (ImageButton) findViewById(R.id.upMateri);
+        title = (TextView) findViewById(R.id.materi_title);
 
         upMateri.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +61,28 @@ public class UploadMateri extends AppCompatActivity {
         btnSendMateri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MateriFragment.class);
-                startActivity(intent);
+
+                materiTitle = title.getText().toString();
+                desc = TextuploadMateri.getText().toString();
+
+                MateriInterface materiInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MateriInterface.class);
+
+                MateriModel materi = new MateriModel();
+                materi.setTitle(materiTitle);
+                materi.setDescription(desc);
+
+                Call<MateriModel> call = materiInterface.createMateri(groupId);
+                call.enqueue(new Callback<MateriModel>() {
+                    @Override
+                    public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<MateriModel> call, Throwable t) {
+
+                    }
+                });
             }
         });
 

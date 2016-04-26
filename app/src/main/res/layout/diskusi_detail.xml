@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -84,6 +85,7 @@
                 android:layout_below="@id/diskusiContentDetail"
                 android:layout_marginTop="20dp"
                 android:textSize="15sp"
+                android:text="0"
                 android:layout_marginLeft="6dp"/>
         </RelativeLayout>
     <android.support.v7.widget.RecyclerView
@@ -94,6 +96,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"/>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/load"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:visibility="gone"
+        android:layout_below="@id/ts"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        app:indicator_color="@color/colorAccent" />
     <LinearLayout
         android:id="@+id/sendLayout"
         android:layout_width="match_parent"
@@ -113,6 +124,7 @@
             android:layout_weight="10"
             android:layout_height="wrap_content">
             <EditText
+                android:id="@+id/postReply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"

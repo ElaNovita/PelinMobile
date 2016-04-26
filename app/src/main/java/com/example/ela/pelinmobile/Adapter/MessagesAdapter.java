@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.MessagesFragment;
+import com.example.ela.pelinmobile.Model.MessageModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -18,17 +19,17 @@ import java.util.List;
  */
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
 
-    List<MessagesFragment.MyMessage> messages;
+    List<MessageModel> messages;
     private final OnItemClickListener listener;
 
-    public MessagesAdapter(List<MessagesFragment.MyMessage> messages, OnItemClickListener listener) {
+    public MessagesAdapter(List<MessageModel> messages, OnItemClickListener listener) {
         this.messages = messages;
         this.listener = listener;
     }
 
     @Override
     public int getItemCount() {
-        return messages.size();
+        return messages == null ? 0 : messages.size();
     }
 
     @Override
@@ -41,10 +42,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(messages.get(position), listener);
-        holder.sender.setText(messages.get(position).sender);
-        holder.messageContent.setText(messages.get(position).content);
-        holder.sendAt.setText(messages.get(position).sendAt);
-        holder.senderImg.setImageResource(messages.get(position).senderImg);
+        holder.sender.setText(messages.get(position).getTargetUser().getName());
+        holder.sendAt.setText(messages.get(position).getCreatedAt());
+//        holder.senderImg.setImageResource(messages.get(position).senderImg);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,11 +58,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             messageCv = (CardView) itemView.findViewById(R.id.messageCv);
             senderImg = (ImageView) itemView.findViewById(R.id.senderImg);
             sender = (TextView) itemView.findViewById(R.id.sender);
-            messageContent = (TextView) itemView.findViewById(R.id.messageContent);
             sendAt = (TextView) itemView.findViewById(R.id.sendAt);
         }
 
-        public void bind(final MessagesFragment.MyMessage messages, final OnItemClickListener listener) {
+        public void bind(final MessageModel messages, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,6 +72,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(MessagesFragment.MyMessage messages);
+        void OnItemClick(MessageModel messages);
     }
 }

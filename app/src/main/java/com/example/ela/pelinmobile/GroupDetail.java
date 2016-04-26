@@ -50,9 +50,7 @@ public class GroupDetail extends BaseDrawer {
         getSupportActionBar().setTitle("Diskusi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-        int groupId = getIntent().getIntExtra("groupId", 1);
+        int groupId = getIntent().getIntExtra("groupId", 0);
         Log.d(TAG, Integer.toString(groupId));
         Bundle bundle = new Bundle();
         bundle.putInt("groupId", groupId);
@@ -69,7 +67,7 @@ public class GroupDetail extends BaseDrawer {
             @Override
             public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
                 GroupModel group = response.body();
-                Log.d(TAG, "onResponse: " + group.getTitle());
+                Log.d(TAG, "onResponse: " + response.code());
             }
 
             @Override

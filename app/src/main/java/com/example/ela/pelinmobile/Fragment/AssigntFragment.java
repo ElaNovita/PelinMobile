@@ -4,27 +4,43 @@ package com.example.ela.pelinmobile.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Adapter.AssigntListAdapter;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.AssigntDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.ListTugas;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.TugasInterface;
+import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AssigntFragment extends Fragment {
 
-    private List<Assignt> assignts;
+    private List<TugasModel> tugasModels;
+    String TAG = "respon";
+    RecyclerView recyclerView;
+    SwipeRefreshLayout refreshLayout;
+    View inflated;
+    TextView failed;
+
 
     public AssigntFragment() {
         // Required empty public constructor
@@ -33,45 +49,75 @@ public class AssigntFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View inflated = inflater.inflate(R.layout.fragment_assignt, container, false);
-        RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.assigntRv);
+        inflated = inflater.inflate(R.layout.fragment_assignt, container, false);
+        recyclerView = (RecyclerView) inflated.findViewById(R.id.assigntRv);
+        refreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
+        failed = (TextView) inflated.findViewById(R.id.failed);
+
+        reqJson();
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reqJson();
+            }
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        AssigntListAdapter adapter = new AssigntListAdapter(assignts, new AssigntListAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(Assignt assignt) {
-                Intent intent = new Intent(getActivity(), ListTugas.class);
-                startActivity(intent);
-            }
-        });
-        recyclerView.setAdapter(adapter);
+
         return inflated;
     }
 
-    public class Assignt {
-        public String title, due;
-
-        public Assignt(String title, String due) {
-            this.title = title;
-            this.due = due;
-        }
+    public void startAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.VISIBLE);
     }
 
-    private void initData() {
-        assignts = new ArrayList<>();
+    public void stopAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.GONE);
+    }
 
-        assignts.add(new Assignt("Tugas 1", "2 hari lagi"));
-        assignts.add(new Assignt("Tugas 2", "3 hari lagi"));
-        assignts.add(new Assignt("Tugas 3", "5 hari lagi"));
-        assignts.add(new Assignt("Tugas 4", "7 hari lagi"));
+    public void reqJson() {
+        TugasInterface tugasInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(TugasInterface.class);
+        Call<List<TugasModel>> call = tugasInterface.getAllTugas();
+        call.enqueue(new Callback<List<TugasModel>>() {
+            @Override
+            public void onResponse(Call<List<TugasModel>> call, Response<List<TugasModel>> response) {
+                List<TugasModel> tugasModels = response.body();
+
+                Log.d(TAG, "onResponse: " + tugasModels);
+
+                AssigntListAdapter adapter = new AssigntListAdapter(tugasModels, new AssigntListAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(TugasModel tugasModel) {
+                        Intent intent = new Intent(getActivity(), ListTugas.class);
+                        startActivity(intent);
+                    }
+                });
+
+                recyclerView.setAdapter(adapter);
+
+                refreshLayout.setRefreshing(false);
+                failed.setVisibility(View.GONE);
+                stopAnim();
+
+            }
+
+            @Override
+            public void onFailure(Call<List<TugasModel>> call, Throwable t) {
+                Log.d(TAG, "onFailure: ", t);
+
+                refreshLayout.setRefreshing(false);
+                failed.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 }

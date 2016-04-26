@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiFragment;
 import com.example.ela.pelinmobile.Model.DiskusiModel;
+import com.example.ela.pelinmobile.Model.ReplyModel;
 import com.example.ela.pelinmobile.R;
 
 import java.text.DateFormat;
@@ -27,7 +28,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
     private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void OnItemClick(DiskusiModel diskusi);
+        void OnItemClick(DiskusiModel diskusi, int position);
     }
 
     public DiskusiAdapter(List<DiskusiModel> diskusis, OnItemClickListener listener) {
@@ -37,7 +38,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return diskusis.size();
+        return diskusis == null ? 0 : diskusis.size();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
         holder.dSendAt.setText(diskusis.get(position).getCreated_at());
         holder.dContent.setText(diskusis.get(position).getText());
         holder.dLike.setText(Integer.toString(diskusis.get(position).getVotesCount()));
-//        holder.dCount.setText(diskusis.get(position).dCount);
+        holder.dCount.setText(Integer.toString(diskusis.get(position).getCommentsCount()));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,13 +80,10 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(diskusi);
+                    listener.OnItemClick(diskusi, getLayoutPosition());
                 }
             });
         }
-
-
-
 
     }
 }

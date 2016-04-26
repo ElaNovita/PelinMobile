@@ -4,7 +4,7 @@ package com.example.ela.pelinmobile.Model;
  * Created by e on 18/04/16.
  */
 public class Student {
-    String major, nim;
+    String major, nim, name;
 
     public String getMajor() {
         return major;
@@ -20,5 +20,13 @@ public class Student {
 
     public void setNim(String nim) {
         this.nim = nim;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

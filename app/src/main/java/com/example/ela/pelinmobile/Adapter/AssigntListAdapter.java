@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.AssigntFragment;
+import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -17,17 +18,17 @@ import java.util.List;
  */
 public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.ViewHolder> {
 
-    List<AssigntFragment.Assignt> assignts;
+    List<TugasModel> tugasModels;
     OnItemClickListener listener;
 
-    public AssigntListAdapter(List<AssigntFragment.Assignt> assignts, OnItemClickListener listener) {
-        this.assignts = assignts;
+    public AssigntListAdapter(List<TugasModel> tugasModels, OnItemClickListener listener) {
+        this.tugasModels = tugasModels;
         this.listener = listener;
     }
 
     @Override
     public int getItemCount() {
-        return assignts.size();
+        return tugasModels == null ? 0 : tugasModels.size();
     }
 
     @Override
@@ -39,9 +40,9 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(assignts.get(position), listener);
-        holder.title.setText(assignts.get(position).title);
-        holder.dueTime.setText(assignts.get(position).due);
+        holder.bind(tugasModels.get(position), listener);
+        holder.title.setText(tugasModels.get(position).getTitle());
+        holder.dueTime.setText(tugasModels.get(position).getDue_date());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,17 +55,17 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
             dueTime = (TextView) itemView.findViewById(R.id.dueTime);
         }
 
-        public void bind(final AssigntFragment.Assignt assignt, final OnItemClickListener listener) {
+        public void bind(final TugasModel tugasModel, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(assignt);
+                    listener.OnItemClick(tugasModel);
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(AssigntFragment.Assignt assignt);
+        void OnItemClick(TugasModel tugasModel);
     }
 }

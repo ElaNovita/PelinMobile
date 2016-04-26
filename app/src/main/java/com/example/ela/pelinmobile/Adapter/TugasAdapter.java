@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.TugasFragment;
+import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -16,10 +17,10 @@ import java.util.List;
  */
 public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> {
 
-    private List<TugasFragment.Tugas> tugases;
+    private List<TugasModel> tugases;
     OnItemClickListener listener;
 
-    public TugasAdapter(List<TugasFragment.Tugas> tugases, OnItemClickListener listener) {
+    public TugasAdapter(List<TugasModel> tugases, OnItemClickListener listener) {
         this.tugases = tugases;
         this.listener = listener;
     }
@@ -39,8 +40,8 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(tugases.get(position), listener);
-        holder.title.setText(tugases.get(position).title);
-        holder.dueTime.setText(tugases.get(position).due);
+        holder.title.setText(tugases.get(position).getTitle());
+        holder.dueTime.setText(tugases.get(position).getDue_date());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,7 +54,7 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
             dueTime = (TextView) itemView.findViewById(R.id.dueTime);
         }
 
-        public void bind(final TugasFragment.Tugas tugas, final OnItemClickListener listener) {
+        public void bind(final TugasModel tugas, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,7 +65,7 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(TugasFragment.Tugas tugas);
+        void OnItemClick(TugasModel tugas);
     }
 }
 

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.MessageDetail;
+import com.example.ela.pelinmobile.Model.MessageDetailModel;
+import com.example.ela.pelinmobile.Model.ReplyMsgModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -16,10 +18,10 @@ import java.util.List;
  */
 public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdapter.ViewHolder> {
 
-    List<MessageDetail.MessagesDetail> messagesDetails;
+    List<MessageDetailModel> messagesDetails;
     private final int LEFT = 1, RIGHT = 2;
 
-    public MessageDetailAdapter(List<MessageDetail.MessagesDetail> messagesDetails) {
+    public MessageDetailAdapter(List<MessageDetailModel> messagesDetails) {
         this.messagesDetails = messagesDetails;
     }
 
@@ -28,12 +30,16 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
         return messagesDetails.size();
     }
 
+    public void addItem(MessageDetailModel messageDetailModel) {
+        this.messagesDetails.add(messageDetailModel);
+    }
+
     @Override
     public int getItemViewType(int position) {
-        if (messagesDetails.get(position).id == 1) {
-            return LEFT;
-        } else {
+        if (messagesDetails.get(position).isMe()) {
             return RIGHT;
+        } else {
+            return LEFT;
         }
     }
 
@@ -60,8 +66,8 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.time.setText(messagesDetails.get(position).time);
-        holder.content.setText(messagesDetails.get(position).content);
+        holder.time.setText(messagesDetails.get(position).getSent());
+        holder.content.setText(messagesDetails.get(position).getText());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -84,7 +84,6 @@ public class CreatePost extends DialogFragment {
                         try {
                             DiskusiModel model = response.body();
 
-
                             Log.d(TAG, Integer.toString(response.code()));
                         } catch (Exception e) {
                             Log.e(TAG, "onResponse: ", e);

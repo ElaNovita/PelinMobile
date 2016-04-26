@@ -62,7 +62,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/like"
                 android:layout_below="@id/diskusiContent"
-                android:text="9"
                 android:layout_marginTop="20dp"
                 android:textSize="15sp"
                 android:layout_marginLeft="6dp"/>
@@ -81,7 +80,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/replyDiskusi"
                 android:layout_below="@id/diskusiContent"
-                android:text="15"
                 android:layout_marginTop="20dp"
                 android:textSize="15sp"
                 android:layout_marginLeft="6dp"/>

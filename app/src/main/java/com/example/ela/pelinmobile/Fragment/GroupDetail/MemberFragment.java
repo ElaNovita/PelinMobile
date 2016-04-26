@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +18,30 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.MemberAdapter;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MemberInterface;
+import com.example.ela.pelinmobile.Model.MateriModel;
+import com.example.ela.pelinmobile.Model.MemberModel;
 import com.example.ela.pelinmobile.Profile;
 import com.example.ela.pelinmobile.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MemberFragment extends Fragment {
 
-    List<Member> members;
+    List<MemberModel> members;
     Button kick;
     LinearLayout wrap;
+    RecyclerView recyclerView;
+    MemberAdapter adapter;
 
 
     public MemberFragment() {
@@ -40,7 +51,8 @@ public class MemberFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+
+
     }
 
     @Override
@@ -48,59 +60,60 @@ public class MemberFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflated = inflater.inflate(R.layout.fragment_member, container, false);
+
         kick = (Button) inflated.findViewById(R.id.kick);
         wrap = (LinearLayout) inflated.findViewById(R.id.wrap);
-        RecyclerView recyclerView = (RecyclerView) inflated.findViewById(R.id.memberRv);
+
+        recyclerView = (RecyclerView) inflated.findViewById(R.id.memberRv);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
-        final MemberAdapter adapter = new MemberAdapter(getContext(), members);
-        adapter.setOnItemClickListener(new MemberAdapter.OnItemClickListener() {
+
+        MemberInterface memberInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MemberInterface.class);
+
+        Call<List<MemberModel>> call = memberInterface.getMembers(2);
+        call.enqueue(new Callback<List<MemberModel>>() {
             @Override
-            public void onItemClick(View view, final int position, boolean isLongClick) {
-                if (isLongClick) {
-                    kick.setText("Delete " + members.get(position).name.toLowerCase() + "?");
-                    kick.setVisibility(View.VISIBLE);
-                    kick.setOnClickListener(new View.OnClickListener() {
+            public void onResponse(Call<List<MemberModel>> call, Response<List<MemberModel>> response) {
+                try {
+                    final List<MemberModel> memberModels = response.body();
+
+                    adapter = new MemberAdapter(getActivity(), memberModels);
+
+                    adapter.setOnItemClickListener(new MemberAdapter.OnItemClickListener() {
                         @Override
-                        public void onClick(View v) {
-                           adapter.removeItem(position);
+                        public void onItemClick(View view, final int position, boolean isLongClick) {
+                            if (isLongClick) {
+                                kick.setText("Delete " + memberModels.get(position).getName().toLowerCase() + "?");
+                                kick.setVisibility(View.VISIBLE);
+                                kick.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        adapter.removeItem(position);
+                                    }
+                                });
+                            } else {
+                                Intent intent = new Intent(getActivity(), Profile.class);
+                                startActivity(intent);
+                            }
                         }
                     });
-                } else {
-                    Intent intent = new Intent(getActivity(), Profile.class);
-                    startActivity(intent);
+
+                    recyclerView.setAdapter(adapter);
+
+                } catch (Exception e) {
+                    Log.e("respon", "onResponse: ", e);
                 }
+            }
+
+            @Override
+            public void onFailure(Call<List<MemberModel>> call, Throwable t) {
+
             }
         });
 
-        recyclerView.setAdapter(adapter);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
 
         return inflated;
     }
 
-
-
-    public class Member {
-        public String name, nim;
-        public int userImg;
-
-        public Member(String name,  int userImg) {
-            this.name = name;
-            this.userImg = userImg;
-        }
-    }
-
-    private void initData() {
-
-
-
-        members = new ArrayList<>();
-        members.add(new Member("Eren",  R.drawable.eren));
-        members.add(new Member("Levi", R.drawable.levi));
-        members.add(new Member("Akashi Seijuro", R.drawable.eren));
-        members.add(new Member("Ciel",  R.drawable.ciel));
-        members.add(new Member("Haise",  R.drawable.haise));
-
-    }
 
 }

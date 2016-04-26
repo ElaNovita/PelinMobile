@@ -3,7 +3,6 @@ package com.example.ela.pelinmobile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,14 +14,12 @@ import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.Bind;
 import cz.msebera.android.httpclient.Header;
 
 
@@ -31,7 +28,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class Login extends AppCompatActivity {
 
-    String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/auth";
+    String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/jwt";
     String TAG = "respon";
     TextView username;
     TextView password;
@@ -81,6 +78,7 @@ public class Login extends AppCompatActivity {
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         stopAnim();
                         Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "onFailure: " + errorResponse, throwable);
                     }
                 });
             }

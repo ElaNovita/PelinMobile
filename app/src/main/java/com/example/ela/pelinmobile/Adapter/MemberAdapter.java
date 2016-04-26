@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.MemberFragment;
+import com.example.ela.pelinmobile.Model.MemberModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
-    private List<MemberFragment.Member> members;
+    private List<MemberModel> members;
     private Fragment fragment;
     Button kick;
 
@@ -44,7 +45,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         this.listener = listener;
     }
 
-    public MemberAdapter(Context context, List<MemberFragment.Member> members) {
+    public MemberAdapter(Context context, List<MemberModel> members) {
         this.members = members;
     }
 
@@ -62,8 +63,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.username.setText(members.get(position).name);
-        holder.userImg.setImageResource(members.get(position).userImg);
+        holder.username.setText(members.get(position).getName());
+//        holder.userImg.setImageResource(members.get(position).userImg);
 
     }
 
