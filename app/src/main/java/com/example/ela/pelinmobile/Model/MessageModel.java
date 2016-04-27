@@ -7,10 +7,15 @@ import com.google.gson.annotations.SerializedName;
  */
 public class MessageModel {
 
+    String url;
+
     @SerializedName("created_at")
     String createdAt;
 
     int id;
+
+    @SerializedName("user_id")
+    String userId;
 
     @SerializedName("target_user")
     TargetUser targetUser;
@@ -57,5 +62,21 @@ public class MessageModel {
 
     public void setTargetUser(TargetUser targetUser) {
         this.targetUser = targetUser;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -4,6 +4,7 @@ import com.example.ela.pelinmobile.Model.MateriModel;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -21,7 +22,8 @@ public interface MateriInterface {
     Call<List<MateriModel>> getMateri(@Path("groupId") int groupId);
 
 
+    @Multipart
     @POST("groups/{groupId}/lessons")
-    Call<MateriModel> createMateri(@Path("groupId") int groupId);
+    Call<MateriModel> createMateri(@Path("groupId") int groupId, MateriModel materiModel, @Part MultipartBody.Part file);
 
 }

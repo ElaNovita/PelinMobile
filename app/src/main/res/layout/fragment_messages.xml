@@ -19,4 +19,14 @@
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_email_white_24dp"/>
 
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:text="Delete Messages With"
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
+
 </FrameLayout>

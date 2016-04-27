@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +16,33 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MessageInterface;
 import com.example.ela.pelinmobile.MessageDetail;
+import com.example.ela.pelinmobile.Model.MessageDetailModel;
+import com.example.ela.pelinmobile.Model.ReplyMsgModel;
 import com.example.ela.pelinmobile.R;
 
+import java.util.List;
+
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CreateMessage extends DialogFragment {
     int keyCode;
+    EditText txtName, msgContent;
+    Button send, cancel;
+    String name, content;
 
     public CreateMessage() {
         // Required empty public constructor
@@ -48,15 +62,26 @@ public class CreateMessage extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflated = inflater.inflate(R.layout.fragment_create_message, container, false);
-        ImageView search = (ImageView) inflated.findViewById(R.id.searchMsg);
-        search.setOnClickListener(new View.OnClickListener() {
+
+        txtName = (EditText) inflated.findViewById(R.id.txtName);
+        msgContent = (EditText) inflated.findViewById(R.id.msgContent);
+        send = (Button) inflated.findViewById(R.id.sendMsg);
+        cancel = (Button) inflated.findViewById(R.id.cancel);
+
+        send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MessageDetail.class);
-                startActivity(intent);
+                Create();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });
+
         return inflated;
     }
 
@@ -69,6 +94,36 @@ public class CreateMessage extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
         );
+    }
+
+    public void Create() {
+
+        ReplyMsgModel replyMsgModel = new ReplyMsgModel();
+        content = msgContent.getText().toString();
+        name = txtName.getText().toString();
+        replyMsgModel.setText(content);
+
+        MessageInterface messageInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MessageInterface.class);
+        Call<ReplyMsgModel> call = messageInterface.sendMsg(name, replyMsgModel);
+        call.enqueue(new Callback<ReplyMsgModel>() {
+            @Override
+            public void onResponse(Call<ReplyMsgModel> call, Response<ReplyMsgModel> response) {
+                Log.d("respon", "onResponse: " + name);
+
+                Intent intent = new Intent(getActivity(), MessageDetail.class);
+                intent.putExtra("userId", name);
+                intent.putExtra("userName", name);
+                startActivity(intent);
+                dismiss();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ReplyMsgModel> call, Throwable t) {
+
+            }
+        });
     }
 
 }

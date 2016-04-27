@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +19,6 @@ import com.example.ela.pelinmobile.Interface.MessageInterface;
 import com.example.ela.pelinmobile.Model.MessageDetailModel;
 import com.example.ela.pelinmobile.Model.ReplyMsgModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,23 +30,28 @@ import retrofit2.Response;
  */
 public class MessageDetail extends AppCompatActivity {
 
-    String TAG = "respon", msgContent;
+    String TAG = "respon", msgContent, userId, userName;
     ImageView send;
     RecyclerView recyclerView;
     TextView txtMsg;
     MessageDetailAdapter adapter;
     LinearLayoutManager llm;
+    Button delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message);
+
+        userName = getIntent().getStringExtra("userName");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Dayat Eds");
+        getSupportActionBar().setTitle(userName);
 
         send = (ImageView) findViewById(R.id.sendMsg);
         txtMsg = (TextView) findViewById(R.id.txtMsg);
         recyclerView = (RecyclerView) findViewById(R.id.messageDetailRv);
+        userId = getIntent().getStringExtra("userId");
 
         llm = new LinearLayoutManager(getApplicationContext());
         llm.setStackFromEnd(true);
@@ -87,7 +91,7 @@ public class MessageDetail extends AppCompatActivity {
 
     private void reqJson() {
         MessageInterface messageInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MessageInterface.class);
-        Call<List<MessageDetailModel>> call = messageInterface.getMessageDetail("putu");
+        Call<List<MessageDetailModel>> call = messageInterface.getMessageDetail(userId);
         call.enqueue(new Callback<List<MessageDetailModel>>() {
             @Override
             public void onResponse(Call<List<MessageDetailModel>> call, Response<List<MessageDetailModel>> response) {
@@ -117,7 +121,7 @@ public class MessageDetail extends AppCompatActivity {
         llm.scrollToPositionWithOffset(adapter.getItemCount()-1, 0);
 
         MessageInterface messageInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MessageInterface.class);
-        Call<ReplyMsgModel> call = messageInterface.sendMsg("putu", replyMsgModel);
+        Call<ReplyMsgModel> call = messageInterface.sendMsg(userId, replyMsgModel);
         call.enqueue(new Callback<ReplyMsgModel>() {
             @Override
             public void onResponse(Call<ReplyMsgModel> call, Response<ReplyMsgModel> response) {

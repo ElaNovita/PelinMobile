@@ -65,24 +65,24 @@ public class UploadMateri extends AppCompatActivity {
                 materiTitle = title.getText().toString();
                 desc = TextuploadMateri.getText().toString();
 
-                MateriInterface materiInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MateriInterface.class);
-
-                MateriModel materi = new MateriModel();
-                materi.setTitle(materiTitle);
-                materi.setDescription(desc);
-
-                Call<MateriModel> call = materiInterface.createMateri(groupId);
-                call.enqueue(new Callback<MateriModel>() {
-                    @Override
-                    public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<MateriModel> call, Throwable t) {
-
-                    }
-                });
+//                MateriInterface materiInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MateriInterface.class);
+//
+//                MateriModel materi = new MateriModel();
+//                materi.setTitle(materiTitle);
+//                materi.setDescription(desc);
+//
+//                Call<MateriModel> call = materiInterface.createMateri(groupId);
+//                call.enqueue(new Callback<MateriModel>() {
+//                    @Override
+//                    public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<MateriModel> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
 
