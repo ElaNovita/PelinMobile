@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.ela.pelinmobile.Adapter.ConfirmAdapter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.RequestInterface;
+import com.example.ela.pelinmobile.Model.ApproveModel;
 import com.example.ela.pelinmobile.Model.RequestModel;
 import com.example.ela.pelinmobile.Model.User;
 import com.example.ela.pelinmobile.R;
@@ -33,7 +34,8 @@ public class ConfirmMember extends AppCompatActivity {
     private List<RequestModel> users;
     RecyclerView recyclerView;
     Button confirmAll;
-    int groupId;
+    int groupId = 4;
+    ConfirmAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class ConfirmMember extends AppCompatActivity {
             public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
                 List<RequestModel> requestModels = response.body();
 
-                ConfirmAdapter adapter = new ConfirmAdapter(requestModels, getApplicationContext());
+                adapter = new ConfirmAdapter(requestModels, getApplicationContext(), groupId);
                 recyclerView.setAdapter(adapter);
                 Log.d("respon", "onResponse: kode " + response.code());
             }
@@ -63,10 +65,30 @@ public class ConfirmMember extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.confirmRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        confirmAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmAll();
+            }
+        });
+
     }
 
     private void confirmAll() {
         RequestInterface requestInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(RequestInterface.class);
+        Call<ApproveModel> call = requestInterface.confirmAll(4);
+        call.enqueue(new Callback<ApproveModel>() {
+            @Override
+            public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
+                Log.d("respon", "onResponse: all " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<ApproveModel> call, Throwable t) {
+
+            }
+        });
     }
+
 
 }

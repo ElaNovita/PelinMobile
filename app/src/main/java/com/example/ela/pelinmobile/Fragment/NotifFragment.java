@@ -25,6 +25,7 @@ import java.util.List;
 public class NotifFragment extends Fragment {
 
     private List<Notif> notifs;
+    int groupId;
 
 
     public NotifFragment() {

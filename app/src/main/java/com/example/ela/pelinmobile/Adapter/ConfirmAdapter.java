@@ -36,9 +36,10 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
     Context context;
     int groupId, reqId;
 
-    public ConfirmAdapter(List<RequestModel> users, Context context) {
+    public ConfirmAdapter(List<RequestModel> users, Context context, int groupId) {
         this.users = users;
         this.context = context;
+        this.groupId = groupId;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
         holder.reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reject();
+                reject(users.get(position).getId());
                 removeItem(position);
             }
         });
@@ -124,9 +125,9 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
         });
     }
 
-    public void reject() {
+    public void reject(int position) {
         RequestInterface service = new RetrofitBuilder(context).getRetrofit().create(RequestInterface.class);
-        Call<ResponseBody> call = service.decline(4, 5);
+        Call<ResponseBody> call = service.decline(4, position);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
