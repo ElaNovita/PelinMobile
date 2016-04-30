@@ -6,6 +6,7 @@ package com.example.ela.pelinmobile.Model;
 public class MemberModel {
 
     String status,name, email;
+    Student student;
 
     public String getStatus() {
         return status;
@@ -29,5 +30,13 @@ public class MemberModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

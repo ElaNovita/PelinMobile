@@ -30,8 +30,6 @@ import retrofit2.Response;
  * Created by e on 9/04/16.
  */
 public class ConfirmMember extends AppCompatActivity {
-
-    private List<RequestModel> users;
     RecyclerView recyclerView;
     Button confirmAll;
     int groupId = 4;

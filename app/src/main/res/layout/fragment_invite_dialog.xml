@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".Fragment.InviteDialog">
+
+    <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"/>
+    <ImageButton
+        android:id="@+id/invite"
+        android:layout_width="0dp"
+        android:layout_height="37dp"
+        android:layout_weight="2"
+        android:src="@drawable/ic_add_black_24dp"
+        android:background="@android:color/white"/>
+</LinearLayout>
