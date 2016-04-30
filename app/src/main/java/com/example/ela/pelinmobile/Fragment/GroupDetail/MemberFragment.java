@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.MemberAdapter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MemberInterface;
+import com.example.ela.pelinmobile.Interface.RequestInterface;
+import com.example.ela.pelinmobile.Model.ApproveModel;
 import com.example.ela.pelinmobile.Model.MateriModel;
 import com.example.ela.pelinmobile.Model.MemberModel;
 import com.example.ela.pelinmobile.Profile;
@@ -43,6 +45,7 @@ public class MemberFragment extends Fragment {
     RecyclerView recyclerView;
     MemberAdapter adapter;
     int groupId;
+    String nim;
 
 
     public MemberFragment() {
@@ -89,9 +92,11 @@ public class MemberFragment extends Fragment {
                             if (isLongClick) {
                                 kick.setText("Delete " + memberModels.get(position).getName().toLowerCase() + "?");
                                 kick.setVisibility(View.VISIBLE);
+                                nim = "1210520070";
                                 kick.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        kick();
                                         adapter.removeItem(position);
                                     }
                                 });
@@ -120,5 +125,20 @@ public class MemberFragment extends Fragment {
         return inflated;
     }
 
+    private void kick() {
+        RequestInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
+        Call<ApproveModel> call = service.kick(4, nim);
+        call.enqueue(new Callback<ApproveModel>() {
+            @Override
+            public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
+                Log.d("respon", "onResponse: kick " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<ApproveModel> call, Throwable t) {
+
+            }
+        });
+    }
 
 }

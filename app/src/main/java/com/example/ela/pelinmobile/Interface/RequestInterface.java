@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by e on 22/04/16.
@@ -31,5 +32,8 @@ public interface RequestInterface {
 
     @GET("groups/{groupId}/pendings/{reqId}/decline")
     Call<ResponseBody> decline(@Path("groupId") int groupId, @Path("reqId") int reqId);
+
+    @GET("groups/{groupId}/members/kick")
+    Call<ApproveModel> kick(@Path("groupId") int groupId, @Query("nim") String nim);
 
 }
