@@ -20,6 +20,12 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
 
     List<MateriModel> materiModels;
 
+    private static OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public MateriAdapter(List<MateriModel> materiModels) {
         this.materiModels = materiModels;
     }
@@ -45,11 +51,34 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, time;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.materiTitle);
             time = (TextView) itemView.findViewById(R.id.posted);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.OnItemClick(itemView, getLayoutPosition(), false);
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null) {
+                        listener.OnItemClick(itemView, getLayoutPosition(), true);
+                    }
+                    return true;
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(View view, int position, boolean isLongClick);
     }
 }

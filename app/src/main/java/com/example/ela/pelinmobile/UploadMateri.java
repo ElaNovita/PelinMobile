@@ -1,22 +1,26 @@
 package com.example.ela.pelinmobile;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriFragment;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MateriInterface;
 import com.example.ela.pelinmobile.Model.MateriModel;
 
-import butterknife.Bind;
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,12 +30,16 @@ import retrofit2.Response;
  */
 public class UploadMateri extends AppCompatActivity {
 
-    TextView TextuploadMateri, title;
-    Button btnSendMateri;
-    ImageButton upMateri;
+    EditText title, description;
+    TextView TextuploadMateri;
+    Button btnSendMateri, upMateri;
     private static final int PICKFILE_RESULT_CODE = 1;
-
+    File file;
+    RequestBody requestBody;
+    MediaType MEDIA_TYPE_PNG;
     String materiTitle, desc;
+    MultipartBody.Part requestFileBody;
+    RequestBody titles, descriptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +54,9 @@ public class UploadMateri extends AppCompatActivity {
 
         TextuploadMateri = (TextView) findViewById(R.id.uploadMateri);
         btnSendMateri = (Button) findViewById(R.id.sendMateri);
-        upMateri = (ImageButton) findViewById(R.id.upMateri);
-        title = (TextView) findViewById(R.id.materi_title);
+        upMateri = (Button) findViewById(R.id.upMateri);
+        title = (EditText) findViewById(R.id.materi_title);
+        description = (EditText) findViewById(R.id.desc);
 
         upMateri.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,28 +70,14 @@ public class UploadMateri extends AppCompatActivity {
         btnSendMateri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 materiTitle = title.getText().toString();
-                desc = TextuploadMateri.getText().toString();
+                desc = description.getText().toString();
 
-//                MateriInterface materiInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MateriInterface.class);
-//
-//                MateriModel materi = new MateriModel();
-//                materi.setTitle(materiTitle);
-//                materi.setDescription(desc);
-//
-//                Call<MateriModel> call = materiInterface.createMateri(groupId);
-//                call.enqueue(new Callback<MateriModel>() {
-//                    @Override
-//                    public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<MateriModel> call, Throwable t) {
-//
-//                    }
-//                });
+                titles = RequestBody.create(MediaType.parse("multipart/form-data"), materiTitle);
+                descriptions = RequestBody.create(MediaType.parse("multipart/form-data"), desc);
+
+                sendFile(requestFileBody, titles, descriptions);
+
             }
         });
 
@@ -93,8 +88,21 @@ public class UploadMateri extends AppCompatActivity {
         switch (requestCode) {
             case PICKFILE_RESULT_CODE:
                 if (resultCode == RESULT_OK) {
-                    String FilePath = data.getData().getLastPathSegment();
-                    TextuploadMateri.setText(FilePath);
+
+
+                    String name = data.getData().getPath().toString();
+                    Uri uri = data.getData();
+
+                    Log.d("respon", "onActivityResult: " + uri.toString());
+
+
+                    File file = new File(uri.getPath());
+
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    requestFileBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+
+
                     btnSendMateri.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -113,5 +121,23 @@ public class UploadMateri extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendFile(MultipartBody.Part files, RequestBody titles, RequestBody descriptions) {
+
+        MateriInterface materiInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MateriInterface.class);
+        Call<MateriModel> call = materiInterface.createMateri(4, files, titles, descriptions);
+        call.enqueue(new Callback<MateriModel>() {
+            @Override
+            public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
+                Log.d("respon", "onResponse: respon " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<MateriModel> call, Throwable t) {
+                Log.e("respon", "onFailure: salah ", t);
+            }
+        });
+
     }
 }

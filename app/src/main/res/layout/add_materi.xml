@@ -11,6 +11,7 @@
         android:hint="Judul"
         android:layout_marginTop="8dp"/>
     <EditText
+        android:id="@+id/desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="4"
@@ -28,13 +29,13 @@
             android:text="Pilih File"
             android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"/>
-        <ImageButton
+        <Button
             android:id="@+id/upMateri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/uploadMateri"
             android:layout_marginLeft="12dp"
-            android:src="@drawable/ic_file_upload_black_24dp"/>
+            android:text="pilih file"/>
     </RelativeLayout>
     <Button
         android:id="@+id/sendMateri"
@@ -42,8 +43,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
-        android:text="Send File"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"/>
+        android:text="Send"
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>

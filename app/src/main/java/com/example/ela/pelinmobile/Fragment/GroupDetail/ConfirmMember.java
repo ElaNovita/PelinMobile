@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class ConfirmMember extends AppCompatActivity {
 
     private List<RequestModel> users;
     RecyclerView recyclerView;
+    Button confirmAll;
+    int groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class ConfirmMember extends AppCompatActivity {
 
         RequestInterface requestInterface = new RetrofitBuilder(this).getRetrofit().create(RequestInterface.class);
 
-        Call<List<RequestModel>> call = requestInterface.getUsers(5);
+        Call<List<RequestModel>> call = requestInterface.getUsers(4);
         call.enqueue(new Callback<List<RequestModel>>() {
             @Override
             public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
@@ -56,11 +59,14 @@ public class ConfirmMember extends AppCompatActivity {
             }
         });
 
+        confirmAll = (Button) findViewById(R.id.confirm_all_btn);
         recyclerView = (RecyclerView) findViewById(R.id.confirmRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
-
+    private void confirmAll() {
+        RequestInterface requestInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(RequestInterface.class);
+    }
 
 }

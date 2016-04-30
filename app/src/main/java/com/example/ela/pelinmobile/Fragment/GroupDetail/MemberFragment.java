@@ -42,6 +42,7 @@ public class MemberFragment extends Fragment {
     LinearLayout wrap;
     RecyclerView recyclerView;
     MemberAdapter adapter;
+    int groupId;
 
 
     public MemberFragment() {
@@ -52,7 +53,7 @@ public class MemberFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        groupId = getArguments().getInt("groupId");
     }
 
     @Override
@@ -67,14 +68,18 @@ public class MemberFragment extends Fragment {
         recyclerView = (RecyclerView) inflated.findViewById(R.id.memberRv);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        MemberInterface memberInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MemberInterface.class);
+        final MemberInterface memberInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MemberInterface.class);
 
-        Call<List<MemberModel>> call = memberInterface.getMembers(2);
+        Call<List<MemberModel>> call = memberInterface.getMembers(groupId);
         call.enqueue(new Callback<List<MemberModel>>() {
             @Override
             public void onResponse(Call<List<MemberModel>> call, Response<List<MemberModel>> response) {
                 try {
                     final List<MemberModel> memberModels = response.body();
+
+                    Log.d("respon", "onResponse: res " + response.body());
+
+
 
                     adapter = new MemberAdapter(getActivity(), memberModels);
 
