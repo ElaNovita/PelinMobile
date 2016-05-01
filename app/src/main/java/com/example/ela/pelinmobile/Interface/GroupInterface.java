@@ -1,6 +1,8 @@
 package com.example.ela.pelinmobile.Interface;
 
+import com.example.ela.pelinmobile.Model.ApproveModel;
 import com.example.ela.pelinmobile.Model.GroupModel;
+import com.example.ela.pelinmobile.Model.JoinModel;
 
 import java.util.List;
 
@@ -23,4 +25,10 @@ public interface GroupInterface {
 
     @POST("groups")
     Call<GroupModel> createGroup(@Body GroupModel groupModel);
+
+    @GET("groups/{groupId}/join")
+    Call<JoinModel> join(@Path("groupId") int groupId);
+
+    @GET("groups/{groupId}/leave")
+    Call<ApproveModel> leave(@Path("groupId") int groupId);
 }

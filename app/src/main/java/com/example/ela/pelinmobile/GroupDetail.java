@@ -17,6 +17,7 @@ import com.example.ela.pelinmobile.Fragment.CreateGroupDialog;
 import com.example.ela.pelinmobile.Fragment.GroupInfo;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
+import com.example.ela.pelinmobile.Model.ApproveModel;
 import com.example.ela.pelinmobile.Model.Group;
 import com.example.ela.pelinmobile.Model.GroupModel;
 
@@ -37,6 +38,7 @@ public class GroupDetail extends BaseDrawer {
     TabLayout tabLayout;
     @Bind(R.id.tabViewPager)
     ViewPager tabViewPager;
+    int groupId;
 
     private String TAG = "respon";
 
@@ -50,7 +52,7 @@ public class GroupDetail extends BaseDrawer {
         getSupportActionBar().setTitle("Diskusi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int groupId = getIntent().getIntExtra("groupId", 0);
+        groupId = getIntent().getIntExtra("groupId", 0);
         Log.d(TAG, Integer.toString(groupId));
         Bundle bundle = new Bundle();
         bundle.putInt("groupId", groupId);
@@ -107,6 +109,9 @@ public class GroupDetail extends BaseDrawer {
                 this.finish();
             case R.id.action_settings:
                 showDialog();
+            case R.id.leave:
+                leave(groupId);
+                this.finish();
 
         }
 
@@ -128,5 +133,20 @@ public class GroupDetail extends BaseDrawer {
         groupInfo.show(fragmentManager, "title");
     }
 
+    private void leave(int id) {
+        GroupInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(GroupInterface.class);
+        Call<ApproveModel> call = service.leave(id);
+        call.enqueue(new Callback<ApproveModel>() {
+            @Override
+            public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
+                Log.d(TAG, "onResponse: leave" + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<ApproveModel> call, Throwable t) {
+
+            }
+        });
+    }
 
 }

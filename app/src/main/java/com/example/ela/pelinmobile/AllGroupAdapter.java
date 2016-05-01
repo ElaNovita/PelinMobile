@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +12,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Model.Group;
 import com.example.ela.pelinmobile.Model.GroupModel;
+import com.example.ela.pelinmobile.Model.JoinModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by e on 7/04/16.
@@ -48,26 +57,34 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.bind(groups.get(position), listener);
         holder.groupTitle.setText(groups.get(position).getTitle());
         holder.dosenName.setText(groups.get(position).getTeacher().getName());
         holder.countMember.setText(Integer.toString(groups.get(position).getMember()));
-        Drawable joined = context.getResources().getDrawable(R.drawable.ic_remove_red_eye_white_24dp);
 //        holder.semester.setText(groups.get(position).get);
 
         if (groups.get(position).isJoined()) {
-            holder.join.setText("Detail");
-            holder.join.setTextColor(context.getResources().getColor(R.color.white));
-            holder.join.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-            holder.join.setCompoundDrawables(null, null, joined, null);
+            joined(holder.join);
 
         } else if (groups.get(position).isPending()) {
-            holder.join.setText("Batal");
-            holder.join.setTextColor(context.getResources().getColor(R.color.white));
-            holder.join.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
-            holder.join.setCompoundDrawables(null, null, joined, null);
+            waitForApproval(holder.join);
         }
+
+        holder.join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (groups.get(position).isJoined()) {
+                    detail(groups.get(position).getId());
+                } else if (groups.get(position).isPending()) {
+                    cancel(position);
+                    cancelReq(holder.join);
+                } else {
+                    join(groups.get(position).getId());
+                    waitForApproval(holder.join);
+                }
+            }
+        });
     }
 
     public interface OnItemClickListener {
@@ -150,4 +167,54 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
         notifyItemMoved(fromPosition, toPosition);
     }
 
+    private void join(int id) {
+
+        GroupInterface service = new RetrofitBuilder(context).getRetrofit().create(GroupInterface.class);
+        Call<JoinModel> call = service.join(id);
+        call.enqueue(new Callback<JoinModel>() {
+            @Override
+            public void onResponse(Call<JoinModel> call, Response<JoinModel> response) {
+                Log.d("respon", "onResponse: joined " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<JoinModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void cancel(int id) {
+
+    }
+
+    private void detail(int id) {
+        Intent intent = new Intent(context, GroupDetail.class);
+        intent.putExtra("groupId", id);
+        context.startActivity(intent);
+    }
+
+    private void joined(Button join) {
+        Drawable joined = context.getResources().getDrawable(R.drawable.ic_remove_red_eye_white_24dp);
+        join.setText("Detail");
+        join.setTextColor(context.getResources().getColor(R.color.white));
+        join.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        join.setCompoundDrawables(null, null, joined, null);
+    }
+
+    private void waitForApproval(Button join) {
+        Drawable joined = context.getResources().getDrawable(R.drawable.ic_remove_red_eye_white_24dp);
+        join.setText("Batal");
+        join.setTextColor(context.getResources().getColor(R.color.white));
+        join.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        join.setCompoundDrawables(null, null, joined, null);
+    }
+
+    private void cancelReq(Button join) {
+        Drawable joined = context.getResources().getDrawable(R.drawable.ic_add_white_24dp);
+        join.setText("Join");
+        join.setTextColor(context.getResources().getColor(R.color.white));
+        join.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
+        join.setCompoundDrawables(null, null, joined, null);
+    }
 }

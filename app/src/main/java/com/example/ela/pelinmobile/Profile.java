@@ -37,6 +37,7 @@ public class Profile extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     String TAG = "respon";
+    int userId;
     public static final String myPref = "myPrefs";
     public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
     FloatingActionButton mail, phone, info;
@@ -64,6 +65,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserDetail.class);
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });
@@ -78,7 +80,8 @@ public class Profile extends AppCompatActivity {
                     User user = response.body();
 
                     String name = user.getName();
-                    String nik = user.getTeacher().getNik();
+                    String nik = user.getStudent().getNim();
+                    userId = user.getId();
 
                     username.setText(name);
                     kode.setText(nik);
