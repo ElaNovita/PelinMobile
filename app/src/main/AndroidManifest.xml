@@ -30,7 +30,9 @@
         <activity android:name=".MessageDetail" />
         <activity android:name=".UploadMateri"/>
         <activity android:name=".AddTugas"/>
-        <activity android:name=".AllGroups"/>
+        <activity android:name=".AllGroups">
+
+        </activity>
         <activity android:name=".Fragment.GroupDetail.ListTugas"/>
         <activity android:name=".Fragment.GroupDetail.ConfirmMember"/>
         <activity android:name=".Login" android:theme="@style/LoginTheme">
@@ -40,6 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UserDetail"/>
     </application>
 
 

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.example.ela.pelinmobile.Model.User;
 import java.util.List;
 
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.github.clans.fab.FloatingActionButton;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -37,6 +39,7 @@ public class Profile extends AppCompatActivity {
     String TAG = "respon";
     public static final String myPref = "myPrefs";
     public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
+    FloatingActionButton mail, phone, info;
 
     private List<GroupModel> groups;
 
@@ -55,6 +58,16 @@ public class Profile extends AppCompatActivity {
 
         final TextView kode = (TextView) findViewById(R.id.code);
         final TextView username = (TextView) findViewById(R.id.user_name);
+        info = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.user_detail);
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UserDetail.class);
+                startActivity(intent);
+            }
+        });
+
 
         MyInterface user = new RetrofitBuilder(Profile.this).getRetrofit().create(MyInterface.class);
         Call<User> call = user.getUser();
@@ -109,10 +122,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+
 
         recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());

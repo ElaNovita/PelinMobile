@@ -1,5 +1,7 @@
 package com.example.ela.pelinmobile.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by e on 18/04/16.
  */
@@ -7,6 +9,13 @@ public class GroupModel {
     String title;
     int members, id;
     Teacher teacher;
+
+    @SerializedName("is_joined")
+    boolean isJoined;
+
+    //TODO change pending_approve to is_pending
+    @SerializedName("is_pending")
+    boolean isPending;
 
     public Teacher getTeacher() {
         return teacher;
@@ -38,5 +47,23 @@ public class GroupModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public boolean isJoined() {
+        return isJoined;
+    }
+
+    public void setJoined(boolean joined) {
+        isJoined = joined;
+    }
+
+    public boolean isPending() {
+
+        return isPending;
+    }
+
+    public void setPending(boolean pending) {
+        isPending = pending;
     }
 }

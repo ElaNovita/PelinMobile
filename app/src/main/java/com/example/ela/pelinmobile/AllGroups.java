@@ -22,12 +22,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Model.Group;
+import com.example.ela.pelinmobile.Model.GroupModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by e on 7/04/16.
@@ -37,28 +43,22 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
     private MenuItem mSearchAction;
     private boolean isSearchOpned = false;
     private EditText seacrhText;
-    private List<Group> groups;
+    private List<GroupModel> groupModels;
     private AllGroupAdapter mAdapter;
     private RecyclerView recyclerView;
-
-
-
+    boolean isJoined;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_groups);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        groups = Group.initData();
+
         recyclerView = (RecyclerView) findViewById(R.id.allGroupRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mAdapter = new AllGroupAdapter(groups, new AllGroupAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(Group group) {
-                Toast.makeText(getApplicationContext(), "You clicked this", Toast.LENGTH_SHORT).show();
-            }
-        });
-        recyclerView.setAdapter(mAdapter);
+
+        reqJson();
     }
 
 
@@ -76,7 +76,7 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
 
     @Override
     public boolean onQueryTextChange(String query) {
-        final List<Group> filteredGroup = filter(groups, query);
+        final List<GroupModel> filteredGroup = filter(groupModels, query);
         mAdapter.animateTo(filteredGroup);
         recyclerView.scrollToPosition(0);
         return false;
@@ -88,11 +88,11 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
         return false;
     }
 
-    private List<Group> filter(List<Group> groups, String query) {
+    private List<GroupModel> filter(List<GroupModel> groups, String query) {
         query = query.toLowerCase();
 
-        final List<Group> filteredGroup = new ArrayList<>();
-        for (Group group : groups) {
+        final List<GroupModel> filteredGroup = new ArrayList<>();
+        for (GroupModel group : groups) {
             final String text = group.getTitle().toLowerCase();
             if (text.contains(query)) {
                 filteredGroup.add(group);
@@ -111,5 +111,32 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
                 this.finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void reqJson() {
+
+        GroupInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(GroupInterface.class);
+        Call<List<GroupModel>> call = service.getGroups();
+        call.enqueue(new Callback<List<GroupModel>>() {
+            @Override
+            public void onResponse(Call<List<GroupModel>> call, final Response<List<GroupModel>> response) {
+
+                groupModels = response.body();
+
+                mAdapter = new AllGroupAdapter(groupModels, getApplicationContext(), new AllGroupAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(GroupModel group) {
+                        Log.d("respon", "OnItemClick: res " + response.code());
+                    }
+                });
+
+                recyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<GroupModel>> call, Throwable t) {
+
+            }
+        });
     }
 }
