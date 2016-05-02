@@ -69,6 +69,7 @@ public class Login extends AppCompatActivity {
 
                             Intent intent = new Intent(Login.this, HomeDosen.class);
                             startActivity(intent);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

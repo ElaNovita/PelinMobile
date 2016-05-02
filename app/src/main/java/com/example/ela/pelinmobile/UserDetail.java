@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
@@ -21,8 +23,10 @@ import retrofit2.Response;
 public class UserDetail extends AppCompatActivity {
 
     int userId;
-    TextView name, nim, status, major, email, phone;
+    TextView name, nim, status, major, email, phone, majorTxt;
+    ImageView majorIcon;
     String _name, _nim, _status, _major, _email, _phone;
+    boolean isTeacher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +43,8 @@ public class UserDetail extends AppCompatActivity {
         major = (TextView) findViewById(R.id.major);
         email = (TextView) findViewById(R.id.mail);
         phone = (TextView) findViewById(R.id.phone);
+        majorTxt = (TextView) findViewById(R.id.majorTxt);
+        majorIcon = (ImageView) findViewById(R.id.majorIcon);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Detail");
@@ -68,10 +74,18 @@ public class UserDetail extends AppCompatActivity {
                 User user = response.body();
 
                 name.setText(user.getName());
-                status.setText(user.getStatus());
-                nim.setText(user.getStudent().getNim());
-                major.setText(user.getStudent().getMajor());
+                status.setText("I am a " + user.getStatus());
                 email.setText(user.getEmail());
+
+                if (user.isTeacher()) {
+                    nim.setText(user.getTeacher().getNik());
+                    major.setVisibility(View.GONE);
+                    majorTxt.setVisibility(View.GONE);
+                    majorIcon.setVisibility(View.GONE);
+                } else {
+                    nim.setText(user.getStudent().getNim());
+                    major.setText(user.getStudent().getMajor());
+                }
 
                 Log.d("respon", "onResponse: name " + response.code());
 

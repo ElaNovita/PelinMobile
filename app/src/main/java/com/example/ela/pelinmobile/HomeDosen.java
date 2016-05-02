@@ -47,12 +47,15 @@ public class HomeDosen extends BaseDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_dosen);
+
         tabViewPager.setAdapter(new HomeDosenAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(tabViewPager);
+
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         ImageView imageView = new ImageView(this);
         tab.setCustomView(imageView);
         setupDrawerContent(navigationView);
+
 
 
 //        badgeView = new BadgeView(this, imageView);

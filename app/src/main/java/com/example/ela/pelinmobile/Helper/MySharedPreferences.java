@@ -11,7 +11,7 @@ public class MySharedPreferences extends Application {
     private final String myPref = "myPrefs";
     private SharedPreferences sp;
     private Context _context;
-    private SharedPreferences.Editor editor;
+    public SharedPreferences.Editor editor;
 
     public MySharedPreferences(Context context) {
         this._context = context;
@@ -30,6 +30,11 @@ public class MySharedPreferences extends Application {
 
     public void setUsername(String username) {
         editor.putString("username", username);
+        editor.commit();
+    }
+
+    public void deleteToken() {
+        editor.clear();
         editor.commit();
     }
 

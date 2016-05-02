@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,8 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MyInterface;
+import com.example.ela.pelinmobile.Model.Group;
 import com.example.ela.pelinmobile.Model.User;
 
 import butterknife.Bind;
@@ -113,8 +116,10 @@ public class BaseAcitivty extends AppCompatActivity {
                 startActivity(intent1);
                 break;
             case R.id.logout:
+                logout();
                 Intent intent2 = new Intent(BaseAcitivty.this, Login.class);
                 startActivity(intent2);
+                break;
             case R.id.home:
                 Intent intent3 = new Intent(BaseAcitivty.this, HomeDosen.class);
                 startActivity(intent3);
@@ -126,6 +131,13 @@ public class BaseAcitivty extends AppCompatActivity {
 
     public Toolbar getToolbar() {
         return toolbar;
+    }
+
+    public void logout() {
+        MySharedPreferences sharedPreferences = new MySharedPreferences(getApplicationContext());
+        String token = sharedPreferences.getToken();
+        sharedPreferences.deleteToken();
+        Log.d("respon", "logout: " + token);
     }
 
 //    public void reqUser() {

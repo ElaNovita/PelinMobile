@@ -1,5 +1,7 @@
 package com.example.ela.pelinmobile.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by e on 16/04/16.
  */
@@ -8,6 +10,9 @@ public class User {
     User.Token token;
     Student student;
     Teacher teacher;
+
+    @SerializedName("is_teacher")
+    boolean isTeacher;
 
     public Photo getPhoto() {
         return photo;
@@ -78,5 +83,13 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isTeacher() {
+        return isTeacher;
+    }
+
+    public void setTeacher(boolean teacher) {
+        isTeacher = teacher;
     }
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Interface.MyGroups;
 import com.example.ela.pelinmobile.Interface.MyInterface;
@@ -41,6 +42,7 @@ public class Profile extends AppCompatActivity {
     public static final String myPref = "myPrefs";
     public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
     FloatingActionButton mail, phone, info;
+    boolean isTeacher;
 
     private List<GroupModel> groups;
 
@@ -78,9 +80,15 @@ public class Profile extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 try {
                     User user = response.body();
+                    String nik;
+
+                    if (user.isTeacher()) {
+                        nik = user.getTeacher().getNik();
+                    } else {
+                        nik = user.getStudent().getNim();
+                    }
 
                     String name = user.getName();
-                    String nik = user.getStudent().getNim();
                     userId = user.getId();
 
                     username.setText(name);
