@@ -89,17 +89,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_phone_white_24dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp"
+            android:visibility="gone"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_email_white_24dp"/>
+            android:src="@drawable/ic_email_white_24dp"
+            android:visibility="gone"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/user_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_info_white_24dp"/>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mode_edit_white_24dp"/>
     </com.github.clans.fab.FloatingActionMenu>
 
 </android.support.design.widget.CoordinatorLayout>

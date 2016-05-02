@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
 import retrofit2.http.Path;
 
 /**
@@ -20,4 +21,7 @@ public interface UserInterface {
 
     @GET("users/{userId}")
     Call<User> getSingleUser(@Path("userId") int userId);
+
+    @PATCH("users/me")
+    Call<User> editUser(@Body User user);
 }

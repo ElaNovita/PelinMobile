@@ -41,7 +41,7 @@ public class Profile extends AppCompatActivity {
     int userId;
     public static final String myPref = "myPrefs";
     public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
-    FloatingActionButton mail, phone, info;
+    FloatingActionButton mail, phone, info, edit;
     boolean isTeacher;
 
     private List<GroupModel> groups;
@@ -62,12 +62,21 @@ public class Profile extends AppCompatActivity {
         final TextView kode = (TextView) findViewById(R.id.code);
         final TextView username = (TextView) findViewById(R.id.user_name);
         info = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.user_detail);
+        edit = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.edit);
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserDetail.class);
                 intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
                 startActivity(intent);
             }
         });
