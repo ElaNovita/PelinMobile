@@ -42,7 +42,7 @@ public class ConfirmMember extends AppCompatActivity {
 
         RequestInterface requestInterface = new RetrofitBuilder(this).getRetrofit().create(RequestInterface.class);
 
-        Call<List<RequestModel>> call = requestInterface.getUsers(4);
+        Call<List<RequestModel>> call = requestInterface.getPendingUsers(groupId);
         call.enqueue(new Callback<List<RequestModel>>() {
             @Override
             public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
@@ -74,7 +74,7 @@ public class ConfirmMember extends AppCompatActivity {
 
     private void confirmAll() {
         RequestInterface requestInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(RequestInterface.class);
-        Call<ApproveModel> call = requestInterface.confirmAll(4);
+        Call<ApproveModel> call = requestInterface.confirmAll(groupId);
         call.enqueue(new Callback<ApproveModel>() {
             @Override
             public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {

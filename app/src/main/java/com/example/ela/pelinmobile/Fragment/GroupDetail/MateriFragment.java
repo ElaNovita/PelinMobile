@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.example.ela.pelinmobile.Interface.MateriInterface;
 import com.example.ela.pelinmobile.Model.MateriModel;
 import com.example.ela.pelinmobile.R;
 import com.example.ela.pelinmobile.UploadMateri;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,6 +43,9 @@ public class MateriFragment extends Fragment {
     RecyclerView recyclerView;
     MateriAdapter adapter;
     Button delete;
+    SwipeRefreshLayout swipeRefreshLayout;
+    AVLoadingIndicatorView load;
+    View inflated;
 
 
     public MateriFragment() {
@@ -63,11 +68,13 @@ public class MateriFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View inflated =  inflater.inflate(R.layout.fragment_materi, container, false);
+        inflated =  inflater.inflate(R.layout.fragment_materi, container, false);
 
         delete = (Button) inflated.findViewById(R.id.delete);
         recyclerView = (RecyclerView) inflated.findViewById(R.id.materiRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
+        load = (AVLoadingIndicatorView) inflated.findViewById(R.id.load);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.materi);
 
@@ -81,13 +88,17 @@ public class MateriFragment extends Fragment {
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                startAnim();
+                reqJson();
+            }
+        });
+
+        startAnim();
+
         return inflated;
-    }
-
-    private void uploadFile(Uri fileUri) {
-
-        MateriInterface materiInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MateriInterface.class);
-
     }
 
     private void reqJson() {
@@ -104,7 +115,7 @@ public class MateriFragment extends Fragment {
 
                     adapter.setOnItemClickListener(new MateriAdapter.OnItemClickListener() {
                         @Override
-                        public void OnItemClick(View view, int position, boolean isLongClick) {
+                        public void OnItemClick(View view, final int position, boolean isLongClick) {
                             materiId = materiModels.get(position).getId();
                             if (isLongClick) {
                                 delete.setVisibility(View.VISIBLE);
@@ -113,6 +124,9 @@ public class MateriFragment extends Fragment {
                                     @Override
                                     public void onClick(View v) {
                                         deleteMateri();
+                                        delete.setVisibility(View.GONE);
+                                        adapter.removeItem(position);
+
                                     }
                                 });
                             }
@@ -120,7 +134,9 @@ public class MateriFragment extends Fragment {
                         }
                     });
 
+                    stopAnim();
                     recyclerView.setAdapter(adapter);
+                    swipeRefreshLayout.setRefreshing(false);
                 } catch (Exception e) {
                     Log.e("respon", "onResponse: ", e);
                 }
@@ -129,6 +145,8 @@ public class MateriFragment extends Fragment {
             @Override
             public void onFailure(Call<List<MateriModel>> call, Throwable t) {
                 Log.e("respon", "onFailure: ", t);
+                stopAnim();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -139,8 +157,6 @@ public class MateriFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                delete.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "Deleting...", Toast.LENGTH_SHORT).show();
                 reqJson();
             }
 
@@ -149,6 +165,14 @@ public class MateriFragment extends Fragment {
 
             }
         });
+    }
+
+    public void startAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.VISIBLE);
+    }
+
+    public void stopAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.GONE);
     }
 
 }

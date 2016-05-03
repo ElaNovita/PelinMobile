@@ -14,6 +14,7 @@ import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiFragment;
 import com.example.ela.pelinmobile.Model.DiskusiModel;
 import com.example.ela.pelinmobile.Model.ReplyModel;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
 import java.text.DateFormat;
@@ -25,14 +26,15 @@ import java.util.List;
 public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHolder> {
 
     List<DiskusiModel> diskusis;
-    private final OnItemClickListener listener;
+    public static OnItemClickListener listener;
 
-    public interface OnItemClickListener {
-        void OnItemClick(DiskusiModel diskusi, int position);
-    }
 
     public DiskusiAdapter(List<DiskusiModel> diskusis, OnItemClickListener listener) {
         this.diskusis = diskusis;
+        this.listener = listener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -50,7 +52,6 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(diskusis.get(position), listener);
         holder.dSender.setText(diskusis.get(position).getUser().getTeacher().getName());
         holder.dSendAt.setText(diskusis.get(position).getCreated_at());
         holder.dContent.setText(diskusis.get(position).getText());
@@ -73,17 +74,31 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
             dLike = (TextView) itemView.findViewById(R.id.likeCount);
             dCount = (TextView) itemView.findViewById(R.id.replyDiskusicount);
             dSenderImg = (ImageView) itemView.findViewById(R.id.senderImg);
-        }
 
-
-        public void bind(final DiskusiModel diskusi, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(diskusi, getLayoutPosition());
+                    if (listener != null) {
+                        listener.onItemClick(v, getLayoutPosition(), false);
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(v, getLayoutPosition(), true);
+                    }
+                    return true;
                 }
             });
         }
+    }
 
+    public void removeItem(int position) {
+        diskusis.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 }

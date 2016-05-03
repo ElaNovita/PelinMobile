@@ -5,11 +5,24 @@
     tools:context="com.example.ela.pelinmobile.Fragment.MessagesFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/messageRv"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#E5EAED"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/messageRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E5EAED"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <TextView
+        android:id="@+id/failed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Failed. Pull to Refresh"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical|center_horizontal"/>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addMessage"
         android:layout_width="wrap_content"

@@ -40,17 +40,16 @@ public class UploadMateri extends AppCompatActivity {
     String materiTitle, desc;
     MultipartBody.Part requestFileBody;
     RequestBody titles, descriptions;
+    int groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_materi);
 
+        groupId = getIntent().getIntExtra("groupId", 0);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        final int groupId = getIntent().getIntExtra("groupId", 0);
-
-        Log.d("respon", Integer.toString(groupId));
 
         TextuploadMateri = (TextView) findViewById(R.id.uploadMateri);
         btnSendMateri = (Button) findViewById(R.id.sendMateri);
@@ -78,6 +77,11 @@ public class UploadMateri extends AppCompatActivity {
 
                 sendFile(requestFileBody, titles, descriptions);
 
+
+                Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
+                intent.putExtra("groupId", groupId);
+                startActivity(intent);
+
             }
         });
 
@@ -91,6 +95,9 @@ public class UploadMateri extends AppCompatActivity {
 
 
                     String name = data.getData().getPath().toString();
+
+                    TextuploadMateri.setText(name);
+
                     Uri uri = data.getData();
 
                     Log.d("respon", "onActivityResult: " + uri.toString());
@@ -99,7 +106,7 @@ public class UploadMateri extends AppCompatActivity {
                     File file = new File(uri.getPath());
 
                     RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    requestFileBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                    requestFileBody = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
 
 
 
@@ -126,16 +133,18 @@ public class UploadMateri extends AppCompatActivity {
     private void sendFile(MultipartBody.Part files, RequestBody titles, RequestBody descriptions) {
 
         MateriInterface materiInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MateriInterface.class);
-        Call<MateriModel> call = materiInterface.createMateri(4, files, titles, descriptions);
+        Call<MateriModel> call = materiInterface.createMateri(groupId, files, titles, descriptions);
         call.enqueue(new Callback<MateriModel>() {
             @Override
             public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
                 Log.d("respon", "onResponse: respon " + response.code());
+                Toast.makeText(getApplicationContext(), "Materi Sudah di Upload", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<MateriModel> call, Throwable t) {
                 Log.e("respon", "onFailure: salah ", t);
+                Toast.makeText(getApplicationContext(), "Materi Gagal di Upload", Toast.LENGTH_SHORT).show();
             }
         });
 

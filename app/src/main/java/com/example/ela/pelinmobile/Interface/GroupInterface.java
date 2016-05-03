@@ -6,8 +6,10 @@ import com.example.ela.pelinmobile.Model.JoinModel;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -31,4 +33,7 @@ public interface GroupInterface {
 
     @GET("groups/{groupId}/leave")
     Call<ApproveModel> leave(@Path("groupId") int groupId);
+
+    @DELETE("groups/{groupId}")
+    Call<ResponseBody> deleteGroup(@Path("groupId") int groupId);
 }

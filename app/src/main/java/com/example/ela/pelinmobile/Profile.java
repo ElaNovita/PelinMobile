@@ -4,6 +4,7 @@ package com.example.ela.pelinmobile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,8 @@ public class Profile extends AppCompatActivity {
     public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
     FloatingActionButton mail, phone, info, edit;
     boolean isTeacher;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView kode, username, failed;
 
     private List<GroupModel> groups;
 
@@ -59,10 +62,12 @@ public class Profile extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        final TextView kode = (TextView) findViewById(R.id.code);
-        final TextView username = (TextView) findViewById(R.id.user_name);
+        kode = (TextView) findViewById(R.id.code);
+        username = (TextView) findViewById(R.id.user_name);
         info = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.user_detail);
         edit = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.edit);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        failed = (TextView) findViewById(R.id.failed);
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +87,44 @@ public class Profile extends AppCompatActivity {
         });
 
 
+        recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        reqUser();
+
+        reqGroup();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reqUser();
+                reqGroup();
+            }
+        });
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                this.finish();
+            case R.id.action_settings:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static Context getContext() {
+        return context;
+    }
+
+
+    private void reqUser() {
         MyInterface user = new RetrofitBuilder(Profile.this).getRetrofit().create(MyInterface.class);
         Call<User> call = user.getUser();
         call.enqueue(new Callback<User>() {
@@ -113,22 +156,34 @@ public class Profile extends AppCompatActivity {
                 Log.e(TAG, "failure: " + t.getMessage() , t);
             }
         });
+    }
 
+    private void reqGroup() {
         MyGroups groupInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MyGroups.class);
         Call<List<GroupModel>> callGroup = groupInterface.getMyGroups();
         callGroup.enqueue(new Callback<List<GroupModel>>() {
             @Override
             public void onResponse(Call<List<GroupModel>> call, Response<List<GroupModel>> response) {
                 try {
-                    List<GroupModel> groups = response.body();
+                    final List<GroupModel> groups = response.body();
 
                     GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
                         @Override
-                        public void onItemClick(GroupModel group, int position) {
-                            Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
-                            startActivity(intent);
+                        public void onItemClick(View view, int position, boolean isLongClick) {
+                            if (isLongClick) {
+                                Toast.makeText(getApplicationContext(), "tes", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
+                                intent.putExtra("groupId", groups.get(position).getId());
+                                startActivity(intent);
+                            }
+
+
                         }
                     });
+
+                    swipeRefreshLayout.setRefreshing(false);
+                    failed.setVisibility(View.GONE);
 
                     recyclerView.setAdapter(adapter);
                 } catch (Exception e) {
@@ -138,35 +193,10 @@ public class Profile extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<GroupModel>> call, Throwable t) {
-
+                swipeRefreshLayout.setRefreshing(false);
+                failed.setVisibility(View.VISIBLE);
             }
         });
-
-
-
-        recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case android.R.id.home:
-                this.finish();
-            case R.id.action_settings:
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public static Context getContext() {
-        return context;
     }
 
 }

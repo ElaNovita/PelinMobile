@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.TugasFragment;
 import com.example.ela.pelinmobile.Model.TugasModel;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -18,10 +19,14 @@ import java.util.List;
 public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> {
 
     private List<TugasModel> tugases;
-    OnItemClickListener listener;
+    static OnItemClickListener listener;
 
     public TugasAdapter(List<TugasModel> tugases, OnItemClickListener listener) {
         this.tugases = tugases;
+        this.listener = listener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -39,7 +44,6 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(tugases.get(position), listener);
         holder.title.setText(tugases.get(position).getTitle());
         holder.dueTime.setText(tugases.get(position).getDue_date());
     }
@@ -52,21 +56,36 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
 
             title = (TextView) itemView.findViewById(R.id.judulTugas);
             dueTime = (TextView) itemView.findViewById(R.id.dueTime);
-        }
 
-        public void bind(final TugasModel tugas, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(tugas);
+                    if (listener != null) {
+                        listener.onItemClick(v, getLayoutPosition(), false);
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(v, getLayoutPosition(), true);
+                    }
+
+                    return true;
                 }
             });
         }
+
     }
 
-    public interface OnItemClickListener {
-        void OnItemClick(TugasModel tugas);
+    public void removeItem(int position) {
+        tugases.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
+
 }
 
 

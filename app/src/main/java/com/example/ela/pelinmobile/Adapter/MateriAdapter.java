@@ -81,4 +81,10 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     public interface OnItemClickListener {
         void OnItemClick(View view, int position, boolean isLongClick);
     }
+
+    public void removeItem(int position) {
+        materiModels.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+    }
 }

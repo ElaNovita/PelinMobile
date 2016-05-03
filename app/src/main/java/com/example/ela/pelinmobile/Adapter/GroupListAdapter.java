@@ -27,8 +27,11 @@ import java.util.List;
 public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.ViewHolder> {
 
     List<GroupModel> groups;
-    private final OnItemClickListener listener;
+    private static OnItemClickListener listener;
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public GroupListAdapter(List<GroupModel> groups, OnItemClickListener listener) {
         this.groups = groups;
@@ -49,7 +52,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(groups.get(position), listener);
         holder.groupTitle.setText(groups.get(position).getTitle());
         holder.dosenName.setText(groups.get(position).getTeacher().getName());
         holder.countMember.setText(Integer.toString(groups.get(position).getMember()));
@@ -66,27 +68,42 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         TextView groupTitle, dosenName, countMember;
         ImageView groupPict;
 
-        ViewHolder(View view) {
+        ViewHolder(final View view) {
             super(view);
 
             groupTitle = (TextView) view.findViewById(R.id.group_name);
             dosenName = (TextView) view.findViewById(R.id.nama_dosen);
             countMember = (TextView) view.findViewById(R.id.member_count);
             groupPict = (ImageView) view.findViewById(R.id.group_pict);
-        }
 
-        public void bind(final GroupModel group, final OnItemClickListener listener) {
-            itemView.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(group, getLayoutPosition());
+                    if (listener != null) {
+                        listener.onItemClick(view, getLayoutPosition(), false);
+                    }
+                }
+            });
+
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(view, getLayoutPosition(), true);
+                    }
+                    return true;
                 }
             });
         }
 
 
+
     }
 
-
+    public void removeItem(int position) {
+        groups.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+    }
 
 }

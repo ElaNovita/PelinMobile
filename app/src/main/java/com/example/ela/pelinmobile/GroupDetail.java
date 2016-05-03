@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.GroupDetailAdapter;
@@ -39,6 +40,7 @@ public class GroupDetail extends BaseDrawer {
     @Bind(R.id.tabViewPager)
     ViewPager tabViewPager;
     int groupId;
+    TabHost tabHost;
 
     private String TAG = "respon";
 

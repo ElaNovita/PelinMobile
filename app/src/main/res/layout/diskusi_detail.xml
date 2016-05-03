@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/senderImgDetail"
-                android:text="Ciel Phantomhive"
+                android:text="Username"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="20dp"
                 android:textSize="18sp"
@@ -49,7 +49,7 @@
                 android:layout_below="@id/senderDetail"
                 android:layout_toRightOf="@id/senderImgDetail"
                 android:layout_marginLeft="20dp"
-                android:text="@string/message_display"/>
+                android:text="Content"/>
             <ImageView
                 android:id="@+id/like"
                 android:layout_width="wrap_content"

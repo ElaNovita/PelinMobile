@@ -28,6 +28,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,6 +69,8 @@ public class GroupListFragment extends Fragment {
     View inflated;
     TextView failed;
     SwipeRefreshLayout refreshLayout;
+    Button kick;
+    GroupListAdapter adapter;
 
     private List<GroupModel> groups;
 
@@ -93,6 +97,7 @@ public class GroupListFragment extends Fragment {
         recyclerView = (RecyclerView) inflated.findViewById(R.id.groupRv);
         failed = (TextView) inflated.findViewById(R.id.failed);
         refreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
+        kick = (Button) inflated.findViewById(R.id.kick);
 
         reqJson();
 
@@ -145,7 +150,7 @@ public class GroupListFragment extends Fragment {
             @Override
             public void onResponse(Call<List<GroupModel>> call, Response<List<GroupModel>> response) {
                 try {
-                    List<GroupModel> groups = response.body();
+                    final List<GroupModel> groups = response.body();
 
 //                    Log.d(TAG, "onResponse: " + groups.get(2).getId());
 
@@ -164,12 +169,30 @@ public class GroupListFragment extends Fragment {
                     Log.d(TAG, "onResponse: " + groupId);
 
 
-                    GroupListAdapter adapter = new GroupListAdapter(groups, new OnItemClickListener() {
+                    adapter = new GroupListAdapter(groups, new OnItemClickListener() {
                         @Override
-                        public void onItemClick(GroupModel group, int position) {
-                            Intent intent = new Intent(getActivity(), GroupDetail.class);
-                            intent.putExtra("groupId", group.getId());
-                            startActivity(intent);
+                        public void onItemClick(View view, final int position, boolean isLongClick) {
+                            final int groupId = groups.get(position).getId();
+                            if (isLongClick) {
+
+                                kick.setVisibility(View.VISIBLE);
+                                kick.setText("Delete " + groups.get(position).getTitle() + "?");
+                                kick.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        DeleteGroup(groupId);
+                                        adapter.removeItem(position);
+                                        kick.setVisibility(View.GONE);
+                                    }
+                                });
+
+                            } else {
+                                Intent intent = new Intent(getActivity(), GroupDetail.class);
+                                intent.putExtra("groupId", groupId);
+                                startActivity(intent);
+                            }
+
+
                         }
                     });
 
@@ -191,6 +214,23 @@ public class GroupListFragment extends Fragment {
                 stopAnim();
                 failed.setVisibility(View.VISIBLE);
 
+            }
+        });
+    }
+
+    private void DeleteGroup(int groupId) {
+        GroupInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(GroupInterface.class);
+        Call<ResponseBody> call = service.deleteGroup(groupId);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                reqJson();
+                Toast.makeText(getActivity(), "Group Berhasil di Hapus", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
             }
         });
     }

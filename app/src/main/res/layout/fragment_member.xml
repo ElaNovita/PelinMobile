@@ -1,31 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.GroupDetail.MemberFragment"
     android:background="#dedede"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/confirmRv"
+    <LinearLayout
+        android:id="@+id/req"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"/>
-    <Button
-        android:id="@+id/confirm_all_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Confirm All"
-        android:textColor="@android:color/white"
-        android:textSize="15sp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="30dp"
-        />
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/confirmRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"/>
+
+        <Button
+            android:layout_below="@id/confirmRv"
+            android:id="@+id/confirm_all_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Confirm All"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="30dp"/>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/req"
         android:id="@+id/memberRv"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
@@ -35,7 +43,7 @@
         android:id="@+id/kick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         android:text="Delete Member"
         android:textColor="@android:color/white"
@@ -44,9 +52,29 @@
         android:id="@+id/invite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_group_add_white_24dp"/>
-</LinearLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/load"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:indicator_color="@color/colorAccent" />
+    <TextView
+        android:id="@+id/failed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Failed. Click to Retry"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="52dp"/>
+
+</RelativeLayout>
 

@@ -38,6 +38,8 @@ public class CreatePost extends DialogFragment {
     ImageView create;
     EditText post;
     String postTxt, TAG = "respon";
+    Bundle bundle;
+    int postId;
 
     public CreatePost() {
         // Required empty public constructor
@@ -62,6 +64,7 @@ public class CreatePost extends DialogFragment {
         create = (ImageView) inflated.findViewById(R.id.sendMsg);
         post = (EditText) inflated.findViewById(R.id.txtName);
 
+
         Bundle args = getArguments();
         final int groupId = args.getInt("groupId");
         Log.d("groupId", Integer.toString(groupId));
@@ -72,32 +75,12 @@ public class CreatePost extends DialogFragment {
 
                 postTxt = post.getText().toString();
 
-                DiskusiInterface diskusiInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(DiskusiInterface.class);
+                reqJson(groupId);
 
-                NewPostModel diskusiModel = new NewPostModel();
-                diskusiModel.setText(postTxt);
-
-                Call<DiskusiModel> call = diskusiInterface.createPost(groupId, diskusiModel);
-                call.enqueue(new Callback<DiskusiModel>() {
-                    @Override
-                    public void onResponse(Call<DiskusiModel> call, Response<DiskusiModel> response) {
-                        try {
-                            DiskusiModel model = response.body();
-
-                            Log.d(TAG, Integer.toString(response.code()));
-                        } catch (Exception e) {
-                            Log.e(TAG, "onResponse: ", e);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<DiskusiModel> call, Throwable t) {
-
-                    }
-                });
-
-                Intent intent = new Intent(getActivity(), DiskusiDetail.class);
+                Intent intent = new Intent(getActivity(), GroupDetail.class);
+                intent.putExtra("groupId", groupId);
                 startActivity(intent);
+
                 dismiss();
             }
         });
@@ -114,5 +97,33 @@ public class CreatePost extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
         );
+    }
+
+    private void reqJson(int groupId) {
+        DiskusiInterface diskusiInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(DiskusiInterface.class);
+
+        NewPostModel diskusiModel = new NewPostModel();
+        diskusiModel.setText(postTxt);
+
+        Call<DiskusiModel> call = diskusiInterface.createPost(groupId, diskusiModel);
+        call.enqueue(new Callback<DiskusiModel>() {
+            @Override
+            public void onResponse(Call<DiskusiModel> call, Response<DiskusiModel> response) {
+                try {
+                    DiskusiModel model = response.body();
+
+                    postId = model.getId();
+
+                    Log.d(TAG, Integer.toString(response.code()));
+                } catch (Exception e) {
+                    Log.e(TAG, "onResponse: ", e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DiskusiModel> call, Throwable t) {
+
+            }
+        });
     }
 }

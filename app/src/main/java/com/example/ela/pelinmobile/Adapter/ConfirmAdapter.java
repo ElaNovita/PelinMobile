@@ -69,7 +69,7 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
         holder.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reqJson();
+                reqJson(groupId, users.get(position).getId());
                 removeItem(position);
             }
         });
@@ -107,9 +107,9 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
 
     }
 
-    public void reqJson() {
+    public void reqJson(int groupId, int reqId) {
         RequestInterface service = new RetrofitBuilder(context).getRetrofit().create(RequestInterface.class);
-        Call<ApproveModel> call = service.confirmUser(4, 11);
+        Call<ApproveModel> call = service.confirmUser(groupId, reqId);
         call.enqueue(new Callback<ApproveModel>() {
             @Override
             public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {

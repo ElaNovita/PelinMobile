@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 public interface RequestInterface {
 
     @GET("groups/{groupId}/pendings")
-    Call<List<RequestModel>> getUsers(@Path("groupId") int groupId);
+    Call<List<RequestModel>> getPendingUsers(@Path("groupId") int groupId);
 
     @GET("groups/{groupId}/pendings/{reqId}/approve")
     Call<ApproveModel> confirmUser(@Path("groupId") int groupId, @Path("reqId") int reqId);

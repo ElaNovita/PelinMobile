@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -52,6 +53,9 @@ public class MemberFragment extends Fragment {
     RecyclerView recyclerView, rv;
     Button confirmAll;
     FloatingActionButton fab;
+    TextView fail;
+    View inflated;
+    LinearLayout linearLayout;
 
 
     public MemberFragment() {
@@ -69,20 +73,123 @@ public class MemberFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View inflated = inflater.inflate(R.layout.fragment_member, container, false);
+        inflated = inflater.inflate(R.layout.fragment_member, container, false);
+
+        startAnim();
 
         kick = (Button) inflated.findViewById(R.id.kick);
         wrap = (LinearLayout) inflated.findViewById(R.id.wrap);
+        fail = (TextView) inflated.findViewById(R.id.failed);
+
 
         confirmAll = (Button) inflated.findViewById(R.id.confirm_all_btn);
         fab = (FloatingActionButton) inflated.findViewById(R.id.invite);
         recyclerView = (RecyclerView) inflated.findViewById(R.id.memberRv);
         rv = (RecyclerView) inflated.findViewById(R.id.confirmRv);
+        linearLayout = (LinearLayout) inflated.findViewById(R.id.req);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        final MemberInterface memberInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MemberInterface.class);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
+
+        reqJoin();
+        reqMembers();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
+
+        fail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnim();
+                reqJoin();
+                reqMembers();
+            }
+        });
+
+        return inflated;
+    }
+
+    private void kick(String nim) {
+        RequestInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
+        Call<ApproveModel> call = service.kick(4, nim);
+        call.enqueue(new Callback<ApproveModel>() {
+            @Override
+            public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
+                Log.d("respon", "onResponse: kick " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<ApproveModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void reqJoin() {
+        RequestInterface requestInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
+
+        Call<List<RequestModel>> call = requestInterface.getPendingUsers(groupId);
+        call.enqueue(new Callback<List<RequestModel>>() {
+            @Override
+            public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
+                List<RequestModel> requestModels = response.body();
+
+                if (requestModels == null) {
+                    linearLayout.setVisibility(View.GONE);
+                }
+
+                ConfirmAdapter adapters = new ConfirmAdapter(requestModels, getActivity(), groupId);
+                rv.setAdapter(adapters);
+                Log.d("respon", "onResponse: kode " + response.code());
+                fail.setVisibility(View.GONE);
+                stopAnim();
+            }
+
+            @Override
+            public void onFailure(Call<List<RequestModel>> call, Throwable t) {
+                fail.setVisibility(View.VISIBLE);
+                stopAnim();
+            }
+        });
+
+        confirmAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmAll();
+            }
+        });
+    }
+
+    private void confirmAll() {
+        RequestInterface requestInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
+        Call<ApproveModel> call = requestInterface.confirmAll(groupId);
+        call.enqueue(new Callback<ApproveModel>() {
+            @Override
+            public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
+                Log.d("respon", "onResponse: all " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<ApproveModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void showDialog() {
+        FragmentManager fragmentManager = getFragmentManager();
+        InviteDialog dialog = InviteDialog.newInstance("Enter Username");
+        dialog.show(fragmentManager, "Enter Username");
+    }
+
+    private void reqMembers() {
+        MemberInterface memberInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(MemberInterface.class);
         Call<List<MemberModel>> call = memberInterface.getMembers(groupId);
         call.enqueue(new Callback<List<MemberModel>>() {
             @Override
@@ -117,97 +224,28 @@ public class MemberFragment extends Fragment {
                         }
                     });
 
+                    fail.setVisibility(View.GONE);
                     recyclerView.setAdapter(adapter);
+                    stopAnim();
 
                 } catch (Exception e) {
                     Log.e("respon", "onResponse: ", e);
+                    fail.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<List<MemberModel>> call, Throwable t) {
-
-            }
-        });
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
-
-        reqJoin();
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });
-
-        return inflated;
-    }
-
-    private void kick(String nim) {
-        RequestInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
-        Call<ApproveModel> call = service.kick(4, nim);
-        call.enqueue(new Callback<ApproveModel>() {
-            @Override
-            public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
-                Log.d("respon", "onResponse: kick " + response.code());
-            }
-
-            @Override
-            public void onFailure(Call<ApproveModel> call, Throwable t) {
-
+                stopAnim();
             }
         });
     }
 
-    private void reqJoin() {
-        RequestInterface requestInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
-
-        Call<List<RequestModel>> call = requestInterface.getUsers(4);
-        call.enqueue(new Callback<List<RequestModel>>() {
-            @Override
-            public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
-                List<RequestModel> requestModels = response.body();
-
-                ConfirmAdapter adapters = new ConfirmAdapter(requestModels, getActivity(), groupId);
-                rv.setAdapter(adapters);
-                Log.d("respon", "onResponse: kode " + response.code());
-            }
-
-            @Override
-            public void onFailure(Call<List<RequestModel>> call, Throwable t) {
-
-            }
-        });
-
-        confirmAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confirmAll();
-            }
-        });
+    public void startAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.VISIBLE);
     }
 
-    private void confirmAll() {
-        RequestInterface requestInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
-        Call<ApproveModel> call = requestInterface.confirmAll(4);
-        call.enqueue(new Callback<ApproveModel>() {
-            @Override
-            public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
-                Log.d("respon", "onResponse: all " + response.code());
-            }
-
-            @Override
-            public void onFailure(Call<ApproveModel> call, Throwable t) {
-
-            }
-        });
+    public void stopAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.GONE);
     }
-
-    private void showDialog() {
-        FragmentManager fragmentManager = getFragmentManager();
-        InviteDialog dialog = InviteDialog.newInstance("Enter Username");
-        dialog.show(fragmentManager, "Enter Username");
-    }
-
 }

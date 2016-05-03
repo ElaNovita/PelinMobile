@@ -8,8 +8,10 @@ import com.example.ela.pelinmobile.Model.NewPostModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -24,5 +26,9 @@ public interface DiskusiInterface {
 
     @POST("groups/{groupId}/posts")
     Call<DiskusiModel> createPost(@Path("groupId") int groupId, @Body NewPostModel diskusiModel);
+
+    @DELETE("groups/{groupId}/posts/{postId}")
+    Call<ResponseBody> deletePost(@Path("groupId") int groupId, @Path("postId") int postId);
+
 
 }

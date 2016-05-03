@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.MessagesAdapter;
@@ -43,6 +45,8 @@ public class MessagesFragment extends Fragment {
     Button delete;
     MessagesAdapter adapter;
     String userId;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView failed;
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -61,6 +65,9 @@ public class MessagesFragment extends Fragment {
         delete = (Button) inflated.findViewById(R.id.delete);
 
         recyclerView = (RecyclerView) inflated.findViewById(R.id.messageRv);
+        swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
+        failed = (TextView) inflated.findViewById(R.id.failed);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addMessage);
@@ -71,6 +78,13 @@ public class MessagesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reqJson();
             }
         });
 
@@ -117,13 +131,18 @@ public class MessagesFragment extends Fragment {
                         }
                     }
                 });
+
+                swipeRefreshLayout.setRefreshing(false);
+                failed.setVisibility(View.GONE);
+
                 recyclerView.setAdapter(adapter);
 
             }
 
             @Override
             public void onFailure(Call<List<MessageModel>> call, Throwable t) {
-
+                failed.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

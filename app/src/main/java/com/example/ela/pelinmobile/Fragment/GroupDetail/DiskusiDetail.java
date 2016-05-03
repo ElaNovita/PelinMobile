@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ela.pelinmobile.Adapter.DiskusiAdapter;
 import com.example.ela.pelinmobile.Adapter.DiskusiDetailAdapter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.DiskusiInterface;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +45,7 @@ public class DiskusiDetail extends AppCompatActivity {
     ImageView sendreply, like;
     boolean voted;
     TextView replyCount, senderName, createdAt, content, postReply, likeCount;
+    DiskusiAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

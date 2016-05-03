@@ -23,42 +23,49 @@
             app:expandedTitleGravity="center_horizontal"
             app:expandedTitleTextAppearance="@style/ExpandedTitleSize">
 
-            <LinearLayout
-                android:id="@+id/header"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:paddingBottom="10dp"
-                android:paddingTop="32dp"
-                android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_photo"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/ciel"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    app:civ_border_color="@android:color/white"
-                    app:civ_border_width="2dp"/>
-                <TextView
-                    android:id="@+id/user_name"
-                    android:text="Username"
-                    android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_gravity="center"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="30dp"/>
-                <TextView
-                    android:id="@+id/code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="10dp"/>
+                    android:background="@color/colorPrimary"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="32dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/user_photo"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:src="@drawable/ciel"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        app:civ_border_color="@android:color/white"
+                        app:civ_border_width="2dp"/>
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:text="Username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="30dp"/>
+                    <TextView
+                        android:id="@+id/code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -77,6 +84,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <TextView
+        android:id="@+id/failed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Failed. Pull to Refresh"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical|center_horizontal"/>
 
     <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"

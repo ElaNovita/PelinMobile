@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.TugasAdapter;
 import com.example.ela.pelinmobile.AddTugas;
@@ -19,11 +22,14 @@ import com.example.ela.pelinmobile.AssigntDetail;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
 import com.example.ela.pelinmobile.Model.TugasModel;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +43,11 @@ public class TugasFragment extends Fragment {
     RecyclerView recyclerView;
     Bundle bundle;
     int groupId;
+    Button kick;
+    TugasAdapter adapter;
+    AVLoadingIndicatorView load;
+    SwipeRefreshLayout swipeRefreshLayout;
+    View inflated;
 
     public TugasFragment() {
         // Required empty public constructor
@@ -48,34 +59,6 @@ public class TugasFragment extends Fragment {
 
         groupId = getArguments().getInt("groupId");
 
-
-        TugasInterface tugasInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(TugasInterface.class);
-        Call<List<TugasModel>> call = tugasInterface.getTugas(groupId);
-        call.enqueue(new Callback<List<TugasModel>>() {
-            @Override
-            public void onResponse(Call<List<TugasModel>> call, Response<List<TugasModel>> response) {
-                try {
-                    List<TugasModel> tugasModels = response.body();
-
-                    TugasAdapter adapter = new TugasAdapter(tugasModels, new TugasAdapter.OnItemClickListener() {
-                        @Override
-                        public void OnItemClick(TugasModel tugas) {
-                            Intent intent = new Intent(getActivity(), AssigntDetail.class);
-                            startActivity(intent);
-                        }
-                    });
-                    recyclerView.setAdapter(adapter);
-                } catch (Exception e) {
-                    Log.e("respon", "onResponse: ", e);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<TugasModel>> call, Throwable t) {
-                Log.e("respon", "onFailure: ", t);
-            }
-        });
-
         bundle = new Bundle();
         bundle.putInt("groupId", groupId);
 
@@ -85,8 +68,26 @@ public class TugasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View inflated = inflater.inflate(R.layout.fragment_tugas, container, false);
+        inflated = inflater.inflate(R.layout.fragment_tugas, container, false);
         recyclerView = (RecyclerView) inflated.findViewById(R.id.tugastRv);
+        kick = (Button) inflated.findViewById(R.id.delete);
+        load = (AVLoadingIndicatorView) inflated.findViewById(R.id.load);
+        swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
+
+        startAnim();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                startAnim();
+                reqJson();
+            }
+        });
+
+        load.setVisibility(View.VISIBLE);
+
+        reqJson();
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.tugas);
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addTugas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -95,6 +96,7 @@ public class TugasFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddTugas.class);
+                intent.putExtra("groupId", groupId);
                 startActivity(intent);
             }
         });
@@ -102,4 +104,78 @@ public class TugasFragment extends Fragment {
         return inflated;
     }
 
+    private void reqJson() {
+        TugasInterface tugasInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(TugasInterface.class);
+        Call<List<TugasModel>> call = tugasInterface.getTugas(groupId);
+        call.enqueue(new Callback<List<TugasModel>>() {
+            @Override
+            public void onResponse(Call<List<TugasModel>> call, Response<List<TugasModel>> response) {
+                try {
+                    final List<TugasModel> tugasModels = response.body();
+
+                    load.setVisibility(View.GONE);
+
+                    adapter = new TugasAdapter(tugasModels, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, final int position, boolean isLongClick) {
+                            if (isLongClick) {
+                                kick.setVisibility(View.VISIBLE);
+                                kick.setText("Delete " + tugasModels.get(position).getTitle() + "?");
+                                kick.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        deleteTugas(tugasModels.get(position).getId());
+                                        kick.setVisibility(View.GONE);
+                                        adapter.removeItem(position);
+                                    }
+                                });
+                            } else {
+                                Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
+
+                    stopAnim();
+                    swipeRefreshLayout.setRefreshing(false);
+                    recyclerView.setAdapter(adapter);
+                } catch (Exception e) {
+                    Log.e("respon", "onResponse: ", e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TugasModel>> call, Throwable t) {
+                Log.e("respon", "onFailure: ", t);
+                load.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                stopAnim();
+            }
+        });
+    }
+
+    private void deleteTugas(int tugasId) {
+        TugasInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(TugasInterface.class);
+        Call<ResponseBody> call = service.deleteTugas(groupId, tugasId);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                reqJson();
+                Log.d("respon", "onResponse: " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void startAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.VISIBLE);
+    }
+
+    public void stopAnim() {
+        inflated.findViewById(R.id.load).setVisibility(View.GONE);
+    }
 }
