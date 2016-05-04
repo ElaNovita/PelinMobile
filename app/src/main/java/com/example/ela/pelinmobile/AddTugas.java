@@ -3,26 +3,28 @@ package com.example.ela.pelinmobile;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
 import com.example.ela.pelinmobile.Model.TugasModel;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -34,19 +36,17 @@ import retrofit2.Response;
 /**
  * Created by e on 1/04/16.
  */
-public class AddTugas extends AppCompatActivity {
+public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
-    DatePicker datePicker;
-    Calendar calendar;
-    int year, month, day;
     TextView TextuploadMateri, txtTime, txtDate;
     Button btnSendMateri, upMateri, dueTime, dueDate;
     private static final int PICKFILE_RESULT_CODE = 1;
     MultipartBody.Part requestFileBody;
     EditText title, description;
     String tugasTitle, desc;
-    RequestBody titles, descriptions;
+    RequestBody titles, descriptions, iso;
     int groupId;
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +81,21 @@ public class AddTugas extends AppCompatActivity {
         btnSendMateri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                TimeZone timeZone = calendar.getTimeZone();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+                dateFormat.setTimeZone(timeZone);
+                String hasil = dateFormat.format(calendar.getTimeInMillis());
+                Log.d("respon", "onDateSet: iso " + hasil);
+
                 tugasTitle = title.getText().toString();
                 desc = description.getText().toString();
 
                 titles = RequestBody.create(MediaType.parse("multipart/form-data"), tugasTitle);
                 descriptions = RequestBody.create(MediaType.parse("multipart/form-data"), desc);
+                iso = RequestBody.create(MediaType.parse("multipart/form-data"), hasil);
 
-                sendFile(requestFileBody, titles, descriptions);
+                sendFile(requestFileBody, titles, descriptions, iso);
 
                 Log.d("respon", "onClick: " + Integer.toString(groupId));
 
@@ -96,6 +104,22 @@ public class AddTugas extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        dueDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDate();
+            }
+        });
+
+        dueTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTime();
+            }
+        });
+
+
     }
 
     @Override
@@ -139,9 +163,9 @@ public class AddTugas extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendFile(MultipartBody.Part files, RequestBody titles, RequestBody descriptions) {
+    private void sendFile(MultipartBody.Part files, RequestBody titles, RequestBody descriptions, RequestBody due_date) {
         TugasInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(TugasInterface.class);
-        Call<TugasModel> call = service.createTugas(groupId, files, titles, descriptions);
+        Call<TugasModel> call = service.createTugas(groupId, files, titles, descriptions, due_date);
         call.enqueue(new Callback<TugasModel>() {
             @Override
             public void onResponse(Call<TugasModel> call, Response<TugasModel> response) {
@@ -157,7 +181,45 @@ public class AddTugas extends AppCompatActivity {
         });
     }
 
-    private void showDate() {
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = Integer.toString(dayOfMonth) + "-" + Integer.toString(monthOfYear) + "-" + Integer.toString(year);
+        txtDate.setText(date);
+
+        calendar.set(year, monthOfYear , dayOfMonth);
 
     }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        String time = Integer.toString(hourOfDay) + "-" + Integer.toString(minute);
+        txtTime.setText(time);
+
+        calendar.set(Calendar.HOUR, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+
+    }
+
+    private void showDate() {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dialog = DatePickerDialog.newInstance(
+                this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH));
+        dialog.show(getFragmentManager(), "DatePickerDialog");
+    }
+
+    private void showTime() {
+        Calendar now = Calendar.getInstance();
+        TimePickerDialog dialog = TimePickerDialog.newInstance(
+                this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                now.get(Calendar.SECOND),
+                true
+        );
+        dialog.show(getFragmentManager(), "TimePickerDialog");
+    }
+
 }

@@ -19,7 +19,7 @@ import butterknife.Bind;
 public class AssigntDetail extends AppCompatActivity {
     TextView timer;
     ImageButton uploadImg;
-    TextView namaFile;
+    TextView namaFile, title, content;
     Button assigntSend;
     private static final int PICKFILE_RESULT_CODE = 1;
 
@@ -31,6 +31,15 @@ public class AssigntDetail extends AppCompatActivity {
         uploadImg = (ImageButton) findViewById(R.id.uploadImg);
         namaFile = (TextView) findViewById(R.id.nmFile);
         assigntSend = (Button) findViewById(R.id.assigntUpload);
+        title = (TextView) findViewById(R.id.assigntTitle);
+        content = (TextView) findViewById(R.id.assigntContent);
+
+
+        String _title = getIntent().getStringExtra("title");
+        String _content = getIntent().getStringExtra("content");
+
+        title.setText(_title);
+        content.setText(_content);
 
         countDownTimer.start();
         uploadImg.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.TugasFragment;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
@@ -20,6 +21,7 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
 
     private List<TugasModel> tugases;
     static OnItemClickListener listener;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     public TugasAdapter(List<TugasModel> tugases, OnItemClickListener listener) {
         this.tugases = tugases;
@@ -45,7 +47,7 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(tugases.get(position).getTitle());
-        holder.dueTime.setText(tugases.get(position).getDue_date());
+        holder.dueTime.setText(cdf.format(tugases.get(position).getDueDate()));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

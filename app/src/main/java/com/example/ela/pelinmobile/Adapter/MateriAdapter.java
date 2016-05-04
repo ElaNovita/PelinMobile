@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriFragment;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Model.MateriModel;
 import com.example.ela.pelinmobile.R;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder> {
 
     List<MateriModel> materiModels;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     private static OnItemClickListener listener;
 
@@ -45,7 +47,7 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(materiModels.get(position).getTitle());
-        holder.time.setText(materiModels.get(position).getCreatedAt());
+        holder.time.setText(cdf.format(materiModels.get(position).getCreatedAt()));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

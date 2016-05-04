@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,16 @@ import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiFragment;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Model.DiskusiModel;
 import com.example.ela.pelinmobile.Model.ReplyModel;
 import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +32,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
 
     List<DiskusiModel> diskusis;
     public static OnItemClickListener listener;
-
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     public DiskusiAdapter(List<DiskusiModel> diskusis, OnItemClickListener listener) {
         this.diskusis = diskusis;
@@ -53,10 +58,11 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.dSender.setText(diskusis.get(position).getUser().getTeacher().getName());
-        holder.dSendAt.setText(diskusis.get(position).getCreated_at());
+        holder.dSendAt.setText(cdf.format(diskusis.get(position).getCreatedAt()));
         holder.dContent.setText(diskusis.get(position).getText());
         holder.dLike.setText(Integer.toString(diskusis.get(position).getVotesCount()));
         holder.dCount.setText(Integer.toString(diskusis.get(position).getCommentsCount()));
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,6 +80,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
             dLike = (TextView) itemView.findViewById(R.id.likeCount);
             dCount = (TextView) itemView.findViewById(R.id.replyDiskusicount);
             dSenderImg = (ImageView) itemView.findViewById(R.id.senderImg);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,4 +108,15 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
+
+//    private String format(String dates) {
+//        Date date = new Date();
+//        try {
+//            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dates);
+//
+//        } catch (ParseException e) {
+//
+//        }
+//        return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date);
+//    }
 }

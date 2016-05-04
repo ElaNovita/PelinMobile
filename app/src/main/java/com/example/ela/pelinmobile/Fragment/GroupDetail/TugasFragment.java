@@ -131,6 +131,8 @@ public class TugasFragment extends Fragment {
                                 });
                             } else {
                                 Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                                intent.putExtra("title", tugasModels.get(position).getTitle());
+                                intent.putExtra("content", tugasModels.get(position).getDescription());
                                 startActivity(intent);
                             }
                         }

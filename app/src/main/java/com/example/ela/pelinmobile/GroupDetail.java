@@ -49,16 +49,16 @@ public class GroupDetail extends BaseDrawer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Diskusi");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         groupId = getIntent().getIntExtra("groupId", 0);
+        String groupTitle = getIntent().getStringExtra("groupTitle");
         Log.d(TAG, Integer.toString(groupId));
         Bundle bundle = new Bundle();
         bundle.putInt("groupId", groupId);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(groupTitle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tabViewPager.setAdapter(new GroupDetailAdapter(getSupportFragmentManager(), bundle));
         tabLayout.setupWithViewPager(tabViewPager);
@@ -98,10 +98,7 @@ public class GroupDetail extends BaseDrawer {
         tabLayout.getTabAt(2).setIcon(tabIcon[2]);
         tabLayout.getTabAt(3).setIcon(tabIcon[3]);
     }
-
-
-
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

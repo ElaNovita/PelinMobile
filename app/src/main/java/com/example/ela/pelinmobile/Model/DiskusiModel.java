@@ -6,13 +6,16 @@ import com.google.gson.annotations.SerializedName;
  * Created by e on 18/04/16.
  */
 public class DiskusiModel {
-    String text, created_at;
+    String text;
     Teacher teacher;
     User user;
     int id;
 
     @SerializedName("group")
     int groupId;
+
+    @SerializedName("created_at")
+    String createdAt;
 
     @SerializedName("votes_count")
     int votesCount;
@@ -28,20 +31,12 @@ public class DiskusiModel {
         this.id = id;
     }
 
-    public String getCreated_at() {
-        return created_at;
-    }
-
     public int getGroupId() {
         return groupId;
     }
 
     public void setGroupId(int groupId) {
         this.groupId = groupId;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
     }
 
     public User getUser() {
@@ -83,5 +78,13 @@ public class DiskusiModel {
 
     public void setCommentsCount(int commentsCount) {
         this.commentsCount = commentsCount;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

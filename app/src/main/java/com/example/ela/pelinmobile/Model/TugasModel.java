@@ -10,8 +10,11 @@ import java.util.List;
  */
 public class TugasModel {
 
-    String title, due_date, description;
+    String title, description;
     int id;
+
+    @SerializedName("due_date")
+    String dueDate;
 
     @SerializedName("files")
     List<Object> files = new ArrayList<Object>();
@@ -33,12 +36,12 @@ public class TugasModel {
         this.title = title;
     }
 
-    public String getDue_date() {
-        return due_date;
+    public String getDueDate() {
+        return dueDate;
     }
 
-    public void setDue_date(String due_date) {
-        this.due_date = due_date;
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 
     public int getId() {

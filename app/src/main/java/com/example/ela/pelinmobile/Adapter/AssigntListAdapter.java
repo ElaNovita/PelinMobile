@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.AssigntFragment;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.R;
 
@@ -20,6 +21,7 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
 
     List<TugasModel> tugasModels;
     OnItemClickListener listener;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     public AssigntListAdapter(List<TugasModel> tugasModels, OnItemClickListener listener) {
         this.tugasModels = tugasModels;
@@ -42,7 +44,7 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(tugasModels.get(position), listener);
         holder.title.setText(tugasModels.get(position).getTitle());
-        holder.dueTime.setText(tugasModels.get(position).getDue_date());
+        holder.dueTime.setText(cdf.format(tugasModels.get(position).getDueDate()));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

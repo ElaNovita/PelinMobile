@@ -29,7 +29,10 @@ import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -56,6 +59,8 @@ public class DiskusiFragment extends Fragment {
     Button kick;
     TextView fail;
     DiskusiAdapter adapter;
+    Date hasil;
+    String result;
 
     public DiskusiFragment() {
         // Required empty public constructor
@@ -130,6 +135,9 @@ public class DiskusiFragment extends Fragment {
 
                     postId = new ArrayList<Integer>();
 
+
+                    Log.d(TAG, "onResponse: date " + result);
+
                     adapter = new DiskusiAdapter(diskusiModels, new OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
@@ -155,11 +163,12 @@ public class DiskusiFragment extends Fragment {
                     });
                     recyclerView.setAdapter(adapter);
                     swipeRefreshLayout.setRefreshing(false);
-                    stopAnim();
+
                     fail.setVisibility(View.GONE);
                 } catch (Exception e) {
                     Log.e(TAG, "error", e);
                 }
+                stopAnim();
             }
 
             @Override

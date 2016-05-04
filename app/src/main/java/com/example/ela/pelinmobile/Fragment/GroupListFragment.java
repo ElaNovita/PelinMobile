@@ -189,6 +189,7 @@ public class GroupListFragment extends Fragment {
                             } else {
                                 Intent intent = new Intent(getActivity(), GroupDetail.class);
                                 intent.putExtra("groupId", groupId);
+                                intent.putExtra("groupTitle", groups.get(position).getTitle());
                                 startActivity(intent);
                             }
 

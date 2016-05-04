@@ -6,4 +6,6 @@
     <color name="colorFAB1">#2196F3</color>
     <color name="colorFAB2">#E040FB</color>
     <color name="white">#fff</color>
+    <color name="mdtp_accent_color">#009688</color>
+    <color name="mdtp_accent_color_dark">#00796b</color>
 </resources>

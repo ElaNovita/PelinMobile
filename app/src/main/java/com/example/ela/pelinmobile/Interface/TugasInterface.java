@@ -34,5 +34,6 @@ public interface TugasInterface {
     Call<TugasModel> createTugas(@Path("groupId") int groupId,
                                  @Part MultipartBody.Part files,
                                  @Part("title") RequestBody title,
-                                 @Part("desc") RequestBody desc);
+                                 @Part("description") RequestBody desc,
+                                 @Part("due_date") RequestBody dueDate);
 }
