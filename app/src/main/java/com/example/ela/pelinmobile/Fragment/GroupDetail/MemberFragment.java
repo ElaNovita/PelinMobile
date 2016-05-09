@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.ConfirmAdapter;
 import com.example.ela.pelinmobile.Adapter.MemberAdapter;
 import com.example.ela.pelinmobile.Fragment.InviteDialog;
@@ -27,13 +24,12 @@ import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MemberInterface;
 import com.example.ela.pelinmobile.Interface.RequestInterface;
 import com.example.ela.pelinmobile.Model.ApproveModel;
-import com.example.ela.pelinmobile.Model.MateriModel;
 import com.example.ela.pelinmobile.Model.MemberModel;
 import com.example.ela.pelinmobile.Model.RequestModel;
 import com.example.ela.pelinmobile.Profile;
+import com.example.ela.pelinmobile.OtherProfile;
 import com.example.ela.pelinmobile.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -215,8 +211,14 @@ public class MemberFragment extends Fragment {
                                     }
                                 });
                             } else {
-                                Intent intent = new Intent(getActivity(), Profile.class);
-                                startActivity(intent);
+                                if (memberModels.get(position).isMe()) {
+                                    Intent intent = new Intent(getActivity(), Profile.class);
+                                    startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent(getActivity(), OtherProfile.class);
+                                    intent.putExtra("userId", memberModels.get(position).getId());
+                                    startActivity(intent);
+                                }
                             }
                         }
                     });

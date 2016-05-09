@@ -61,6 +61,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
+
                             String token = response.getString("token");
 
                             MySharedPreferences mf = new MySharedPreferences(Login.this);

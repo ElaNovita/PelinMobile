@@ -49,7 +49,7 @@ public class TugasFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     View inflated;
     String attachment;
-    boolean isOwner;
+    boolean isOwner, isTeacher;
 
     public TugasFragment() {
         // Required empty public constructor
@@ -94,6 +94,12 @@ public class TugasFragment extends Fragment {
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addTugas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if (!isTeacher) {
+            floatingActionButton.setVisibility(View.GONE);
+        } else {
+            floatingActionButton.setVisibility(View.VISIBLE);
+        }
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

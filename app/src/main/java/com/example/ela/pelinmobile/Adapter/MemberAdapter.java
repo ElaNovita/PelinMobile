@@ -111,4 +111,5 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
+
 }

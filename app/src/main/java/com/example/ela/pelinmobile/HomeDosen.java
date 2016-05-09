@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +19,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.HomeDosenAdapter;
 import com.example.ela.pelinmobile.Fragment.CreateGroupDialog;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MyInterface;
+import com.example.ela.pelinmobile.Model.User;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ela on 13/03/16.
@@ -42,6 +50,8 @@ public class HomeDosen extends BaseDrawer {
     private BadgeView badgeView;
     int buttonCounter = 2;
     Button add, dec;
+    String TAG = "respon";
+    boolean isTeacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

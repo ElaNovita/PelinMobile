@@ -49,7 +49,7 @@ public class GroupDetail extends BaseDrawer {
     TabLayout tabLayout;
     @Bind(R.id.tabViewPager)
     ViewPager tabViewPager;
-    int groupId = 2;
+    int groupId;
     TabHost tabHost;
     Bundle bundle;
     String groupTitle;
@@ -80,19 +80,7 @@ public class GroupDetail extends BaseDrawer {
         bundle.putString("groupTitle", groupTitle);
         bundle.putBoolean("owner", isOwner);
 
-        GroupInterface groupInterface = new RetrofitBuilder(this).getRetrofit().create(GroupInterface.class);
-        Call<GroupModel> call = groupInterface.getSingleGroup(groupId);
-        call.enqueue(new Callback<GroupModel>() {
-            @Override
-            public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
-                GroupModel group = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<GroupModel> call, Throwable t) {
-                Log.e("bundle", "onFailure: ", t);
-            }
-        });
+        reqJson();
 
 
         Log.d(TAG, "onCreate: own " + isOwner);
@@ -222,6 +210,7 @@ public class GroupDetail extends BaseDrawer {
             @Override
             public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
                 Log.d(TAG, "onResponse: leave" + response.code());
+                reqJson();
             }
 
             @Override
@@ -243,4 +232,21 @@ public class GroupDetail extends BaseDrawer {
 
         viewPager.setAdapter(adapter);
     }
+
+    private void reqJson() {
+        GroupInterface groupInterface = new RetrofitBuilder(this).getRetrofit().create(GroupInterface.class);
+        Call<GroupModel> call = groupInterface.getSingleGroup(groupId);
+        call.enqueue(new Callback<GroupModel>() {
+            @Override
+            public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
+                GroupModel group = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<GroupModel> call, Throwable t) {
+                Log.e("bundle", "onFailure: ", t);
+            }
+        });
+    }
+
 }

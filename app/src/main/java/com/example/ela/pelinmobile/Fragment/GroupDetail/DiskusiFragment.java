@@ -61,7 +61,7 @@ public class DiskusiFragment extends Fragment {
     DiskusiAdapter adapter;
     Date hasil;
     String result;
-    boolean isOwner;
+    boolean isOwner, isTeacher;
 
     public DiskusiFragment() {
         // Required empty public constructor
@@ -113,6 +113,10 @@ public class DiskusiFragment extends Fragment {
             }
         });
 
+        if (isOwner || isTeacher) {
+
+        }
+
         return inflated;
     }
 
@@ -142,16 +146,22 @@ public class DiskusiFragment extends Fragment {
                         public void onItemClick(View view, final int position, boolean isLongClick) {
                             if (isLongClick) {
 
-                                kick.setText("Delete this post?");
-                                kick.setVisibility(View.VISIBLE);
-                                kick.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        deletePost(groupId, diskusiModels.get(position).getId());
-                                        adapter.removeItem(position);
-                                        kick.setVisibility(View.GONE);
-                                    }
-                                });
+                                if (isOwner || isTeacher) {
+                                    kick.setText("Delete this post?");
+                                    kick.setVisibility(View.VISIBLE);
+                                    kick.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            deletePost(groupId, diskusiModels.get(position).getId());
+                                            adapter.removeItem(position);
+                                            kick.setVisibility(View.GONE);
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(getActivity(), diskusiModels.get(position).getUser().getName(), Toast.LENGTH_SHORT).show();
+                                }
+
+
                             } else {
                                 Intent intent = new Intent(getActivity(), DiskusiDetail.class);
                                 intent.putExtra("postId", diskusiModels.get(position).getId());

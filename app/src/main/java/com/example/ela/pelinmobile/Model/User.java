@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by e on 16/04/16.
  */
 public class User {
-    String status, name, email, password;
+    String status, name, email, password, phone;
     User.Token token;
     Student student;
     Teacher teacher;
@@ -98,5 +98,13 @@ public class User {
 
     public void setPhoto(PhotoModel photo) {
         this.photo = photo;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

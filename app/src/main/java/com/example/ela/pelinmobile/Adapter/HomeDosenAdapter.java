@@ -28,7 +28,6 @@ public class HomeDosenAdapter extends FragmentPagerAdapter {
     String badge_notif;
 
 
-
     public HomeDosenAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }

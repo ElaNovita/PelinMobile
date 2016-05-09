@@ -23,6 +23,7 @@ import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Interface.MyGroups;
 import com.example.ela.pelinmobile.Interface.MyInterface;
+import com.example.ela.pelinmobile.Interface.UserInterface;
 import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.Model.User;
 import java.util.List;
@@ -38,18 +39,20 @@ import retrofit2.Response;
 /**
  * Created by ela on 14/03/16.
  */
-public class Profile extends AppCompatActivity {
+public class OtherProfile extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     String TAG = "respon";
     int userId;
     public static final String myPref = "myPrefs";
     public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
-    FloatingActionButton info, edit;
+    FloatingActionButton mail, phone, info;
     boolean isTeacher;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView kode, username, failed;
     ImageView user_img;
+    boolean isMe;
+    int UserID;
 
     private List<GroupModel> groups;
 
@@ -61,18 +64,22 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile);
-
+        setContentView(R.layout.other_profile);
 
         context = getApplicationContext();
+
+        UserID = getIntent().getIntExtra("userId", 0);
+
+        
 
         kode = (TextView) findViewById(R.id.code);
         username = (TextView) findViewById(R.id.user_name);
         info = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.user_detail);
-        edit = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.edit);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         failed = (TextView) findViewById(R.id.failed);
         user_img = (ImageView) findViewById(R.id.user_photo);
+        mail = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.mail);
+        phone = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.phone);
 
 
         info.setOnClickListener(new View.OnClickListener() {
@@ -83,15 +90,6 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
-                startActivity(intent);
-            }
-        });
-
 
 
         recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
@@ -132,8 +130,8 @@ public class Profile extends AppCompatActivity {
 
 
     private void reqUser() {
-        MyInterface user = new RetrofitBuilder(Profile.this).getRetrofit().create(MyInterface.class);
-        Call<User> call = user.getUser();
+        UserInterface user = new RetrofitBuilder(OtherProfile.this).getRetrofit().create(UserInterface.class);
+        Call<User> call = user.getSingleUser(UserID);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -146,6 +144,19 @@ public class Profile extends AppCompatActivity {
                     } else {
                         nik = user.getStudent().getNim();
                     }
+
+                    phone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (user.getPhone() != null) {
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + user.getPhone()));
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), user.getName() + " tidak menambahkan info no ponsel", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
                     String name = user.getName();
                     userId = user.getId();
 

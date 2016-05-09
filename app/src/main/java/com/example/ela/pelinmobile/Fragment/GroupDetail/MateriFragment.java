@@ -47,7 +47,7 @@ public class MateriFragment extends Fragment {
     AVLoadingIndicatorView load;
     View inflated;
     String groupTitle;
-    boolean isOwner;
+    boolean isOwner, isTeacher;
 
 
     public MateriFragment() {
@@ -81,6 +81,13 @@ public class MateriFragment extends Fragment {
         load = (AVLoadingIndicatorView) inflated.findViewById(R.id.load);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addMateri);
+
+        if (!isTeacher) {
+            floatingActionButton.setVisibility(View.GONE);
+        } else {
+            floatingActionButton.setVisibility(View.VISIBLE);
+        }
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,17 +128,33 @@ public class MateriFragment extends Fragment {
                         public void OnItemClick(View view, final int position, boolean isLongClick) {
                             materiId = materiModels.get(position).getId();
                             if (isLongClick) {
-                                delete.setVisibility(View.VISIBLE);
-                                delete.setText("Delete " + materiModels.get(position).getTitle() + "?");
-                                delete.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        deleteMateri();
-                                        delete.setVisibility(View.GONE);
-                                        adapter.removeItem(position);
+                                if (isTeacher) {
+                                    delete.setVisibility(View.VISIBLE);
+                                    delete.setText("Delete " + materiModels.get(position).getTitle() + "?");
+                                    delete.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            deleteMateri();
+                                            delete.setVisibility(View.GONE);
+                                            adapter.removeItem(position);
 
-                                    }
-                                });
+                                        }
+                                    });
+                                    delete.setVisibility(View.VISIBLE);
+                                    delete.setText("Delete " + materiModels.get(position).getTitle() + "?");
+                                    delete.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            deleteMateri();
+                                            delete.setVisibility(View.GONE);
+                                            adapter.removeItem(position);
+
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(getActivity(), materiModels.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                                }
+
                             }
 
                         }

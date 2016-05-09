@@ -67,10 +67,11 @@ public class GroupListFragment extends Fragment {
     ArrayList<Integer> groupId;
     String TAG = "respon";
     View inflated;
-    TextView failed;
+    TextView failed, nogroup;
     SwipeRefreshLayout refreshLayout;
     Button kick;
     GroupListAdapter adapter;
+    boolean isOwner;
 
     private List<GroupModel> groups;
 
@@ -98,10 +99,20 @@ public class GroupListFragment extends Fragment {
         failed = (TextView) inflated.findViewById(R.id.failed);
         refreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         kick = (Button) inflated.findViewById(R.id.kick);
+        nogroup = (TextView) inflated.findViewById(R.id.nogroup);
+
 
         reqJson();
 
+
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addGroup);
+
+        if (isOwner) {
+            fab.setVisibility(View.GONE);
+        } else {
+            fab.setVisibility(View.VISIBLE);
+        }
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
 
@@ -153,9 +164,13 @@ public class GroupListFragment extends Fragment {
                     final List<GroupModel> groups = response.body();
 
 //                    Log.d(TAG, "onResponse: " + groups.get(2).getId());
+                    if (groups == null) {
+                        nogroup.setVisibility(View.VISIBLE);
+                    } else {
+                        nogroup.setVisibility(View.GONE);
+                    }
 
                     groupId = new ArrayList<Integer>();
-
 
 
                     for (GroupModel group : groups) {
@@ -166,6 +181,8 @@ public class GroupListFragment extends Fragment {
 
                     }
 
+
+
                     Log.d(TAG, "onResponse: " + groupId);
 
 
@@ -174,6 +191,8 @@ public class GroupListFragment extends Fragment {
                         public void onItemClick(View view, final int position, boolean isLongClick) {
                             final int groupId = groups.get(position).getId();
                             if (isLongClick) {
+
+
 
                                 kick.setVisibility(View.VISIBLE);
                                 kick.setText("Delete " + groups.get(position).getTitle() + "?");
@@ -188,7 +207,7 @@ public class GroupListFragment extends Fragment {
 
                             } else {
                                 Intent intent = new Intent(getActivity(), GroupDetail.class);
-                                intent.putExtra("groupId", 2);
+                                intent.putExtra("groupId", groupId);
                                 intent.putExtra("groupTitle", groups.get(position).getTitle());
                                 intent.putExtra("owner", groups.get(position).isOwner());
                                 startActivity(intent);

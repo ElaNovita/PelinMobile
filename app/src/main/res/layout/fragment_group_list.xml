@@ -29,6 +29,15 @@
         android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
+    <TextView
+        android:id="@+id/nogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Group? Create one"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/load"

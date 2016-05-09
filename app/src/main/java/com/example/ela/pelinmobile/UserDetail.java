@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.UserInterface;
 import com.example.ela.pelinmobile.Model.User;
@@ -24,7 +25,7 @@ public class UserDetail extends AppCompatActivity {
 
     int userId;
     TextView name, nim, status, major, email, phone, majorTxt;
-    ImageView majorIcon;
+    ImageView image, majorIcon;
     String _name, _nim, _status, _major, _email, _phone;
     boolean isTeacher;
 
@@ -45,9 +46,7 @@ public class UserDetail extends AppCompatActivity {
         phone = (TextView) findViewById(R.id.phone);
         majorTxt = (TextView) findViewById(R.id.majorTxt);
         majorIcon = (ImageView) findViewById(R.id.majorIcon);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Detail");
+        image = (ImageView) findViewById(R.id.img);
     }
 
     @Override
@@ -75,7 +74,6 @@ public class UserDetail extends AppCompatActivity {
 
                 name.setText(user.getName());
                 status.setText("I am a " + user.getStatus());
-                email.setText(user.getEmail());
 
                 if (user.isTeacher()) {
                     nim.setText(user.getTeacher().getNik());
@@ -87,7 +85,25 @@ public class UserDetail extends AppCompatActivity {
                     major.setText(user.getStudent().getMajor());
                 }
 
-                Log.d("respon", "onResponse: name " + response.code());
+                if (user.getPhone() == null) {
+                    phone.setText("No Info");
+                } else {
+                    phone.setText(user.getPhone());
+                }
+
+                if (user.getEmail() == null) {
+                    email.setText("No Info");
+                } else {
+                    email.setText(user.getEmail());
+                }
+
+                if (user.getPhoto().getSmall() == null) {
+                    image.setImageResource(R.drawable.eren);
+                } else {
+                    Glide.with(getApplicationContext()).load(user.getPhoto().getSmall()).into(image);
+                }
+
+                Log.d("respon", "onResponse: photo " + user.getPhoto().getSmall());
 
             }
 
