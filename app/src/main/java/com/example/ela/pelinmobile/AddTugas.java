@@ -169,8 +169,9 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
         call.enqueue(new Callback<TugasModel>() {
             @Override
             public void onResponse(Call<TugasModel> call, Response<TugasModel> response) {
-                Log.d("respon", "onResponse: respon " + response.code());
+                Log.d("respon", "onResponse: respon tugas  " + response.code());
                 Toast.makeText(getApplicationContext(), "Tugas Sudah di Upload", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override

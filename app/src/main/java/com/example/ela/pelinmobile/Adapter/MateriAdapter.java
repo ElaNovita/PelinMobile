@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriFragment;
 import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Model.MateriModel;
 import com.example.ela.pelinmobile.R;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -47,7 +50,11 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(materiModels.get(position).getTitle());
-        holder.time.setText(cdf.format(materiModels.get(position).getCreatedAt()));
+        try {
+            holder.time.setText(cdf.format(materiModels.get(position).getCreatedAt()));
+        } catch (ParseException e) {
+
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

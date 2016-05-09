@@ -1,5 +1,7 @@
 package com.example.ela.pelinmobile.Interface;
 
+import com.example.ela.pelinmobile.Model.SubmitModel;
+import com.example.ela.pelinmobile.Model.Submitted;
 import com.example.ela.pelinmobile.Model.TugasModel;
 
 import java.util.List;
@@ -36,4 +38,16 @@ public interface TugasInterface {
                                  @Part("title") RequestBody title,
                                  @Part("description") RequestBody desc,
                                  @Part("due_date") RequestBody dueDate);
+
+    @Multipart
+    @POST("groups/{groupId}/assignments/{assignId}/submit")
+    Call<SubmitModel> submitTugas(@Path("groupId") int groupId,
+                                  @Path("assignId") int assign,
+                                  @Part("text") RequestBody text,
+                                  @Part MultipartBody.Part file);
+
+    @GET("groups/{groupId}/assignments/{assignId}/submitted")
+    Call<List<Submitted>> getSubmitted(@Path("groupId") int groupId, @Path("assignId") int assignId);
+
+//    @GET("groups/{groupId}/assignments/{asignId}/")
 }

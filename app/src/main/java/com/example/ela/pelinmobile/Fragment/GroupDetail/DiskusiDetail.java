@@ -42,7 +42,7 @@ public class DiskusiDetail extends AppCompatActivity {
     String TAG = "respon", name, created, txtContent;
     RecyclerView recyclerView;
     int replySize, groupId, postId;
-    ImageView sendreply, like;
+    ImageView sendreply, like, sender;
     boolean voted;
     TextView replyCount, senderName, createdAt, content, postReply, likeCount;
     DiskusiAdapter adapter;
@@ -62,6 +62,7 @@ public class DiskusiDetail extends AppCompatActivity {
         createdAt = (TextView) findViewById(R.id.sendAtDetail);
         postReply = (TextView) findViewById(R.id.postReply);
         sendreply = (ImageView) findViewById(R.id.diskusi_send);
+        sender = (ImageView) findViewById(R.id.senderImgDetail);
 
         senderName.setText("fa");
 
@@ -80,6 +81,7 @@ public class DiskusiDetail extends AppCompatActivity {
                 createdAt.setText(diskusi.getCreatedAt());
                 content.setText(diskusi.getText());
                 setCountText(counter);
+
                 voted = diskusi.isVoted();
 
                 if (voted == true) {
@@ -188,7 +190,7 @@ public class DiskusiDetail extends AppCompatActivity {
 
                 replyCount.setText(Integer.toString(replySize));
 
-                DiskusiDetailAdapter adapter = new DiskusiDetailAdapter(replyModels);
+                DiskusiDetailAdapter adapter = new DiskusiDetailAdapter(replyModels, getApplicationContext());
                 recyclerView.setAdapter(adapter);
 
                 stopAnim();

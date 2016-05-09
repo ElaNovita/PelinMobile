@@ -108,7 +108,7 @@ public class MessagesFragment extends Fragment {
                 final List<MessageModel> messageModels = response.body();
 
 
-                adapter = new MessagesAdapter(messageModels);
+                adapter = new MessagesAdapter(messageModels, getActivity());
                 adapter.setOnItemClickListener(new MessagesAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(View view, final int position, boolean isLongClick) {

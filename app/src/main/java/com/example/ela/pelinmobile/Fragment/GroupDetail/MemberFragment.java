@@ -90,9 +90,6 @@ public class MemberFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.member);
-
         reqJoin();
         reqMembers();
 

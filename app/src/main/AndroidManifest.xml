@@ -47,6 +47,7 @@
         </activity>
         <activity android:name=".UserDetail"/>
         <activity android:name=".EditProfile"/>
+        <activity android:name=".EditGroup"/>
     </application>
 
 

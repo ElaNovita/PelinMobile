@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
 import com.example.ela.pelinmobile.Model.DiskusiModel;
 import com.example.ela.pelinmobile.Model.ReplyModel;
@@ -20,9 +22,12 @@ import java.util.List;
 public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdapter.ViewHolder> {
 
     private List<ReplyModel> detailDiskusis;
+    Context context;
+    static ImageView img;
 
-    public DiskusiDetailAdapter(List<ReplyModel> detailDiskusis) {
+    public DiskusiDetailAdapter(List<ReplyModel> detailDiskusis, Context context) {
         this.detailDiskusis = detailDiskusis;
+        this.context = context;
     }
 
     @Override
@@ -43,12 +48,11 @@ public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdap
         holder.nama.setText(detailDiskusis.get(position).getUser().getName());
         holder.content.setText(detailDiskusis.get(position).getText());
         holder.time.setText(detailDiskusis.get(position).getCreatedAt());
-//        holder.img.setImageResource(detailDiskusis.get(position).img);
+        Glide.with(context).load(detailDiskusis.get(position).getUser().getPhoto().getSmall()).into(img);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nama, content, time;
-        ImageView img;
 
         public ViewHolder(View itemView) {
             super(itemView);

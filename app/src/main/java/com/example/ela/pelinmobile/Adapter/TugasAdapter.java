@@ -1,9 +1,11 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.GroupDetail.TugasFragment;
@@ -12,6 +14,7 @@ import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -22,10 +25,12 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
     private List<TugasModel> tugases;
     static OnItemClickListener listener;
     CustomDateFormatter cdf = new CustomDateFormatter();
+    public  static Context context;
 
-    public TugasAdapter(List<TugasModel> tugases, OnItemClickListener listener) {
+    public TugasAdapter(List<TugasModel> tugases, Context context, OnItemClickListener listener) {
         this.tugases = tugases;
         this.listener = listener;
+        this.context = context;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -47,17 +52,28 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(tugases.get(position).getTitle());
-        holder.dueTime.setText(cdf.format(tugases.get(position).getDueDate()));
+        if (tugases.get(position).isPassed()) {
+            holder.passed.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        } else {
+            holder.passed.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
+        }
+        try {
+            holder.dueTime.setText(cdf.format(tugases.get(position).getDueDate()));
+        } catch (ParseException e) {
+
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, dueTime;
+        LinearLayout passed;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.judulTugas);
             dueTime = (TextView) itemView.findViewById(R.id.dueTime);
+            passed = (LinearLayout) itemView.findViewById(R.id.passed);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -36,4 +37,7 @@ public interface GroupInterface {
 
     @DELETE("groups/{groupId}")
     Call<ResponseBody> deleteGroup(@Path("groupId") int groupId);
+
+    @PATCH("groups/{groupId}")
+    Call<GroupModel> editGroup(@Path("groupId") int groupId, @Body GroupModel model);
 }

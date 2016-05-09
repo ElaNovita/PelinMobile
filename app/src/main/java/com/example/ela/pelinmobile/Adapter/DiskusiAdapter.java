@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.CardView;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiFragment;
 import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
@@ -33,10 +35,14 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
     List<DiskusiModel> diskusis;
     public static OnItemClickListener listener;
     CustomDateFormatter cdf = new CustomDateFormatter();
+    String created;
+    static Context context;
+    static ImageView dSenderImg;
 
-    public DiskusiAdapter(List<DiskusiModel> diskusis, OnItemClickListener listener) {
+    public DiskusiAdapter(List<DiskusiModel> diskusis, Context context, OnItemClickListener listener) {
         this.diskusis = diskusis;
         this.listener = listener;
+        this.context = context;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -57,18 +63,30 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.dSender.setText(diskusis.get(position).getUser().getTeacher().getName());
-        holder.dSendAt.setText(cdf.format(diskusis.get(position).getCreatedAt()));
+        holder.dSender.setText(diskusis.get(position).getUser().getName());
         holder.dContent.setText(diskusis.get(position).getText());
         holder.dLike.setText(Integer.toString(diskusis.get(position).getVotesCount()));
         holder.dCount.setText(Integer.toString(diskusis.get(position).getCommentsCount()));
+        Glide.with(context).load(diskusis.get(position).getUser().getPhoto().getSmall()).into(dSenderImg);
+
+        Log.d("respon", "onBindViewHolder: photo " + diskusis.get(position).getUser().getPhoto().getSmall());
+
+        try {
+            created = cdf.format(diskusis.get(position).getCreatedAt());
+            holder.dSendAt.setText(created);
+            Log.d("respon", "onBindViewHolder: format " + cdf.format(diskusis.get(position).getCreatedAt()));
+        } catch (ParseException e) {
+
+            Log.e("respon", "onBindViewHolder: " + e.getMessage(), e);
+        }
+
+        Log.d("respon", "onBindViewHolder: date " + created);
 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CardView dCv;
         TextView dSender, dSendAt, dContent, dLike, dCount;
-        ImageView dSenderImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +98,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
             dLike = (TextView) itemView.findViewById(R.id.likeCount);
             dCount = (TextView) itemView.findViewById(R.id.replyDiskusicount);
             dSenderImg = (ImageView) itemView.findViewById(R.id.senderImg);
+
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

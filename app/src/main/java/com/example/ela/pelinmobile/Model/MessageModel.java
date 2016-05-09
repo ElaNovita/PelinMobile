@@ -20,33 +20,6 @@ public class MessageModel {
     @SerializedName("target_user")
     TargetUser targetUser;
 
-    public class TargetUser {
-        String url, name;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
 
     public int getId() {
         return id;
@@ -54,14 +27,6 @@ public class MessageModel {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public TargetUser getTargetUser() {
-        return targetUser;
-    }
-
-    public void setTargetUser(TargetUser targetUser) {
-        this.targetUser = targetUser;
     }
 
     public String getUrl() {
@@ -78,5 +43,21 @@ public class MessageModel {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public TargetUser getTargetUser() {
+        return targetUser;
+    }
+
+    public void setTargetUser(TargetUser targetUser) {
+        this.targetUser = targetUser;
     }
 }

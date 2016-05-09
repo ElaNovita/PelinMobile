@@ -31,7 +31,7 @@ import retrofit2.Response;
  */
 public class CreateGroupDialog extends DialogFragment {
 
-    TextView grouptitle, classes, group_smster, group_desc;
+    EditText grouptitle, classes, group_smster, group_desc, jurusan;
     Button create;
 
     String title;
@@ -60,10 +60,11 @@ public class CreateGroupDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         View inflated = inflater.inflate(R.layout.create_group, container);
         create = (Button) inflated.findViewById(R.id.btn_create);
-        grouptitle = (TextView) inflated.findViewById(R.id.group_name);
-        classes = (TextView) inflated.findViewById(R.id.group_classes);
-        group_smster = (TextView) inflated.findViewById(R.id.group_semester);
-        group_desc = (TextView) inflated.findViewById(R.id.group_desc);
+        grouptitle = (EditText) inflated.findViewById(R.id.group_name);
+        classes = (EditText) inflated.findViewById(R.id.group_classes);
+        group_smster = (EditText) inflated.findViewById(R.id.group_semester);
+        group_desc = (EditText) inflated.findViewById(R.id.group_desc);
+        jurusan = (EditText) inflated.findViewById(R.id.jurusan);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,8 @@ public class CreateGroupDialog extends DialogFragment {
 
                 GroupModel groupModel = new GroupModel();
                 groupModel.setTitle(title);
+                groupModel.setMajor(jurusan.getText().toString());
+                groupModel.setSemester(Integer.parseInt(group_smster.getText().toString()));
 
                 Call<GroupModel> call = groupInterface.createGroup(groupModel);
                 call.enqueue(new Callback<GroupModel>() {

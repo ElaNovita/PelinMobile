@@ -188,9 +188,11 @@ public class GroupListFragment extends Fragment {
 
                             } else {
                                 Intent intent = new Intent(getActivity(), GroupDetail.class);
-                                intent.putExtra("groupId", groupId);
+                                intent.putExtra("groupId", 2);
                                 intent.putExtra("groupTitle", groups.get(position).getTitle());
+                                intent.putExtra("owner", groups.get(position).isOwner());
                                 startActivity(intent);
+                                Log.d(TAG, "onItemClick: id " + groupId);
                             }
 
 

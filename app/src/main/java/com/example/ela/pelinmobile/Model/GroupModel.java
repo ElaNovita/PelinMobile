@@ -6,9 +6,12 @@ import com.google.gson.annotations.SerializedName;
  * Created by e on 18/04/16.
  */
 public class GroupModel {
-    String title;
-    int members, id;
+    String title, major, description;
+    int members, id, semester;
     Teacher teacher;
+
+    @SerializedName("is_owner")
+    boolean isOwner;
 
     @SerializedName("is_joined")
     boolean isJoined;
@@ -66,4 +69,45 @@ public class GroupModel {
     public void setPending(boolean pending) {
         isPending = pending;
     }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public int getMembers() {
+        return members;
+    }
+
+    public void setMembers(int members) {
+        this.members = members;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isOwner() {
+        return isOwner;
+    }
+
+    public void setOwner(boolean owner) {
+        isOwner = owner;
+    }
 }
+

@@ -3,15 +3,19 @@ package com.example.ela.pelinmobile.Adapter;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.MessagesFragment;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Model.MessageModel;
 import com.example.ela.pelinmobile.R;
+import com.github.curioustechizen.ago.RelativeTimeTextView;
 
 import java.util.List;
 
@@ -22,13 +26,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     List<MessageModel> messages;
     private static OnItemClickListener listener;
+    CustomDateFormatter cdf = new CustomDateFormatter();
+    Context context;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    public MessagesAdapter(List<MessageModel> messages) {
+    public MessagesAdapter(List<MessageModel> messages, Context context) {
         this.messages = messages;
+        this.context = context;
     }
 
     @Override
@@ -47,14 +54,24 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 //        holder.bind(messages.get(position), listener);
         holder.sender.setText(messages.get(position).getTargetUser().getName());
-        holder.sendAt.setText(messages.get(position).getCreatedAt());
+//        holder.sendAt.setText(messages.get(position).getCreatedAt());
+//        cdf.format(messages.get(position).getCreatedAt())
 //        holder.senderImg.setImageResource(messages.get(position).senderImg);
+        holder.sendAt.setText(cdf.getTimeAgo(cdf.toLong(messages.get(position).getCreatedAt())));
+        if (messages.get(position).getTargetUser().getPhoto().getSmall() == null) {
+            holder.senderImg.setImageResource(R.drawable.eren);
+        } else {
+            Glide.with(context).load(messages.get(position).getTargetUser().getPhoto().getSmall()).into(holder.senderImg);
+        }
+        Log.d("respon", "onBindViewHolder: " + cdf.toLong(messages.get(position).getCreatedAt()));
+        Log.d("respon", "onBindViewHolder: now " + messages.get(position).getCreatedAt());
+        Log.d("respon", "onBindViewHolder: photo " + messages.get(position).getTargetUser().getPhoto().getSmall());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CardView messageCv;
-        ImageView senderImg;
         TextView sender, messageContent, sendAt;
+        ImageView senderImg;
 
         public ViewHolder(final View itemView) {
             super(itemView);

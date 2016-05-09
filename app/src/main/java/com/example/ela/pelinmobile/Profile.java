@@ -12,9 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
@@ -46,6 +48,7 @@ public class Profile extends AppCompatActivity {
     boolean isTeacher;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView kode, username, failed;
+    ImageView user_img;
 
     private List<GroupModel> groups;
 
@@ -68,6 +71,7 @@ public class Profile extends AppCompatActivity {
         edit = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.edit);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         failed = (TextView) findViewById(R.id.failed);
+        user_img = (ImageView) findViewById(R.id.user_photo);
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +149,7 @@ public class Profile extends AppCompatActivity {
 
                     username.setText(name);
                     kode.setText(nik);
+                    Glide.with(getApplicationContext()).load(user.getPhoto().getMedium()).into(user_img);
 
                 } catch (Exception e) {
                     Log.e(TAG, "gagal", e);

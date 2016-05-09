@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/border"
     android:paddingBottom="2dp"
-    android:background="#dedede"
-    android:layout_marginBottom="2dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:background="@drawable/border">
-        <TextView
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
-            android:id="@+id/jdl_tugas"
-            android:layout_width="0dp"
-            android:layout_weight="8"
-            android:textSize="15sp"
-            android:layout_height="wrap_content"
-            android:text="judultugas.zip"/>
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="bottom"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_file_download_black_24dp"/>
-    </LinearLayout>
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/sender"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/img"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/nim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/sender"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginTop="3dp"/>
+    <ImageView
+        android:id="@+id/download"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_file_download_black_36dp" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_below="@id/sender"
+        android:layout_toRightOf="@id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"/>
+</RelativeLayout>

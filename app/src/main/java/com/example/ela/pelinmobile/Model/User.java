@@ -10,17 +10,11 @@ public class User {
     User.Token token;
     Student student;
     Teacher teacher;
+    PhotoModel photo;
+    int id;
 
     @SerializedName("is_teacher")
     boolean isTeacher;
-
-    public Photo getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
 
     public Student getStudent() {
         return student;
@@ -37,9 +31,6 @@ public class User {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
-
-    Photo photo;
-    int id;
 
     static class Token {
         String token;
@@ -99,5 +90,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public PhotoModel getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoModel photo) {
+        this.photo = photo;
     }
 }

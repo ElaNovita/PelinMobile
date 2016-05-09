@@ -48,6 +48,8 @@ public class TugasFragment extends Fragment {
     AVLoadingIndicatorView load;
     SwipeRefreshLayout swipeRefreshLayout;
     View inflated;
+    String attachment;
+    boolean isOwner;
 
     public TugasFragment() {
         // Required empty public constructor
@@ -58,6 +60,8 @@ public class TugasFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         groupId = getArguments().getInt("groupId");
+        isOwner = getArguments().getBoolean("owner");
+
 
         bundle = new Bundle();
         bundle.putInt("groupId", groupId);
@@ -88,7 +92,6 @@ public class TugasFragment extends Fragment {
 
         reqJson();
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.tugas);
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addTugas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -115,26 +118,41 @@ public class TugasFragment extends Fragment {
 
                     load.setVisibility(View.GONE);
 
-                    adapter = new TugasAdapter(tugasModels, new OnItemClickListener() {
+                    adapter = new TugasAdapter(tugasModels, getActivity(), new OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
-                            if (isLongClick) {
-                                kick.setVisibility(View.VISIBLE);
-                                kick.setText("Delete " + tugasModels.get(position).getTitle() + "?");
-                                kick.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        deleteTugas(tugasModels.get(position).getId());
-                                        kick.setVisibility(View.GONE);
-                                        adapter.removeItem(position);
-                                    }
-                                });
+
+                            attachment = "attach";
+
+                            if (isOwner) {
+                                if (isLongClick) {
+                                    kick.setVisibility(View.VISIBLE);
+                                    kick.setText("Delete " + tugasModels.get(position).getTitle() + "?");
+                                    kick.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            deleteTugas(tugasModels.get(position).getId());
+                                            kick.setVisibility(View.GONE);
+                                            adapter.removeItem(position);
+                                        }
+                                    });
+                                } else {
+                                    Intent intent = new Intent(getActivity(), ListTugas.class);
+                                    intent.putExtra("groupId", groupId);
+                                    intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                    startActivity(intent);
+                                }
                             } else {
                                 Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                                intent.putExtra("groupId", groupId);
+                                intent.putExtra("tugasId", tugasModels.get(position).getId());
                                 intent.putExtra("title", tugasModels.get(position).getTitle());
                                 intent.putExtra("content", tugasModels.get(position).getDescription());
+                                intent.putExtra("file", attachment);
                                 startActivity(intent);
                             }
+
+
                         }
                     });
 

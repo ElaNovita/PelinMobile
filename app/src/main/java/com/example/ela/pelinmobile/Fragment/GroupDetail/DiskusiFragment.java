@@ -61,6 +61,7 @@ public class DiskusiFragment extends Fragment {
     DiskusiAdapter adapter;
     Date hasil;
     String result;
+    boolean isOwner;
 
     public DiskusiFragment() {
         // Required empty public constructor
@@ -94,8 +95,6 @@ public class DiskusiFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         kick = (Button) inflated.findViewById(R.id.kick);
         fail = (TextView) inflated.findViewById(R.id.failed);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.diskusi);
 
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addDiskusi);
 
@@ -138,7 +137,7 @@ public class DiskusiFragment extends Fragment {
 
                     Log.d(TAG, "onResponse: date " + result);
 
-                    adapter = new DiskusiAdapter(diskusiModels, new OnItemClickListener() {
+                    adapter = new DiskusiAdapter(diskusiModels, getContext(), new OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
                             if (isLongClick) {

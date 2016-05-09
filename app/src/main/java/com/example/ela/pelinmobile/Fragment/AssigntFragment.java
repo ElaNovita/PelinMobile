@@ -61,6 +61,8 @@ public class AssigntFragment extends Fragment {
         refreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         failed = (TextView) inflated.findViewById(R.id.failed);
 
+        startAnim();
+
         reqJson();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -94,7 +96,7 @@ public class AssigntFragment extends Fragment {
 
                 Log.d(TAG, "onResponse: " + tugasModels);
 
-                AssigntListAdapter adapter = new AssigntListAdapter(tugasModels, new AssigntListAdapter.OnItemClickListener() {
+                AssigntListAdapter adapter = new AssigntListAdapter(tugasModels, getActivity(), new AssigntListAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(TugasModel tugasModel) {
                         Intent intent = new Intent(getActivity(), ListTugas.class);
@@ -116,6 +118,7 @@ public class AssigntFragment extends Fragment {
 
                 refreshLayout.setRefreshing(false);
                 failed.setVisibility(View.VISIBLE);
+                stopAnim();
             }
         });
     }

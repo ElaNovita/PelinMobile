@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:layout_marginBottom="16dp">
+        <ImageView
+            android:id="@+id/ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_border_color_white_36dp"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="Group"
+            android:textSize="30sp"
+            android:layout_toRightOf="@id/ic"
+            android:layout_marginLeft="18dp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <EditText
+            android:id="@+id/group_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Group Name"
+            android:layout_marginTop="20dp"/>
+        <EditText
+            android:layout_marginTop="8dp"
+            android:id="@+id/group_classes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kelas"/>
+        <EditText
+            android:layout_marginTop="8dp"
+            android:id="@+id/group_semester"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Semester"/>
+        <EditText
+            android:layout_marginTop="8dp"
+            android:id="@+id/jurusan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Semester"/>
+        <EditText
+            android:id="@+id/group_desc"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Group Description"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/colorPrimary"
+        android:text="Save Changes?"
+        android:textColor="@color/white"
+        android:layout_marginTop="24dp"/>
+
+</LinearLayout>

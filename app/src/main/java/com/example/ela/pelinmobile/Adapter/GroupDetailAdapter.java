@@ -25,28 +25,28 @@ public class GroupDetailAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = new DiskusiFragment();
-                fragment.setArguments(bundle);
-                break;
-            case 1:
-                fragment = new MateriFragment();
-                fragment.setArguments(bundle);
-                break;
-            case 2:
-                fragment = new TugasFragment();
-                fragment.setArguments(bundle);
-                break;
-            case 3:
-                fragment = new MemberFragment();
-                fragment.setArguments(bundle);
-                break;
-            default:
-                fragment = null;
-                break;
-        }
+        Fragment fragment = new Fragment() ;
+//        switch (position) {
+//            case 0:
+//                fragment = new DiskusiFragment();
+//                fragment.setArguments(bundle);
+//                break;
+//            case 1:
+//                fragment = new MateriFragment();
+//                fragment.setArguments(bundle);
+//                break;
+//            case 2:
+//                fragment = new TugasFragment();
+//                fragment.setArguments(bundle);
+//                break;
+//            case 3:
+//                fragment = new MemberFragment();
+//                fragment.setArguments(bundle);
+//                break;
+//            default:
+//                fragment = null;
+//                break;
+//        }
 
         return fragment;
     }

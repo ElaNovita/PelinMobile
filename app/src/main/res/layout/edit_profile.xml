@@ -36,20 +36,31 @@
         android:paddingRight="16dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="110dp">
             <ImageView
                 android:id="@+id/edt_img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
                 android:src="@drawable/ciel"/>
+            <TextView
+                android:id="@+id/nm_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/edt_img"
+                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="24dp"
+                android:layout_alignParentBottom="true"
+                android:text="nama file"/>
             <Button
                 android:id="@+id/select_img"
                 android:layout_width="100dp"
                 android:layout_height="45dp"
                 android:text="Pilih file"
+                android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/edt_img"
-                android:layout_marginTop="60dp"
                 android:layout_marginLeft="16dp"/>
+
         </RelativeLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

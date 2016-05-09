@@ -37,7 +37,7 @@ public class UploadMateri extends AppCompatActivity {
     File file;
     RequestBody requestBody;
     MediaType MEDIA_TYPE_PNG;
-    String materiTitle, desc;
+    String materiTitle, desc, groupTitle;
     MultipartBody.Part requestFileBody;
     RequestBody titles, descriptions;
     int groupId;
@@ -48,6 +48,7 @@ public class UploadMateri extends AppCompatActivity {
         setContentView(R.layout.add_materi);
 
         groupId = getIntent().getIntExtra("groupId", 0);
+        groupTitle = getIntent().getStringExtra("groupTitle");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -80,6 +81,7 @@ public class UploadMateri extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
                 intent.putExtra("groupId", groupId);
+                intent.putExtra("groupTitle", groupTitle);
                 startActivity(intent);
 
             }
@@ -94,7 +96,7 @@ public class UploadMateri extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
 
 
-                    String name = data.getData().getPath().toString();
+                    String name = data.getData().getLastPathSegment().toString();
 
                     TextuploadMateri.setText(name);
 
@@ -102,13 +104,10 @@ public class UploadMateri extends AppCompatActivity {
 
                     Log.d("respon", "onActivityResult: " + uri.toString());
 
-
                     File file = new File(uri.getPath());
 
                     RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                     requestFileBody = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
-
-
 
                     btnSendMateri.setVisibility(View.VISIBLE);
                 }

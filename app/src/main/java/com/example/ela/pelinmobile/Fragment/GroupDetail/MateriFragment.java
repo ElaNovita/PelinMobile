@@ -46,6 +46,8 @@ public class MateriFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     AVLoadingIndicatorView load;
     View inflated;
+    String groupTitle;
+    boolean isOwner;
 
 
     public MateriFragment() {
@@ -58,6 +60,8 @@ public class MateriFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         groupId = getArguments().getInt("groupId");
+        groupTitle = getArguments().getString("groupTitle");
+
         reqJson();
 
 
@@ -76,14 +80,13 @@ public class MateriFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         load = (AVLoadingIndicatorView) inflated.findViewById(R.id.load);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.materi);
-
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addMateri);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), UploadMateri.class);
                 intent.putExtra("groupId", groupId);
+                intent.putExtra("groupTitle", groupTitle);
                 startActivity(intent);
             }
         });

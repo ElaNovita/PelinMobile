@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.MessageDetail;
 import com.example.ela.pelinmobile.Model.MessageDetailModel;
 import com.example.ela.pelinmobile.Model.ReplyMsgModel;
@@ -20,6 +21,7 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
 
     List<MessageDetailModel> messagesDetails;
     private final int LEFT = 1, RIGHT = 2;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     public MessageDetailAdapter(List<MessageDetailModel> messagesDetails) {
         this.messagesDetails = messagesDetails;
@@ -66,8 +68,12 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.time.setText(messagesDetails.get(position).getSent());
         holder.content.setText(messagesDetails.get(position).getText());
+        try {
+            holder.time.setText(cdf.format(messagesDetails.get(position).getSent()));
+        } catch (Exception e) {
+
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
