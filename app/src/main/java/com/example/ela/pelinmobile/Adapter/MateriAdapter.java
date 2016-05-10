@@ -1,21 +1,43 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriFragment;
 import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MateriInterface;
 import com.example.ela.pelinmobile.Model.MateriModel;
 import com.example.ela.pelinmobile.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ela on 18/03/16.
@@ -24,6 +46,10 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
 
     List<MateriModel> materiModels;
     CustomDateFormatter cdf = new CustomDateFormatter();
+    Context context;
+    private NotificationManager notify;
+    private NotificationCompat.Builder builder;
+    int id = 1;
 
     private static OnItemClickListener listener;
 
@@ -31,8 +57,9 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
         this.listener = listener;
     }
 
-    public MateriAdapter(List<MateriModel> materiModels) {
+    public MateriAdapter(List<MateriModel> materiModels, Context context) {
         this.materiModels = materiModels;
+        this.context = context;
     }
 
     @Override
@@ -57,14 +84,17 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, time;
+        ImageView download, detail;
 
         public ViewHolder(final View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.materiTitle);
             time = (TextView) itemView.findViewById(R.id.posted);
+            download = (ImageView) itemView.findViewById(R.id.downloadmateri);
+            detail = (ImageView) itemView.findViewById(R.id.detailMateri);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,6 +114,18 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
                     return true;
                 }
             });
+
+            download.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String url = "http://pelinapi-edsproject.rhcloud.com/static/media/2_editef/Dokumentasi%20API%20XL%20Agnosthings.pdf";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                }
+            });
+
         }
     }
 
@@ -96,4 +138,5 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
+
 }

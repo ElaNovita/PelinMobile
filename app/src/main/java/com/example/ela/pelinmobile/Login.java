@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Helper.MySharedPreferences;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.MyInterface;
+import com.example.ela.pelinmobile.Model.User;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -21,6 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -66,6 +72,7 @@ public class Login extends AppCompatActivity {
 
                             MySharedPreferences mf = new MySharedPreferences(Login.this);
                             mf.setToken(token);
+                            reqMe();
                             stopAnim();
 
                             Intent intent = new Intent(Login.this, HomeDosen.class);
@@ -99,5 +106,25 @@ public class Login extends AppCompatActivity {
         username.setEnabled(true);
         password.setEnabled(true);
         login.setEnabled(true);
+    }
+
+    private void reqMe() {
+        MyInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MyInterface.class);
+        Call<User> call = service.getUser();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                boolean isTeacher = response.body().isTeacher();
+                MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
+                mf.setStatus(isTeacher);
+                Log.d(TAG, "onResponse: log " + isTeacher);
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
     }
 }

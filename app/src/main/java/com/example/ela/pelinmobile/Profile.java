@@ -152,6 +152,7 @@ public class Profile extends AppCompatActivity {
                             intent.putExtra("email", user.getEmail());
                             intent.putExtra("pass", user.getPassword());
                             startActivity(intent);
+                            finish();
                         }
                     });
 

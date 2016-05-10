@@ -138,6 +138,7 @@
 
                     Log.d("respon", "onResponse: edt " + response.code());
                     Log.d("respon", "onResponse: req " + name);
+                    finish();
                 }
 
                 @Override

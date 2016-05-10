@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.DiskusiAdapter;
 import com.example.ela.pelinmobile.Fragment.CreatePost;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.DiskusiInterface;
 import com.example.ela.pelinmobile.Model.DiskusiModel;
@@ -79,6 +80,8 @@ public class DiskusiFragment extends Fragment {
 
         bundle.putInt("groupId", groupId);
 
+        MySharedPreferences mf = new MySharedPreferences(getActivity());
+        isTeacher = mf.getStatus();
 
     }
 
@@ -144,6 +147,10 @@ public class DiskusiFragment extends Fragment {
                     adapter = new DiskusiAdapter(diskusiModels, getContext(), new OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
+
+                            isOwner = diskusiModels.get(position).isMe();
+                            Log.d(TAG, "onItemClick: me " + isOwner);
+
                             if (isLongClick) {
 
                                 if (isOwner || isTeacher) {

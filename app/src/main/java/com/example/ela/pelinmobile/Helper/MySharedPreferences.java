@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import retrofit2.http.Body;
+
 /**
  * Created by e on 16/04/16.
  */
@@ -36,6 +38,15 @@ public class MySharedPreferences extends Application {
     public void deleteToken() {
         editor.clear();
         editor.commit();
+    }
+
+    public void setStatus(boolean status) {
+        editor.putBoolean("status", status);
+        editor.commit();
+    }
+
+    public boolean getStatus() {
+        return sp.getBoolean("status", false);
     }
 
     public String getUsername(String username) {

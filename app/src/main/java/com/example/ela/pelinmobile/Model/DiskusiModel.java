@@ -10,6 +10,7 @@ public class DiskusiModel {
     Teacher teacher;
     User user;
     int id;
+    boolean me;
 
     @SerializedName("group")
     int groupId;
@@ -86,5 +87,13 @@ public class DiskusiModel {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isMe() {
+        return me;
+    }
+
+    public void setMe(boolean me) {
+        this.me = me;
     }
 }

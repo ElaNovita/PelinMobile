@@ -15,6 +15,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * Created by e on 20/04/16.
@@ -35,6 +36,7 @@ public interface MateriInterface {
     @DELETE("groups/{groupId}/lessons/{materiId}")
     Call<ResponseBody> deleteMateri(@Path("groupId") int groupId, @Path("materiId") int materiId);
 
-
+    @GET
+    Call<ResponseBody> downloadMateri(@Url String materiUrl);
 
 }

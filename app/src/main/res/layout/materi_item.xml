@@ -48,13 +48,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
             android:src="@drawable/ic_remove_red_eye_black_36dp"/>
         <ImageView
             android:id="@+id/downloadmateri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/detailMateri"
             android:src="@drawable/ic_file_download_black_36dp"/>
     </RelativeLayout>
 

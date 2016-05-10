@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.ela.pelinmobile.Adapter.TugasAdapter;
 import com.example.ela.pelinmobile.AddTugas;
 import com.example.ela.pelinmobile.AssigntDetail;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
 import com.example.ela.pelinmobile.Model.TugasModel;
@@ -62,6 +63,8 @@ public class TugasFragment extends Fragment {
         groupId = getArguments().getInt("groupId");
         isOwner = getArguments().getBoolean("owner");
 
+        MySharedPreferences mf = new MySharedPreferences(getActivity());
+        isTeacher = mf.getStatus();
 
         bundle = new Bundle();
         bundle.putInt("groupId", groupId);
@@ -95,10 +98,10 @@ public class TugasFragment extends Fragment {
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addTugas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        if (!isTeacher) {
-            floatingActionButton.setVisibility(View.GONE);
-        } else {
+        if (isTeacher) {
             floatingActionButton.setVisibility(View.VISIBLE);
+        } else {
+            floatingActionButton.setVisibility(View.GONE);
         }
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -129,9 +132,9 @@ public class TugasFragment extends Fragment {
                         public void onItemClick(View view, final int position, boolean isLongClick) {
 
                             attachment = "attach";
+                            if (isLongClick) {
 
-                            if (isOwner) {
-                                if (isLongClick) {
+                                if (isTeacher) {
                                     kick.setVisibility(View.VISIBLE);
                                     kick.setText("Delete " + tugasModels.get(position).getTitle() + "?");
                                     kick.setOnClickListener(new View.OnClickListener() {
@@ -143,19 +146,24 @@ public class TugasFragment extends Fragment {
                                         }
                                     });
                                 } else {
+                                    Toast.makeText(getActivity(), tugasModels.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+
+                                if (isTeacher) {
                                     Intent intent = new Intent(getActivity(), ListTugas.class);
                                     intent.putExtra("groupId", groupId);
                                     intent.putExtra("tugasId", tugasModels.get(position).getId());
                                     startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                                    intent.putExtra("groupId", groupId);
+                                    intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                    intent.putExtra("title", tugasModels.get(position).getTitle());
+                                    intent.putExtra("content", tugasModels.get(position).getDescription());
+                                    intent.putExtra("file", attachment);
+                                    startActivity(intent);
                                 }
-                            } else {
-                                Intent intent = new Intent(getActivity(), AssigntDetail.class);
-                                intent.putExtra("groupId", groupId);
-                                intent.putExtra("tugasId", tugasModels.get(position).getId());
-                                intent.putExtra("title", tugasModels.get(position).getTitle());
-                                intent.putExtra("content", tugasModels.get(position).getDescription());
-                                intent.putExtra("file", attachment);
-                                startActivity(intent);
                             }
 
 

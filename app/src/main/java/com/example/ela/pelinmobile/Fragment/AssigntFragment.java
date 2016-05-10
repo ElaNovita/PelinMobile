@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.AssigntDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.ListTugas;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.FragmentComunicator;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
 import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.R;
@@ -40,10 +42,18 @@ public class AssigntFragment extends Fragment {
     SwipeRefreshLayout refreshLayout;
     View inflated;
     TextView failed;
+    private FragmentComunicator comunicator;
 
 
     public AssigntFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        context = getActivity();
+        comunicator = (FragmentComunicator) context;
     }
 
     @Override
@@ -94,7 +104,19 @@ public class AssigntFragment extends Fragment {
             public void onResponse(Call<List<TugasModel>> call, Response<List<TugasModel>> response) {
                 List<TugasModel> tugasModels = response.body();
 
-                Log.d(TAG, "onResponse: " + tugasModels);
+                Log.d(TAG, "onResponse: size " + tugasModels.size());
+
+                ArrayList<Integer> counter = new ArrayList<Integer>();
+
+
+
+                for (TugasModel tugas : tugasModels) {
+                    if (!tugas.isPassed()) {
+                        counter.add(tugas.getId());
+                    }
+                }
+
+                comunicator.sendDataToActivity(counter.size());
 
                 AssigntListAdapter adapter = new AssigntListAdapter(tugasModels, getActivity(), new AssigntListAdapter.OnItemClickListener() {
                     @Override

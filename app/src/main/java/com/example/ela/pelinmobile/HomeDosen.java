@@ -22,7 +22,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.HomeDosenAdapter;
 import com.example.ela.pelinmobile.Fragment.CreateGroupDialog;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.FragmentComunicator;
 import com.example.ela.pelinmobile.Interface.MyInterface;
 import com.example.ela.pelinmobile.Model.User;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -35,7 +37,7 @@ import retrofit2.Response;
 /**
  * Created by ela on 13/03/16.
  */
-public class HomeDosen extends BaseDrawer {
+public class HomeDosen extends BaseDrawer implements FragmentComunicator{
 
     @Bind(R.id.drawerLayout)
     DrawerLayout drawerLayout;
@@ -48,10 +50,11 @@ public class HomeDosen extends BaseDrawer {
     NavigationView navigationView;
 
     private BadgeView badgeView;
-    int buttonCounter = 2;
+    public int buttonCounter = 1;
     Button add, dec;
     String TAG = "respon";
     boolean isTeacher;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +64,10 @@ public class HomeDosen extends BaseDrawer {
         tabViewPager.setAdapter(new HomeDosenAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(tabViewPager);
 
-        TabLayout.Tab tab = tabLayout.getTabAt(1);
-        ImageView imageView = new ImageView(this);
-        tab.setCustomView(imageView);
-        setupDrawerContent(navigationView);
+        MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
+        mf.getStatus();
 
-
+        Log.d(TAG, "onCreate: log " + mf.getStatus());
 
 //        badgeView = new BadgeView(this, imageView);
 //        badgeView.setText("1");
@@ -111,14 +112,14 @@ public class HomeDosen extends BaseDrawer {
 //        tabLayout.getTabAt(1).setIcon(title[1]);
 
         Drawable drawable = getResources().getDrawable(title[1]);
-        ImageView imageView = new ImageView(this);
+        imageView = new ImageView(this);
         imageView.setImageDrawable(drawable);
 
         tabLayout.getTabAt(1).setCustomView(imageView);
 
-        badgeView = new BadgeView(this, imageView);
-        badgeView.setText(Integer.toString(buttonCounter));
-        counter(buttonCounter);
+
+
+
 
         tabLayout.getTabAt(2).setIcon(title[2]);
         tabLayout.getTabAt(3).setIcon(title[3]);
@@ -142,6 +143,20 @@ public class HomeDosen extends BaseDrawer {
         return false;
     }
 
+    @Override
+    public void sendDataToActivity(int value) {
+        buttonCounter = value;
+        TabLayout.Tab tab = tabLayout.getTabAt(1);
+        TabLayout.Tab tab2 = tabLayout.getTabAt(2);
+        imageView = new ImageView(this);
+        tab.setCustomView(imageView);
+        setupDrawerContent(navigationView);
 
+        badgeView = new BadgeView(this, imageView);
+        counter(buttonCounter);
+
+        badgeView.setText(Integer.toString(buttonCounter));
+        Log.d(TAG, "sendDataToActivity: " + value);
+    }
 }
 

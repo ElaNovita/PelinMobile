@@ -1,13 +1,14 @@
 package com.example.ela.pelinmobile.Fragment.GroupDetail;
 
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.MateriAdapter;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MateriInterface;
 import com.example.ela.pelinmobile.Model.MateriModel;
@@ -48,6 +51,10 @@ public class MateriFragment extends Fragment {
     View inflated;
     String groupTitle;
     boolean isOwner, isTeacher;
+    ImageView download, detail;
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder builder;
+    int id = 1;
 
 
     public MateriFragment() {
@@ -61,6 +68,9 @@ public class MateriFragment extends Fragment {
 
         groupId = getArguments().getInt("groupId");
         groupTitle = getArguments().getString("groupTitle");
+
+        MySharedPreferences mf = new MySharedPreferences(getActivity());
+        isTeacher = mf.getStatus();
 
         reqJson();
 
@@ -82,10 +92,10 @@ public class MateriFragment extends Fragment {
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addMateri);
 
-        if (!isTeacher) {
-            floatingActionButton.setVisibility(View.GONE);
-        } else {
+        if (isTeacher) {
             floatingActionButton.setVisibility(View.VISIBLE);
+        } else {
+            floatingActionButton.setVisibility(View.GONE);
         }
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -121,25 +131,15 @@ public class MateriFragment extends Fragment {
                 try {
                     final List<MateriModel> materiModels = response.body();
 
-                    adapter = new MateriAdapter(materiModels);
+                    adapter = new MateriAdapter(materiModels, getActivity());
 
                     adapter.setOnItemClickListener(new MateriAdapter.OnItemClickListener() {
                         @Override
                         public void OnItemClick(View view, final int position, boolean isLongClick) {
                             materiId = materiModels.get(position).getId();
+//                            String url = materiModels.get(position).getFiles().get(4).
                             if (isLongClick) {
                                 if (isTeacher) {
-                                    delete.setVisibility(View.VISIBLE);
-                                    delete.setText("Delete " + materiModels.get(position).getTitle() + "?");
-                                    delete.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            deleteMateri();
-                                            delete.setVisibility(View.GONE);
-                                            adapter.removeItem(position);
-
-                                        }
-                                    });
                                     delete.setVisibility(View.VISIBLE);
                                     delete.setText("Delete " + materiModels.get(position).getTitle() + "?");
                                     delete.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +155,8 @@ public class MateriFragment extends Fragment {
                                     Toast.makeText(getActivity(), materiModels.get(position).getTitle(), Toast.LENGTH_SHORT).show();
                                 }
 
+                            } else {
+//                                Intent intent = new Intent(getActivity(),)
                             }
 
                         }
@@ -200,5 +202,6 @@ public class MateriFragment extends Fragment {
     public void stopAnim() {
         inflated.findViewById(R.id.load).setVisibility(View.GONE);
     }
+
 
 }

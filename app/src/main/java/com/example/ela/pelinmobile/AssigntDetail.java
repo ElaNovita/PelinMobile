@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -82,6 +83,10 @@ public class AssigntDetail extends AppCompatActivity {
         content.setText(_content);
         attachment.setText(attach);
 
+        if (attach == null) {
+            attachment.setVisibility(View.GONE);
+        }
+
         progressBar.setProgress(100);
         myCountDownTimer = new MyCountDownTimer(milistoGo, 1000);
         myCountDownTimer.start();
@@ -111,6 +116,15 @@ public class AssigntDetail extends AppCompatActivity {
             }
         });
 
+        attachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "http://pelinapi-edsproject.rhcloud.com/static/media/2_editef/Dokumentasi%20API%20XL%20Agnosthings.pdf";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
     }
 
     @Override

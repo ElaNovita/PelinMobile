@@ -37,6 +37,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.AllGroups;
 import com.example.ela.pelinmobile.GroupDetail;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.HomeDosen;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
@@ -71,7 +72,7 @@ public class GroupListFragment extends Fragment {
     SwipeRefreshLayout refreshLayout;
     Button kick;
     GroupListAdapter adapter;
-    boolean isOwner;
+    boolean isTeacher;
 
     private List<GroupModel> groups;
 
@@ -83,6 +84,8 @@ public class GroupListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        MySharedPreferences mf = new MySharedPreferences(getActivity());
+        isTeacher = mf.getStatus();
 
 //        stopAnim();
 
@@ -107,10 +110,10 @@ public class GroupListFragment extends Fragment {
 
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addGroup);
 
-        if (isOwner) {
-            fab.setVisibility(View.GONE);
-        } else {
+        if (isTeacher) {
             fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -191,19 +194,20 @@ public class GroupListFragment extends Fragment {
                         public void onItemClick(View view, final int position, boolean isLongClick) {
                             final int groupId = groups.get(position).getId();
                             if (isLongClick) {
-
-
-
-                                kick.setVisibility(View.VISIBLE);
-                                kick.setText("Delete " + groups.get(position).getTitle() + "?");
-                                kick.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        DeleteGroup(groupId);
-                                        adapter.removeItem(position);
-                                        kick.setVisibility(View.GONE);
-                                    }
-                                });
+                                if (isTeacher) {
+                                    kick.setVisibility(View.VISIBLE);
+                                    kick.setText("Delete " + groups.get(position).getTitle() + "?");
+                                    kick.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            DeleteGroup(groupId);
+                                            adapter.removeItem(position);
+                                            kick.setVisibility(View.GONE);
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(getActivity(), groups.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                                }
 
                             } else {
                                 Intent intent = new Intent(getActivity(), GroupDetail.class);

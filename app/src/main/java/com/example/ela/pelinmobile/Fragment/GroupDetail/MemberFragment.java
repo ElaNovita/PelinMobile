@@ -16,10 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.ConfirmAdapter;
 import com.example.ela.pelinmobile.Adapter.MemberAdapter;
 import com.example.ela.pelinmobile.Fragment.InviteDialog;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MemberInterface;
 import com.example.ela.pelinmobile.Interface.RequestInterface;
@@ -52,6 +54,7 @@ public class MemberFragment extends Fragment {
     TextView fail;
     View inflated;
     LinearLayout linearLayout;
+    boolean isTeacher;
 
 
     public MemberFragment() {
@@ -63,6 +66,9 @@ public class MemberFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         groupId = getArguments().getInt("groupId");
+
+        MySharedPreferences mf = new MySharedPreferences(getActivity());
+        isTeacher = mf.getStatus();
     }
 
     @Override
@@ -200,16 +206,22 @@ public class MemberFragment extends Fragment {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
                             if (isLongClick) {
-                                kick.setText("Delete " + memberModels.get(position).getName().toLowerCase() + "?");
-                                kick.setVisibility(View.VISIBLE);
-                                final String nim = memberModels.get(position).getStudent().getNim();
-                                kick.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        kick(nim);
-                                        adapter.removeItem(position);
-                                    }
-                                });
+
+                                if (isTeacher) {
+                                    kick.setText("Delete " + memberModels.get(position).getName().toLowerCase() + "?");
+                                    kick.setVisibility(View.VISIBLE);
+                                    final String nim = memberModels.get(position).getStudent().getNim();
+                                    kick.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            kick(nim);
+                                            adapter.removeItem(position);
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(getActivity(), memberModels.get(position).getName(), Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
                                 if (memberModels.get(position).isMe()) {
                                     Intent intent = new Intent(getActivity(), Profile.class);
