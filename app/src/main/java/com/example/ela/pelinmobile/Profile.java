@@ -84,16 +84,6 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
-                startActivity(intent);
-            }
-        });
-
-
-
         recyclerView = (RecyclerView) findViewById(R.id.joinedGroupRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -152,6 +142,20 @@ public class Profile extends AppCompatActivity {
                     username.setText(name);
                     kode.setText(nik);
                     Glide.with(getApplicationContext()).load(user.getPhoto().getMedium()).into(user_img);
+
+                    edit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), EditProfile.class);
+                            intent.putExtra("username", user.getName());
+                            intent.putExtra("phone", user.getPhone());
+                            intent.putExtra("email", user.getEmail());
+                            intent.putExtra("pass", user.getPassword());
+                            startActivity(intent);
+                        }
+                    });
+
+                    Log.d(TAG, "onResponse: phone " + user.getPhone());
 
                 } catch (Exception e) {
                     Log.e(TAG, "gagal", e);

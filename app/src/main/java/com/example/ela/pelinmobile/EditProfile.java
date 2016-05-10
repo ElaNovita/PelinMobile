@@ -40,6 +40,7 @@
         MultipartBody.Part requestFileBody;
         RequestBody reqName, reqEmail, reqPhone, reqPass;
         private static final int PICKFILE_RESULT_CODE = 1;
+        String TAG = "respon";
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +55,13 @@
             save = (Button) findViewById(R.id.save);
             select = (Button) findViewById(R.id.select_img);
             image = (ImageView) findViewById(R.id.edt_img);
+
+            name.setText(getIntent().getStringExtra("username"));
+            email.setText(getIntent().getStringExtra("email"));
+            phone.setText(getIntent().getStringExtra("phone"));
+            passowrd.setText(getIntent().getStringExtra("pass"));
+
+            Log.d(TAG, "onCreate: name " + name.getText() + email.getText() + phone.getText());
 
             select.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,7 +131,7 @@
         public void reqJson() {
 
             UserInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(UserInterface.class);
-            Call<User> call = service.editUser(reqName, reqName, reqEmail, reqPass, requestFileBody);
+            Call<User> call = service.editUser(reqName, reqPhone, reqEmail, reqPass, requestFileBody);
             call.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
