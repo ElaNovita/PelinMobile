@@ -17,6 +17,7 @@ import com.example.ela.pelinmobile.Model.MessageModel;
 import com.example.ela.pelinmobile.R;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -57,15 +58,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 //        holder.sendAt.setText(messages.get(position).getCreatedAt());
 //        cdf.format(messages.get(position).getCreatedAt())
 //        holder.senderImg.setImageResource(messages.get(position).senderImg);
-        holder.sendAt.setText(cdf.getTimeAgo(cdf.toLong(messages.get(position).getCreatedAt())));
+        try {
+            holder.sendAt.setText(cdf.getTimeAgo(messages.get(position).getUpdatedAt()));
+        } catch (ParseException e) {
+            Log.d("respon", "onBindViewHolder: gagal " + e.getMessage());
+        }
         if (messages.get(position).getTargetUser().getPhoto().getSmall() == null) {
             holder.senderImg.setImageResource(R.drawable.eren);
         } else {
             Glide.with(context).load(messages.get(position).getTargetUser().getPhoto().getSmall()).into(holder.senderImg);
         }
-        Log.d("respon", "onBindViewHolder: " + cdf.toLong(messages.get(position).getCreatedAt()));
-        Log.d("respon", "onBindViewHolder: now " + messages.get(position).getCreatedAt());
-        Log.d("respon", "onBindViewHolder: photo " + messages.get(position).getTargetUser().getPhoto().getSmall());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

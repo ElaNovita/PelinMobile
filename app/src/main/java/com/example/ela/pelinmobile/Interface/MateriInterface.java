@@ -36,7 +36,5 @@ public interface MateriInterface {
     @DELETE("groups/{groupId}/lessons/{materiId}")
     Call<ResponseBody> deleteMateri(@Path("groupId") int groupId, @Path("materiId") int materiId);
 
-    @GET
-    Call<ResponseBody> downloadMateri(@Url String materiUrl);
-
+    
 }

@@ -17,7 +17,7 @@ public class TugasModel {
     String dueDate;
 
     @SerializedName("files")
-    List<FilesModel> files;
+    List<FileModel> files;
 
     @SerializedName("created_at")
     String createdAt;
@@ -84,11 +84,11 @@ public class TugasModel {
         this.description = description;
     }
 
-    public List<FilesModel> getFiles() {
+    public List<FileModel> getFiles() {
         return files;
     }
 
-    public void setFiles(List<FilesModel> files) {
+    public void setFiles(List<FileModel> files) {
         this.files = files;
     }
 }

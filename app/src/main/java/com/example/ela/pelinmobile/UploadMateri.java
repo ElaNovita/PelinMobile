@@ -79,6 +79,7 @@ public class UploadMateri extends AppCompatActivity {
                 sendFile(requestFileBody, titles, descriptions);
 
 
+
                 Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("groupTitle", groupTitle);
@@ -137,6 +138,7 @@ public class UploadMateri extends AppCompatActivity {
             @Override
             public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
                 Log.d("respon", "onResponse: respon " + response.code());
+                Log.d("respon", "onClick: description" + response.body().getDescription());
                 Toast.makeText(getApplicationContext(), "Materi Sudah di Upload", Toast.LENGTH_SHORT).show();
             }
 

@@ -51,6 +51,7 @@ public class MateriFragment extends Fragment {
     View inflated;
     String groupTitle;
     boolean isOwner, isTeacher;
+    Bundle bundle;
     ImageView download, detail;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
@@ -136,8 +137,11 @@ public class MateriFragment extends Fragment {
                     adapter.setOnItemClickListener(new MateriAdapter.OnItemClickListener() {
                         @Override
                         public void OnItemClick(View view, final int position, boolean isLongClick) {
+                            String url = materiModels.get(position).getFileModels().get(0).getFile();
+                            bundle = new Bundle();
+                            bundle.putString("url", url);
                             materiId = materiModels.get(position).getId();
-//                            String url = materiModels.get(position).getFiles().get(4).
+
                             if (isLongClick) {
                                 if (isTeacher) {
                                     delete.setVisibility(View.VISIBLE);
@@ -156,7 +160,8 @@ public class MateriFragment extends Fragment {
                                 }
 
                             } else {
-//                                Intent intent = new Intent(getActivity(),)
+//                                Intent intent = new Intent(getActivity(), MateriDetail.class);
+//                                intent.putExtra("")
                             }
 
                         }

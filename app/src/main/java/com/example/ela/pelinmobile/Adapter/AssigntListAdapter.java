@@ -56,7 +56,7 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
         }
 
         try {
-            holder.dueTime.setText(cdf.format(tugasModels.get(position).getCreatedAt()));
+            holder.dueTime.setText(cdf.getTimeLater(tugasModels.get(position).getDueDate()));
         } catch (ParseException e) {
 
         }

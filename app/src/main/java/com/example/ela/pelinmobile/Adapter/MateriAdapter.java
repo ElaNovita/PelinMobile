@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.MateriFragment;
 import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
@@ -49,7 +50,6 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     Context context;
     private NotificationManager notify;
     private NotificationCompat.Builder builder;
-    int id = 1;
 
     private static OnItemClickListener listener;
 
@@ -82,6 +82,7 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
         } catch (ParseException e) {
 
         }
+
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
@@ -95,6 +96,7 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
             time = (TextView) itemView.findViewById(R.id.posted);
             download = (ImageView) itemView.findViewById(R.id.downloadmateri);
             detail = (ImageView) itemView.findViewById(R.id.detailMateri);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,11 +120,23 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
             download.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    String url = "http://pelinapi-edsproject.rhcloud.com/static/media/2_editef/Dokumentasi%20API%20XL%20Agnosthings.pdf";
+                    String url = materiModels.get(7).getFileModels().get(5).getFile();
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(url));
                     context.startActivity(i);
+                }
+            });
+
+            detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, MateriDetail.class);
+                    intent.putExtra("title", materiModels.get(getLayoutPosition()).getTitle());
+                    intent.putExtra("date", materiModels.get(getLayoutPosition()).getCreatedAt());
+                    intent.putExtra("desc", materiModels.get(getLayoutPosition()).getDescription());
+//                    intent.putExtra("url")
+                    Log.d("respon", "onClick: desc " + materiModels.get(getLayoutPosition()).getDescription());
+                    context.startActivity(intent);
                 }
             });
 

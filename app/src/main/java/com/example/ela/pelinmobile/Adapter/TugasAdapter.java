@@ -58,10 +58,16 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
             holder.passed.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
         }
         try {
-            holder.dueTime.setText(cdf.format(tugases.get(position).getDueDate()));
+            holder.dueTime.setText(cdf.getTimeLater(tugases.get(position).getDueDate()));
         } catch (ParseException e) {
-
+            //
         }
+
+//        try {
+//            holder.dueTime.setText(cdf.getTimeLater(tugases.get(position).getDueDate()));
+//        } catch (ParseException e) {
+//
+//        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

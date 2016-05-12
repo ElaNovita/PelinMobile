@@ -18,7 +18,7 @@ public class MateriModel {
     String updatedAt;
 
     @SerializedName("files")
-    List<Object> files = new ArrayList<Object>();
+    List<FileModel> fileModels;
 
     public int getId() {
         return id;
@@ -60,11 +60,11 @@ public class MateriModel {
         this.updatedAt = updatedAt;
     }
 
-    public List<Object> getFiles() {
-        return files;
+    public List<FileModel> getFileModels() {
+        return fileModels;
     }
 
-    public void setFiles(List<Object> files) {
-        this.files = files;
+    public void setFileModels(List<FileModel> fileModels) {
+        this.fileModels = fileModels;
     }
 }

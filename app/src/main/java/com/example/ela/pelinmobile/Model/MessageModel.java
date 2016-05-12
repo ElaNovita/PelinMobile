@@ -20,6 +20,9 @@ public class MessageModel {
     @SerializedName("target_user")
     TargetUser targetUser;
 
+    @SerializedName("updated_at")
+    String updatedAt;
+
 
     public int getId() {
         return id;
@@ -60,4 +63,13 @@ public class MessageModel {
     public void setTargetUser(TargetUser targetUser) {
         this.targetUser = targetUser;
     }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="42dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/icon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_dns_black_36dp"
+        android:layout_marginTop="2dp"/>
+    <TextView
+        android:id="@+id/nm_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama file.pdf"
+        android:layout_toRightOf="@id/icon1"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"/>
+</RelativeLayout>

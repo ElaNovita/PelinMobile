@@ -1,9 +1,9 @@
 package com.example.ela.pelinmobile.Model;
 
 /**
- * Created by e on 6/05/16.
+ * Created by e on 11/05/16.
  */
-public class FilesModel {
+public class FileModel {
     int id;
     String file, name;
 

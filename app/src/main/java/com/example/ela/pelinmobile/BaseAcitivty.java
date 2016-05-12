@@ -136,9 +136,13 @@ public class BaseAcitivty extends AppCompatActivity {
     public void logout() {
         MySharedPreferences sharedPreferences = new MySharedPreferences(getApplicationContext());
         String token = sharedPreferences.getToken();
-        sharedPreferences.deleteToken();
-        Log.d("respon", "logout: " + token);
-        finish();
+        if (token == null) {
+            finish();
+        } else {
+            sharedPreferences.deleteToken();
+            finish();
+        }
+
     }
 
 //    public void reqUser() {
