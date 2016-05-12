@@ -51,43 +51,6 @@
                 android:layout_marginTop="20dp"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
-        android:id="@+id/submitted"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Anda Sudah mengumpulkan tugas"
-                android:textSize="15sp"/>
-            <TextView
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="desc"
-                android:textSize="15sp"/>
-            <TextView
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="16dp"
-                android:id="@+id/submittedAttach"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/assigntContent"
-                android:layout_toRightOf="@id/attachImg"
-                android:text="NamaFile.docx"
-                android:textColor="@android:color/holo_blue_dark"
-                android:layout_marginTop="20dp"/>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
     <TextView
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -147,6 +110,5 @@
         android:background="@color/colorPrimary"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:visibility="invisible"/>
+        android:layout_marginTop="8dp"/>
 </LinearLayout>

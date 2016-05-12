@@ -106,12 +106,14 @@ public class AssigntDetail extends AppCompatActivity {
                 _text = desc.getText().toString();
 
                 text = RequestBody.create(MediaType.parse("multipart/form-data"), _text);
+                if (_text == null && requestFileBody == null) {
+                    Toast.makeText(getApplicationContext(), "Anda belum mengisi jawaban atau memilih file", Toast.LENGTH_SHORT).show();
+                }
 
                 reqJson(groupId, tugasId, requestFileBody, text);
 
                 Intent intent = new Intent(getApplicationContext(), HomeDosen.class);
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), "Tugas Anda Sudah Dikirim", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -184,7 +186,9 @@ public class AssigntDetail extends AppCompatActivity {
         call.enqueue(new Callback<SubmitModel>() {
             @Override
             public void onResponse(Call<SubmitModel> call, Response<SubmitModel> response) {
-                Log.d("respon", "onResponse: res " + response.code());
+                Log.d("tugas submit", "onResponse: res " + response.code());
+
+                Toast.makeText(getApplicationContext(), "Tugas Anda Sudah Dikirim", Toast.LENGTH_SHORT).show();
             }
 
             @Override
