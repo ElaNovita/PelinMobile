@@ -16,12 +16,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
 import com.example.ela.pelinmobile.Model.SubmitModel;
 import com.example.ela.pelinmobile.Model.TugasModel;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.Bind;
 import okhttp3.MediaType;
@@ -45,8 +50,16 @@ public class AssigntDetail extends AppCompatActivity {
     MyCountDownTimer myCountDownTimer;
     RequestBody text;
     MultipartBody.Part requestFileBody;
-    String _text, attach;
+    String _text, attach, dueDate;
     int groupId, tugasId;
+    ImageView attachImg;
+    String fileName;
+    CustomDateFormatter cdf = new CustomDateFormatter();
+    private static final int SECOND = 1000;
+    private static final int MINUTE = 60 * SECOND;
+    private static final int HOUR = 60 * MINUTE;
+    private static final int DAY = 24 * HOUR;
+    long daysToGo, hoursToGo, minutesToGo, secondToGo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,29 +75,61 @@ public class AssigntDetail extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         desc = (EditText) findViewById(R.id.desc);
         attachment = (TextView) findViewById(R.id.attachment);
+        attachImg = (ImageView) findViewById(R.id.attachImg);
 
         groupId = getIntent().getIntExtra("groupId", 0);
         tugasId = getIntent().getIntExtra("tugasId", 0);
         attach = getIntent().getStringExtra("file");
+        dueDate = getIntent().getStringExtra("due");
         String _title = getIntent().getStringExtra("title");
         String _content = getIntent().getStringExtra("content");
 
+        if (attach != null) {
+            fileName = attach.substring(attach.lastIndexOf('/') + 1);
+        }
 
+        long ms = 0;
 
-        int hoursToGo = 0;
-        int minutesToGo = 1;
-        int secondToGo = 10;
+        try {
+            ms = cdf.getToday(dueDate);
+        } catch (ParseException e) {
+            Log.e("respon", "onCreate: ", e);
+        }
 
-        long milistoGo = secondToGo * 1000 + minutesToGo * 1000 * 60 + hoursToGo * 1000 * 60 * 60;
+        StringBuffer txt = new StringBuffer("");
+        if (ms > DAY) {
+            txt.append(ms / DAY).append(" days ");
+            daysToGo = ms / DAY;
+            ms %= DAY;
+        }
+        if (ms > HOUR) {
+            txt.append(ms / HOUR).append(" hours ");
+            hoursToGo = ms / HOUR;
+            ms %= HOUR;
+        }
+        if (ms > MINUTE) {
+            txt.append(ms / MINUTE).append(" minutes ");
+            minutesToGo = ms / MINUTE;
+            ms %= MINUTE;
+        }
+        if (ms > SECOND) {
+            txt.append(ms / SECOND).append(" seconds ");
+            secondToGo = ms / SECOND;
+            ms %= SECOND;
+        }
+        txt.append(ms + " ms");
+
+        long milistoGo = secondToGo * 1000 + minutesToGo * 1000 * 60 + hoursToGo * 1000 * 60 * 60 + daysToGo * 1000 * 60 * 60 * 24;
 
         milis = milistoGo;
 
         title.setText(_title);
         content.setText(_content);
-        attachment.setText(attach);
+        attachment.setText(fileName);
 
         if (attach == null) {
             attachment.setVisibility(View.GONE);
+            attachImg.setVisibility(View.GONE);
         }
 
         progressBar.setProgress(100);
@@ -121,9 +166,9 @@ public class AssigntDetail extends AppCompatActivity {
         attachment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://pelinapi-edsproject.rhcloud.com/static/media/2_editef/Dokumentasi%20API%20XL%20Agnosthings.pdf";
+
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
+                i.setData(Uri.parse(attach));
                 startActivity(i);
             }
         });
@@ -160,15 +205,15 @@ public class AssigntDetail extends AppCompatActivity {
 
         @Override
         public void onTick(long millis) {
-            int second = (int) (millis / 1000) % 60;
             int minutes = (int) (millis / (1000 * 60)) % 60;
             int hours = (int) (millis / (1000 * 60 * 60)) % 24;
+            int days = (int) (millis / (1000 * 60 * 60 * 24)) ;
 
             int progress = (int) (millis*100 / milis);
 
             progressBar.setProgress(progress);
 
-            String txt = String.format("%2d hours, %2d minutes, %2d second", hours, minutes, second);
+            String txt = String.format("%2d days, %2d hours, %2d minutes", days, hours, minutes);
 
             timer.setText(txt);
         }
@@ -186,7 +231,6 @@ public class AssigntDetail extends AppCompatActivity {
         call.enqueue(new Callback<SubmitModel>() {
             @Override
             public void onResponse(Call<SubmitModel> call, Response<SubmitModel> response) {
-                Log.d("tugas submit", "onResponse: res " + response.code());
 
                 Toast.makeText(getApplicationContext(), "Tugas Anda Sudah Dikirim", Toast.LENGTH_SHORT).show();
             }

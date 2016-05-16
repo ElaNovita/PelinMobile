@@ -10,14 +10,11 @@ import java.util.List;
  */
 public class TugasModel {
 
-    String title, description;
+    String title, description, file;
     int id;
 
     @SerializedName("due_date")
     String dueDate;
-
-    @SerializedName("files")
-    List<FileModel> files;
 
     @SerializedName("created_at")
     String createdAt;
@@ -27,6 +24,9 @@ public class TugasModel {
 
     @SerializedName("is_passed")
     boolean isPassed;
+
+    @SerializedName("is_submitted")
+    boolean isSubmitted;
 
     public String getTitle() {
         return title;
@@ -84,11 +84,19 @@ public class TugasModel {
         this.description = description;
     }
 
-    public List<FileModel> getFiles() {
-        return files;
+    public String getFile() {
+        return file;
     }
 
-    public void setFiles(List<FileModel> files) {
-        this.files = files;
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public boolean isSubmitted() {
+        return isSubmitted;
+    }
+
+    public void setSubmitted(boolean submitted) {
+        isSubmitted = submitted;
     }
 }

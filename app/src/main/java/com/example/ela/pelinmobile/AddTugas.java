@@ -43,7 +43,7 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
     private static final int PICKFILE_RESULT_CODE = 1;
     MultipartBody.Part requestFileBody;
     EditText title, description;
-    String tugasTitle, desc;
+    String tugasTitle, desc, groupTitle;
     RequestBody titles, descriptions, iso;
     int groupId;
     Calendar calendar = Calendar.getInstance();
@@ -54,6 +54,7 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
         setContentView(R.layout.add_tugas);
 
         groupId = getIntent().getIntExtra("groupId", 0);
+        groupTitle = getIntent().getStringExtra("groupTitle");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -97,10 +98,11 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
 
                 sendFile(requestFileBody, titles, descriptions, iso);
 
-                Log.d("respon", "onClick: " + Integer.toString(groupId));
+                Log.d("respon", "onClick: " + requestFileBody.toString());
 
                 Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
                 intent.putExtra("groupId", groupId);
+                intent.putExtra("groupTitle", groupTitle);
                 startActivity(intent);
             }
         });
@@ -134,16 +136,14 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
 
                     Uri uri = data.getData();
 
-                    Log.d("respon", "onActivityResult: " + uri.toString());
-
-
                     File file = new File(uri.getPath());
 
                     RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    requestFileBody = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
+                    requestFileBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
 
                     btnSendMateri.setVisibility(View.VISIBLE);
+                    Log.d("respon", "onActivityResult: " + file.toString());
                 }
                 break;
         }

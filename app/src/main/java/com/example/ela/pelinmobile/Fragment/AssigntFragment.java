@@ -121,6 +121,7 @@ public class AssigntFragment extends Fragment {
                 AssigntListAdapter adapter = new AssigntListAdapter(tugasModels, getActivity(), new AssigntListAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(TugasModel tugasModel) {
+                        //TODO change list tugas to tugas detail
                         Intent intent = new Intent(getActivity(), ListTugas.class);
                         startActivity(intent);
                     }

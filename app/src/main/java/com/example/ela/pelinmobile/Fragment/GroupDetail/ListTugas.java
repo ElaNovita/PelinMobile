@@ -34,7 +34,6 @@ public class ListTugas extends AppCompatActivity {
     LinearLayout detailTugas;
     TextView title,detail, attachment;
     Button downloadAll;
-    FloatingActionButton getDetail, edit;
 
 
     @Override
@@ -51,28 +50,12 @@ public class ListTugas extends AppCompatActivity {
         detail = (TextView) findViewById(R.id.assigntContent);
         attachment = (TextView) findViewById(R.id.attachment);
         downloadAll = (Button) findViewById(R.id.download_all);
-        getDetail = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.soal_detail);
-        edit = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.edit);
         recyclerView = (RecyclerView) findViewById(R.id.listtugasRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         reqJson(groupId, tugasId);
 
-        getDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailTugas.setVisibility(View.VISIBLE);
-            }
-        });
 
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditTugas.class);
-//                TODO putstringextra to edit tugas, titl,desc, and time
-                startActivity(intent);
-            }
-        });
 
     }
 

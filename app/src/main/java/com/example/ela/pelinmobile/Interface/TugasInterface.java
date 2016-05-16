@@ -13,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -48,6 +49,15 @@ public interface TugasInterface {
 
     @GET("groups/{groupId}/assignments/{assignId}/submitted")
     Call<List<Submitted>> getSubmitted(@Path("groupId") int groupId, @Path("assignId") int assignId);
+
+    @Multipart
+    @PATCH("groups/{groupId}/assignments/{assignId}")
+    Call<SubmitModel> editTugas(@Path("groupId") int groupId,
+                               @Path("assignId") int assign,
+                                @Part MultipartBody.Part files,
+                                @Part("title") RequestBody title,
+                                @Part("description") RequestBody desc,
+                                @Part("due_date") RequestBody dueDate);
 
 //    @GET("groups/{groupId}/assignments/{asignId}/")
 }

@@ -32,6 +32,15 @@ public class CustomDateFormatter {
 
     }
 
+    public Date toDate(String dates) throws ParseException {
+
+        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").parse(dates);
+
+        date.getTime();
+        return date;
+
+    }
+
     public String getTimeAgo(String dates) throws ParseException{
 
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -124,44 +133,20 @@ public class CustomDateFormatter {
                 return new SimpleDateFormat("EEE, d MMM yyyy HH:mm").format(date);
             }
         }
-
-
-//        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        Date date = d.parse(dates);
-//        long time = date.getTime();
-//
-//        if (time < 1000000000000L) {
-//            time *= 1000;
-//        }
-//
-//        long now = System.currentTimeMillis();
-//        if (time > now || time <= 0) {
-//            return null;
-//        }
-//
-//        final long diff = time - now ;
-//        Log.d("respon", "getTimeLater: " + diff);
-//        Log.d("respon", "getTimeLater: time " + time);
-//        Log.d("respon", "getTimeLater: now" + now);
-//        if (diff < MINUTE_MILLIS) {
-//            return "beberapa saat lalu";
-//        } else if (diff < 2 * MINUTE_MILLIS){
-//            return "semenit lau";
-//        } else if (diff < 50 * MINUTE_MILLIS) {
-//            return diff / MINUTE_MILLIS + " menit lalu";
-//        } else if (diff < 90 * MINUTE_MILLIS) {
-//            return "1 jam lagi";
-//        } else if (diff < 48 * HOUR_MILLIS) {
-//            return diff / HOUR_MILLIS + " jam lalu";
-//        } else if (diff < 48 * HOUR_MILLIS) {
-//            return "yesterday";
-//        } else if (diff < 96 * HOUR_MILLIS) {
-//            return diff / DAY_MILLIS + " hari yang lalu";
-//        } else {
-//            return new SimpleDateFormat("dd MM yyy").format(date);
-//        }
     }
 
+    public long getToday(String dates) throws ParseException{
 
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = d.parse(dates);
+        long time = date.getTime();
+
+        if (time < 1000000000000L) {
+            time *= 1000;
+        }
+
+        long now = System.currentTimeMillis();
+
+        return time - now;
+    }
 }
-// string->

@@ -16,7 +16,6 @@ public class GroupModel {
     @SerializedName("is_joined")
     boolean isJoined;
 
-    //TODO change pending_approve to is_pending
     @SerializedName("is_pending")
     boolean isPending;
 

@@ -98,23 +98,5 @@
         android:background="@color/colorPrimary"
         android:text="Download All"
         android:textColor="@color/white"/>
-    <com.github.clans.fab.FloatingActionMenu
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="46dp"
-        android:layout_marginRight="18dp">
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/soal_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_info_white_24dp"/>
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mode_edit_white_24dp"/>
-    </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>

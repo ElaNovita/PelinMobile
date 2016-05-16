@@ -5,7 +5,7 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
     <EditText
-        android:id="@+id/materi_title"
+        android:id="@+id/assignTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Judul"
@@ -23,17 +23,17 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="12dp">
         <TextView
-            android:id="@+id/uploadMateri"
+            android:id="@+id/file_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pilih File"
             android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"/>
         <Button
-            android:id="@+id/upMateri"
+            android:id="@+id/select_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/uploadMateri"
+            android:layout_toRightOf="@id/file_name"
             android:layout_marginLeft="12dp"
             android:text="pilih file"/>
     </RelativeLayout>
@@ -45,14 +45,14 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="12dp">
         <TextView
-            android:id="@+id/dueDate"
+            android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Due Date"
             android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"/>
         <Button
-            android:id="@+id/selectDueDate"
+            android:id="@+id/selectDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/dueDate"
@@ -67,14 +67,14 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="12dp">
         <TextView
-            android:id="@+id/dueTime"
+            android:id="@+id/txtTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Due Date"
             android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"/>
         <Button
-            android:id="@+id/selectDueTime"
+            android:id="@+id/selectTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/dueTime"
@@ -83,7 +83,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/sendMateri"
+        android:id="@+id/send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

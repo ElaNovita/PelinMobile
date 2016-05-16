@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.TugasAdapter;
@@ -47,13 +49,14 @@ public class TugasFragment extends Fragment {
     RecyclerView recyclerView;
     Bundle bundle;
     int groupId;
-    Button kick;
     TugasAdapter adapter;
     AVLoadingIndicatorView load;
     SwipeRefreshLayout swipeRefreshLayout;
     View inflated;
-    String attachment;
+    String attachment, groupTitle;
     boolean isOwner, isTeacher;
+    LinearLayout menus;
+    ImageView kick, edit, info;
 
     public TugasFragment() {
         // Required empty public constructor
@@ -65,6 +68,8 @@ public class TugasFragment extends Fragment {
 
         groupId = getArguments().getInt("groupId");
         isOwner = getArguments().getBoolean("owner");
+        groupTitle = getArguments().getString("groupTitle");
+
 
         MySharedPreferences mf = new MySharedPreferences(getActivity());
         isTeacher = mf.getStatus();
@@ -80,9 +85,12 @@ public class TugasFragment extends Fragment {
         // Inflate the layout for this fragment
         inflated = inflater.inflate(R.layout.fragment_tugas, container, false);
         recyclerView = (RecyclerView) inflated.findViewById(R.id.tugastRv);
-        kick = (Button) inflated.findViewById(R.id.delete);
         load = (AVLoadingIndicatorView) inflated.findViewById(R.id.load);
         swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
+        menus = (LinearLayout) inflated.findViewById(R.id.menus);
+        kick = (ImageView) inflated.findViewById(R.id.delete);
+        edit = (ImageView) inflated.findViewById(R.id.edit);
+        info = (ImageView) inflated.findViewById(R.id.detail);
 
         startAnim();
 
@@ -112,6 +120,7 @@ public class TugasFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddTugas.class);
                 intent.putExtra("groupId", groupId);
+                intent.putExtra("groupTitle", groupTitle);
                 startActivity(intent);
             }
         });
@@ -134,25 +143,39 @@ public class TugasFragment extends Fragment {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
 
-                            attachment = "attach";
+                            attachment = tugasModels.get(position).getFile();
                             String due = tugasModels.get(position).getDueDate();
-                            try {
-                                Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").parse(due);
-                            } catch (ParseException e) {
-
-                            }
+                            boolean isPassed = tugasModels.get(position).isPassed();
+                            boolean isSubmitted = tugasModels.get(position).isSubmitted();
+//                            boolean isSubmitted = true;
 
                             if (isLongClick) {
 
+                                view.setBackgroundColor(getActivity().getResources().getColor(android.R.color.darker_gray));
+
                                 if (isTeacher) {
-                                    kick.setVisibility(View.VISIBLE);
-                                    kick.setText("Delete " + tugasModels.get(position).getTitle() + "?");
+                                    menus.setVisibility(View.VISIBLE);
                                     kick.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             deleteTugas(tugasModels.get(position).getId());
-                                            kick.setVisibility(View.GONE);
+                                            menus.setVisibility(View.GONE);
                                             adapter.removeItem(position);
+                                        }
+                                    });
+                                    edit.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getActivity(), EditTugas.class);
+                                            intent.putExtra("title", tugasModels.get(position).getTitle());
+                                            intent.putExtra("desc", tugasModels.get(position).getDescription());
+                                            intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                            intent.putExtra("file", tugasModels.get(position).getFile());
+                                            intent.putExtra("groupId", groupId);
+                                            intent.putExtra("assignId", tugasModels.get(position).getId());
+                                            startActivity(intent);
+                                            menus.setVisibility(View.GONE);
+
                                         }
                                     });
                                 } else {
@@ -160,23 +183,87 @@ public class TugasFragment extends Fragment {
                                 }
                             } else {
 
-                                if (isTeacher) {
-                                    Intent intent = new Intent(getActivity(), ListTugas.class);
-                                    intent.putExtra("groupId", groupId);
-                                    intent.putExtra("tugasId", tugasModels.get(position).getId());
-                                    startActivity(intent);
+                                if (!isPassed) {
+                                    if (isTeacher) {
+                                        Intent intent = new Intent(getActivity(), ListTugas.class);
+                                        intent.putExtra("groupId", groupId);
+                                        intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                        startActivity(intent);
+                                    } else {
+
+                                        if (!isSubmitted) {
+                                            Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                                            intent.putExtra("groupId", groupId);
+                                            intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                            intent.putExtra("title", tugasModels.get(position).getTitle());
+                                            intent.putExtra("content", tugasModels.get(position).getDescription());
+                                            intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                            if (attachment == null) {
+                                                attachment = "";
+                                            } else {
+                                                intent.putExtra("file", attachment);
+                                            }
+                                            startActivity(intent);
+                                        } else {
+                                            Intent intent = new Intent(getActivity(), PassedAssignment.class);
+                                            intent.putExtra("groupId", groupId);
+                                            intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                            intent.putExtra("title", tugasModels.get(position).getTitle());
+                                            intent.putExtra("content", tugasModels.get(position).getDescription());
+                                            intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                            intent.putExtra("isPassed", false);
+                                            if (attachment == null) {
+                                                attachment = "";
+                                            } else {
+                                                intent.putExtra("file", attachment);
+                                            }
+                                            startActivity(intent);
+                                        }
+
+                                    }
                                 } else {
-                                    Intent intent = new Intent(getActivity(), AssigntDetail.class);
-                                    intent.putExtra("groupId", groupId);
-                                    intent.putExtra("tugasId", tugasModels.get(position).getId());
-                                    intent.putExtra("title", tugasModels.get(position).getTitle());
-                                    intent.putExtra("content", tugasModels.get(position).getDescription());
-                                    intent.putExtra("file", attachment);
-                                    startActivity(intent);
+                                    if (isTeacher) {
+                                        Intent intent = new Intent(getActivity(), ListTugas.class);
+                                        intent.putExtra("groupId", groupId);
+                                        intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                        startActivity(intent);
+                                    } else {
+                                        if (isSubmitted) {
+                                            Intent intent = new Intent(getActivity(), PassedAssignment.class);
+                                            intent.putExtra("groupId", groupId);
+                                            intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                            intent.putExtra("title", tugasModels.get(position).getTitle());
+                                            intent.putExtra("content", tugasModels.get(position).getDescription());
+                                            intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                            intent.putExtra("isPassed", true);
+                                            intent.putExtra("isSubmitted", true);
+                                            if (attachment == null) {
+                                                attachment = "";
+                                            } else {
+                                                intent.putExtra("file", attachment);
+                                            }
+                                            startActivity(intent);
+                                        } else {
+                                            Intent intent = new Intent(getActivity(), PassedAssignment.class);
+                                            intent.putExtra("groupId", groupId);
+                                            intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                            intent.putExtra("title", tugasModels.get(position).getTitle());
+                                            intent.putExtra("content", tugasModels.get(position).getDescription());
+                                            intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                            intent.putExtra("isPassed", true);
+                                            intent.putExtra("isSubmitted", false);
+                                            if (attachment == null) {
+                                                attachment = "";
+                                            } else {
+                                                intent.putExtra("file", attachment);
+                                            }
+                                            startActivity(intent);
+                                        }
+
+                                    }
                                 }
+
                             }
-
-
                         }
                     });
 

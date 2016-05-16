@@ -51,6 +51,7 @@
         <activity android:name=".EditGroup"/>
         <activity android:name=".Fragment.GroupDetail.MateriDetail"/>
         <activity android:name=".Fragment.GroupDetail.EditTugas"/>
+        <activity android:name=".Fragment.GroupDetail.PassedAssignment"/>
     </application>
 
 

@@ -27,15 +27,48 @@
         android:layout_marginRight="16dp"
         android:src="@drawable/fab_add"/>
 
-    <Button
-        android:id="@+id/delete"
+    <!--<Button-->
+        <!--android:id="@+id/delete"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:text="Delete Messages With"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:visibility=""/>-->
+    <LinearLayout
+        android:id="@+id/menus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
         android:background="@color/colorPrimary"
-        android:text="Delete Messages With"
-        android:textColor="@android:color/white"
-        android:visibility="gone"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/ic_delete_white_36dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="6dp"/>
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/ic_mode_edit_white_36dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="6dp"/>
+        <ImageView
+            android:id="@+id/detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/ic_info_outline_white_36dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="6dp"/>
+    </LinearLayout>
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/load"
         android:layout_width="80dp"

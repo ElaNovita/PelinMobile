@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/ln"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -17,6 +18,7 @@
 
 
             <TextView
+                android:id="@+id/status"
                 android:layout_marginLeft="18dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
@@ -27,6 +29,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"/>
             <TextView
+                android:id="@+id/desc"
                 android:layout_marginLeft="18dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
@@ -71,7 +74,9 @@
         android:max="100"
         android:progress="100"
         android:layout_marginBottom="16dp"/>
+
     <Button
+        android:id="@+id/btnSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Upload Jawaban Baru"

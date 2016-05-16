@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.ela.pelinmobile.Model.FileModel;
 import com.example.ela.pelinmobile.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,5 +57,11 @@ public class MateriDetail extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setRandomBg() {
+        int[] arrayImage = new int[]{
+                
+        }
     }
 }
