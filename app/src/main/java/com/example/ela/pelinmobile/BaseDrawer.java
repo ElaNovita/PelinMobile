@@ -14,7 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 
 import butterknife.Bind;
 
@@ -43,6 +47,17 @@ public class BaseDrawer extends BaseAcitivty {
                 return true;
             }
         });
+
+        View headerView = navigationView.inflateHeaderView(R.layout.drawer_header);
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.user_nav);
+        TextView textView = (TextView) headerView.findViewById(R.id.user_nav_name);
+
+        MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
+
+        String userImage = mf.getUserImage();
+
+        Glide.with(getApplicationContext()).load(userImage).into(imageView);
+        textView.setText(mf.getUsername());
     }
 
     @Override

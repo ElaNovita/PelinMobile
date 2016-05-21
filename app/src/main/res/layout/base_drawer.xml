@@ -20,7 +20,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#fff"
-            app:headerLayout="@layout/drawer_header"
             app:menu="@menu/drawer_menu"
             app:itemIconTint="#8b8b8b"
             app:itemTextColor="#666666"/>

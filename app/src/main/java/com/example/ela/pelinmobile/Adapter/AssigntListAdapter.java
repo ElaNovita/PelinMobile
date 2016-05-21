@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.AssigntFragment;
 import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
+import com.example.ela.pelinmobile.Model.MyAssignment;
 import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.R;
 
@@ -22,12 +23,12 @@ import java.util.List;
  */
 public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.ViewHolder> {
 
-    List<TugasModel> tugasModels;
+    List<MyAssignment> tugasModels;
     OnItemClickListener listener;
     CustomDateFormatter cdf = new CustomDateFormatter();
     Context context;
 
-    public AssigntListAdapter(List<TugasModel> tugasModels, Context context, OnItemClickListener listener) {
+    public AssigntListAdapter(List<MyAssignment> tugasModels, Context context, OnItemClickListener listener) {
         this.tugasModels = tugasModels;
         this.listener = listener;
         this.context = context;
@@ -74,17 +75,17 @@ public class AssigntListAdapter extends RecyclerView.Adapter<AssigntListAdapter.
             passed = (LinearLayout) itemView.findViewById(R.id.passed);
         }
 
-        public void bind(final TugasModel tugasModel, final OnItemClickListener listener) {
+        public void bind(final MyAssignment tugasModel, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(tugasModel);
+                    listener.OnItemClick(tugasModel, getLayoutPosition());
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(TugasModel tugasModel);
+        void OnItemClick(MyAssignment tugasModel, int position);
     }
 }

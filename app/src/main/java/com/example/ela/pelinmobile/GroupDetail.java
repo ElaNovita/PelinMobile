@@ -52,7 +52,8 @@ public class GroupDetail extends BaseDrawer {
     int groupId;
     TabHost tabHost;
     Bundle bundle;
-    String groupTitle;
+    int semester, member;
+    String groupTitle, nmDosen, desc;
     boolean isOwner;
 
     private String TAG = "respon";
@@ -192,16 +193,15 @@ public class GroupDetail extends BaseDrawer {
         MenuItem item3 = menu.findItem(R.id.edit);
         item.setTitle(R.string.about);
         item1.setTitle("Leave Group");
-        item3.setTitle("Edit Group");
+        if (isOwner) {
+            item3.setTitle("Edit Group");
+        } else {
+            item3.setVisible(false);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public void showDialog() {
-//        FragmentManager fragmentManager = getFragmentManager();
-        android.app.FragmentManager fragmentManager = getFragmentManager();
-        GroupInfo groupInfo = GroupInfo.newInstance("Info Group");
-        groupInfo.show(fragmentManager, "title");
-    }
+
 
     private void leave(int id) {
         GroupInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(GroupInterface.class);
@@ -218,6 +218,21 @@ public class GroupDetail extends BaseDrawer {
 
             }
         });
+    }
+
+    public void showDialog() {
+        //TODO gmn biar ga nullpaonter soalnya soalnya get valuenya setelah reqJson
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+
+        Bundle bundles = new Bundle();
+////        bundles.putBundle();
+//        bundles.putString("group", "groupTitle");
+//        bundles.putString("dosen", "nmDosen");
+//        bundles.putInt("semester", 2);
+//        bundles.putString("desc", "desc");
+//        bundles.putInt("member", 2);
+        GroupInfo groupInfo = GroupInfo.newInstance("Group Info", groupTitle, nmDosen, desc, member, semester);
+        groupInfo.show(fragmentManager, "title");
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -240,6 +255,13 @@ public class GroupDetail extends BaseDrawer {
             @Override
             public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
                 GroupModel group = response.body();
+
+                Log.d(TAG, "onResponse: title " + group.getTitle());
+
+                nmDosen = group.getTeacher().getName();
+                member = group.getMember();
+                semester = group.getSemester();
+                desc = group.getDescription();
             }
 
             @Override

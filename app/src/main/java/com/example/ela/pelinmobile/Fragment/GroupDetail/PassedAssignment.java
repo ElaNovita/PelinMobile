@@ -3,6 +3,7 @@ package com.example.ela.pelinmobile.Fragment.GroupDetail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.AssigntDetail;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.R;
 
 /**
@@ -26,6 +28,9 @@ public class PassedAssignment extends AppCompatActivity {
     ProgressBar progressBar;
     int groupId, tugasId;
     String attach, dueDate;
+    CustomDateFormatter cdf = new CustomDateFormatter();
+    long milis;
+    MyCountDownTimer myCountDownTimer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +54,8 @@ public class PassedAssignment extends AppCompatActivity {
         timer = (TextView) findViewById(R.id.timer);
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
+        milis = cdf.getTimeRemain(dueDate);
+
         if (isPassed) {
             send.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
@@ -63,7 +70,9 @@ public class PassedAssignment extends AppCompatActivity {
 
         } else {
             send.setVisibility(View.VISIBLE);
-            timer.setText("Time remaining");
+            progressBar.setProgress(100);
+            myCountDownTimer = new MyCountDownTimer(milis, 1000);
+            myCountDownTimer.start();
         }
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -83,5 +92,35 @@ public class PassedAssignment extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+    }
+
+    public class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long milis, long interval) {
+            super(milis, interval);
+        }
+
+        @Override
+        public void onTick(long millis) {
+            int minutes = (int) (millis / (1000 * 60)) % 60;
+            int hours = (int) (millis / (1000 * 60 * 60)) % 24;
+            int days = (int) (millis / (1000 * 60 * 60 * 24)) ;
+
+            int progress = (int) (millis*100 / milis);
+
+            progressBar.setProgress(progress);
+
+            String txt = String.format("%2d days, %2d hours, %2d minutes", days, hours, minutes);
+
+            timer.setText(txt);
+        }
+
+        @Override
+        public void onFinish() {
+            timer.setText("Time is over");
+            progressBar.setProgress(0);
+        }
     }
 }

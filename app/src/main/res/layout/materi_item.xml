@@ -43,20 +43,6 @@
             android:text="17 March 16 09.30 AM"
             android:layout_marginTop="18dp"
             android:layout_marginLeft="8dp"/>
-        <ImageView
-            android:id="@+id/detailMateri"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_remove_red_eye_black_36dp"/>
-        <ImageView
-            android:id="@+id/downloadmateri"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/detailMateri"
-            android:src="@drawable/ic_file_download_black_36dp"/>
     </RelativeLayout>
 
 </LinearLayout>

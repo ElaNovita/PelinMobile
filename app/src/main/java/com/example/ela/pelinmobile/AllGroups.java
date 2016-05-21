@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -57,7 +58,7 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
 
         recyclerView = (RecyclerView) findViewById(R.id.allGroupRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
+        startAnim();
         reqJson();
     }
 
@@ -114,13 +115,14 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
     }
 
     private void reqJson() {
+        Log.d("reqjson", "reqJson: " );
 
         GroupInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(GroupInterface.class);
         Call<List<GroupModel>> call = service.getGroups();
         call.enqueue(new Callback<List<GroupModel>>() {
             @Override
             public void onResponse(Call<List<GroupModel>> call, final Response<List<GroupModel>> response) {
-
+                Log.d("respon", "onResponse: hasil " + response.code());
                 groupModels = response.body();
 
                 mAdapter = new AllGroupAdapter(groupModels, getApplicationContext(), new AllGroupAdapter.OnItemClickListener() {
@@ -131,12 +133,22 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
                 });
 
                 recyclerView.setAdapter(mAdapter);
+                stopAnim();
             }
 
             @Override
             public void onFailure(Call<List<GroupModel>> call, Throwable t) {
-
+                Log.e("respon", "onFailure: gagal ", t);
+                stopAnim();
             }
         });
+    }
+
+    public void startAnim() {
+        findViewById(R.id.load).setVisibility(View.VISIBLE);
+    }
+
+    public void stopAnim() {
+        findViewById(R.id.load).setVisibility(View.GONE);
     }
 }

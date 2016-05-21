@@ -178,8 +178,6 @@ public class GroupListFragment extends Fragment {
 
                     for (GroupModel group : groups) {
 
-
-
                         groupId.add(group.getId());
 
                     }

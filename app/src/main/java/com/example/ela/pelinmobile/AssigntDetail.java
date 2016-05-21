@@ -55,11 +55,6 @@ public class AssigntDetail extends AppCompatActivity {
     ImageView attachImg;
     String fileName;
     CustomDateFormatter cdf = new CustomDateFormatter();
-    private static final int SECOND = 1000;
-    private static final int MINUTE = 60 * SECOND;
-    private static final int HOUR = 60 * MINUTE;
-    private static final int DAY = 24 * HOUR;
-    long daysToGo, hoursToGo, minutesToGo, secondToGo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,40 +83,7 @@ public class AssigntDetail extends AppCompatActivity {
             fileName = attach.substring(attach.lastIndexOf('/') + 1);
         }
 
-        long ms = 0;
-
-        try {
-            ms = cdf.getToday(dueDate);
-        } catch (ParseException e) {
-            Log.e("respon", "onCreate: ", e);
-        }
-
-        StringBuffer txt = new StringBuffer("");
-        if (ms > DAY) {
-            txt.append(ms / DAY).append(" days ");
-            daysToGo = ms / DAY;
-            ms %= DAY;
-        }
-        if (ms > HOUR) {
-            txt.append(ms / HOUR).append(" hours ");
-            hoursToGo = ms / HOUR;
-            ms %= HOUR;
-        }
-        if (ms > MINUTE) {
-            txt.append(ms / MINUTE).append(" minutes ");
-            minutesToGo = ms / MINUTE;
-            ms %= MINUTE;
-        }
-        if (ms > SECOND) {
-            txt.append(ms / SECOND).append(" seconds ");
-            secondToGo = ms / SECOND;
-            ms %= SECOND;
-        }
-        txt.append(ms + " ms");
-
-        long milistoGo = secondToGo * 1000 + minutesToGo * 1000 * 60 + hoursToGo * 1000 * 60 * 60 + daysToGo * 1000 * 60 * 60 * 24;
-
-        milis = milistoGo;
+        milis = cdf.getTimeRemain(dueDate);
 
         title.setText(_title);
         content.setText(_content);
@@ -133,7 +95,7 @@ public class AssigntDetail extends AppCompatActivity {
         }
 
         progressBar.setProgress(100);
-        myCountDownTimer = new MyCountDownTimer(milistoGo, 1000);
+        myCountDownTimer = new MyCountDownTimer(milis, 1000);
         myCountDownTimer.start();
         uploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,13 +193,14 @@ public class AssigntDetail extends AppCompatActivity {
         call.enqueue(new Callback<SubmitModel>() {
             @Override
             public void onResponse(Call<SubmitModel> call, Response<SubmitModel> response) {
-
+                Log.d("respon", "onResponse: submit " + response.code());
                 Toast.makeText(getApplicationContext(), "Tugas Anda Sudah Dikirim", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<SubmitModel> call, Throwable t) {
-
+                Log.e("respon", "onFailure: ", t);
+                Toast.makeText(getApplicationContext(), "Upload Gagal,Coba Lagi", Toast.LENGTH_LONG).show();
             }
         });
     }

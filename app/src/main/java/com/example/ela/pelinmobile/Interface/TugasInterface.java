@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile.Interface;
 
+import com.example.ela.pelinmobile.Model.MyAssignment;
 import com.example.ela.pelinmobile.Model.SubmitModel;
 import com.example.ela.pelinmobile.Model.Submitted;
 import com.example.ela.pelinmobile.Model.TugasModel;
@@ -27,7 +28,7 @@ public interface TugasInterface {
     Call<List<TugasModel>> getTugas(@Path("groupId") int groupId);
 
     @GET("my_assignments")
-    Call<List<TugasModel>> getAllTugas();
+    Call<List<MyAssignment>> getAllTugas();
 
     @DELETE("groups/{groupId}/assignments/{idTugas}")
     Call<ResponseBody> deleteTugas(@Path("groupId") int groupId, @Path("idTugas") int idTugas);

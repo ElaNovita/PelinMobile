@@ -25,6 +25,7 @@ import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MateriInterface;
 import com.example.ela.pelinmobile.Model.MateriModel;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
 import java.io.File;
@@ -50,8 +51,7 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     Context context;
     private NotificationManager notify;
     private NotificationCompat.Builder builder;
-
-    private static OnItemClickListener listener;
+    static OnItemClickListener listener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
@@ -78,7 +78,7 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(materiModels.get(position).getTitle());
         try {
-            holder.time.setText(cdf.format(materiModels.get(position).getCreatedAt()));
+            holder.time.setText(cdf.getTimeAgo(materiModels.get(position).getCreatedAt()));
         } catch (ParseException e) {
 
         }
@@ -87,22 +87,19 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, time;
-        ImageView download, detail;
 
         public ViewHolder(final View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.materiTitle);
             time = (TextView) itemView.findViewById(R.id.posted);
-            download = (ImageView) itemView.findViewById(R.id.downloadmateri);
-            detail = (ImageView) itemView.findViewById(R.id.detailMateri);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        listener.OnItemClick(itemView, getLayoutPosition(), false);
+                        listener.onItemClick(v, getLayoutPosition(), false);
                     }
                 }
             });
@@ -111,40 +108,36 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
                 @Override
                 public boolean onLongClick(View v) {
                     if (listener != null) {
-                        listener.OnItemClick(itemView, getLayoutPosition(), true);
+                        listener.onItemClick(itemView, getLayoutPosition(), true);
                     }
                     return true;
                 }
             });
 
-            download.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String url = materiModels.get(7).getFileModels().get(5).getFile();
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    context.startActivity(i);
-                }
-            });
-
-            detail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, MateriDetail.class);
-                    intent.putExtra("title", materiModels.get(getLayoutPosition()).getTitle());
-                    intent.putExtra("date", materiModels.get(getLayoutPosition()).getCreatedAt());
-                    intent.putExtra("desc", materiModels.get(getLayoutPosition()).getDescription());
-//                    intent.putExtra("url")
-                    Log.d("respon", "onClick: desc " + materiModels.get(getLayoutPosition()).getDescription());
-                    context.startActivity(intent);
-                }
-            });
+//            download.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String url = materiModels.get(7).getFileModels().get(5).getFile();
+//                    Intent i = new Intent(Intent.ACTION_VIEW);
+//                    i.setData(Uri.parse(url));
+//                    context.startActivity(i);
+//                }
+//            });
+//
+//            detail.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, MateriDetail.class);
+//                    intent.putExtra("title", materiModels.get(getLayoutPosition()).getTitle());
+//                    intent.putExtra("date", materiModels.get(getLayoutPosition()).getCreatedAt());
+//                    intent.putExtra("desc", materiModels.get(getLayoutPosition()).getDescription());
+////                    intent.putExtra("url")
+//                    Log.d("respon", "onClick: desc " + materiModels.get(getLayoutPosition()).getDescription());
+//                    context.startActivity(intent);
+//                }
+//            });
 
         }
-    }
-
-    public interface OnItemClickListener {
-        void OnItemClick(View view, int position, boolean isLongClick);
     }
 
     public void removeItem(int position) {

@@ -4,20 +4,16 @@
         <item
             android:id="@+id/home"
             android:icon="@drawable/ic_home_black_24dp"
+            android:checked="true"
             android:title="Home"/>
         <item
             android:id="@+id/allGroupMenu"
-            android:checked="true"
             android:icon="@drawable/ic_group_black_24dp"
             android:title="Semua Grup"/>
         <item
             android:id="@+id/search_group_menu"
             android:icon="@drawable/ic_search_black_24dp"
             android:title="Cari Grup"/>
-        <item
-            android:id="@+id/edit_profile_menu"
-            android:title="Edit Profile"
-            android:icon="@drawable/ic_mode_edit_black_24dp"/>
         <item
             android:id="@+id/logout"
             android:title="Logout"

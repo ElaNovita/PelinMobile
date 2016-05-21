@@ -63,6 +63,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
+        MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
 
         context = getApplicationContext();
 
@@ -74,6 +75,8 @@ public class Profile extends AppCompatActivity {
         failed = (TextView) findViewById(R.id.failed);
         user_img = (ImageView) findViewById(R.id.user_photo);
 
+        Glide.with(this).load(mf.getUserImage()).into(user_img);
+        username.setText(mf.getUsername());
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,12 +139,8 @@ public class Profile extends AppCompatActivity {
                     } else {
                         nik = user.getStudent().getNim();
                     }
-                    String name = user.getName();
                     userId = user.getId();
-
-                    username.setText(name);
                     kode.setText(nik);
-                    Glide.with(getApplicationContext()).load(user.getPhoto().getMedium()).into(user_img);
 
                     edit.setOnClickListener(new View.OnClickListener() {
                         @Override

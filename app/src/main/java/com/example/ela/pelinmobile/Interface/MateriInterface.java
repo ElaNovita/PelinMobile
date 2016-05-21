@@ -31,10 +31,12 @@ public interface MateriInterface {
     Call<MateriModel> createMateri(@Path("groupId") int groupId,
                                    @Part MultipartBody.Part files,
                                    @Part("title") RequestBody title,
-                                   @Part("desc") RequestBody desc);
+                                   @Part("description") RequestBody description);
 
     @DELETE("groups/{groupId}/lessons/{materiId}")
     Call<ResponseBody> deleteMateri(@Path("groupId") int groupId, @Path("materiId") int materiId);
 
+    @GET("groups/{groupId}/lessons/{materiId}")
+    Call<List<MateriModel>> getFiles(@Path("groupId") int groupId, @Path("materiId") int materiId);
     
 }

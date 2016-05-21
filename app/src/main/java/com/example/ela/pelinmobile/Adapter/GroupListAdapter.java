@@ -96,8 +96,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             });
         }
 
-
-
     }
 
     public void removeItem(int position) {

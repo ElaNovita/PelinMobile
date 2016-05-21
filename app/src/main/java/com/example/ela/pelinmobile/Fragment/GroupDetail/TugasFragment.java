@@ -198,6 +198,7 @@ public class TugasFragment extends Fragment {
                                             intent.putExtra("title", tugasModels.get(position).getTitle());
                                             intent.putExtra("content", tugasModels.get(position).getDescription());
                                             intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                            intent.putExtra("isPassed", false);
                                             if (attachment == null) {
                                                 attachment = "";
                                             } else {

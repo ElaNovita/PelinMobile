@@ -20,6 +20,7 @@ public class CustomDateFormatter {
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+    long daysToGo, hoursToGo, minutesToGo, secondToGo;
 
     public String format(String dates) throws ParseException {
 //        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dates);
@@ -29,6 +30,14 @@ public class CustomDateFormatter {
 
 
         return new SimpleDateFormat("EEE, d MMM yyyy HH:mm").format(date);
+
+    }
+
+    public String formatTime(String dates) throws ParseException {
+
+        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").parse(dates);
+
+        return new SimpleDateFormat("HH:mm").format(date);
 
     }
 
@@ -90,9 +99,6 @@ public class CustomDateFormatter {
         long now = System.currentTimeMillis();
         if (time > now || time <= 0) {
             final long diff = time - now;
-            Log.d("respon", "getTimeLater: " + diff);
-            Log.d("respon", "getTimeLater: time " + time);
-            Log.d("respon", "getTimeLater: now" + now);
             if (diff < MINUTE_MILLIS) {
                 return "beberapa saat lagi";
             } else if (diff < 2 * MINUTE_MILLIS) {
@@ -112,9 +118,6 @@ public class CustomDateFormatter {
             }
         } else {
             final long diff = now - time;
-            Log.d("respon", "getTimeLater: " + diff);
-            Log.d("respon", "getTimeLater: time " + time);
-            Log.d("respon", "getTimeLater: now" + now);
             if (diff < MINUTE_MILLIS) {
                 return "beberapa saat lalu";
             } else if (diff < 2 * MINUTE_MILLIS) {
@@ -148,5 +151,34 @@ public class CustomDateFormatter {
         long now = System.currentTimeMillis();
 
         return time - now;
+    }
+
+    public long getTimeRemain(String dates) {
+        long ms = 0;
+
+        try {
+            ms = getToday(dates);
+        } catch (ParseException e) {
+            Log.e("respon", "onCreate: ", e);
+        }
+
+        if (ms > DAY_MILLIS) {
+            daysToGo = ms / DAY_MILLIS;
+            ms %= DAY_MILLIS;
+        }
+        if (ms > HOUR_MILLIS) {
+            hoursToGo = ms / HOUR_MILLIS;
+            ms %= HOUR_MILLIS;
+        }
+        if (ms > MINUTE_MILLIS) {
+            minutesToGo = ms / MINUTE_MILLIS;
+            ms %= MINUTE_MILLIS;
+        }
+        if (ms > SECOND_MILLIS) {
+            secondToGo = ms / SECOND_MILLIS;
+            ms %= SECOND_MILLIS;
+        }
+
+        return secondToGo * 1000 + minutesToGo * 1000 * 60 + hoursToGo * 1000 * 60 * 60 + daysToGo * 1000 * 60 * 60 * 24;
     }
 }

@@ -13,5 +13,6 @@ You’ll first need an interface that specifies listener’s behaviour. In this 
     <string name="materi">Materi</string>
     <string name="tugas">Tugas</string>
     <string name="member">Anggota</string>
+    <string name="over">Time is over</string>
     <string name="dummy">This is typically used for displaying an alert dialog, a confirm dialog, or prompting the user for information within an overlay without having to switch to another Activity.</string>
 </resources>

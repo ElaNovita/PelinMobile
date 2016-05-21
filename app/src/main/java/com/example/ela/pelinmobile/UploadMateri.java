@@ -30,7 +30,7 @@ import retrofit2.Response;
  */
 public class UploadMateri extends AppCompatActivity {
 
-    EditText title, description;
+    EditText title, _description;
     TextView TextuploadMateri;
     Button btnSendMateri, upMateri;
     private static final int PICKFILE_RESULT_CODE = 1;
@@ -39,7 +39,7 @@ public class UploadMateri extends AppCompatActivity {
     MediaType MEDIA_TYPE_PNG;
     String materiTitle, desc, groupTitle;
     MultipartBody.Part requestFileBody;
-    RequestBody titles, descriptions;
+    RequestBody titles, description;
     int groupId;
 
     @Override
@@ -56,14 +56,15 @@ public class UploadMateri extends AppCompatActivity {
         btnSendMateri = (Button) findViewById(R.id.sendMateri);
         upMateri = (Button) findViewById(R.id.upMateri);
         title = (EditText) findViewById(R.id.materi_title);
-        description = (EditText) findViewById(R.id.desc);
+        _description = (EditText) findViewById(R.id.desc);
 
         upMateri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("file/*");
-                startActivityForResult(intent, PICKFILE_RESULT_CODE);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(Intent.createChooser(intent, "Select file"), PICKFILE_RESULT_CODE);
             }
         });
 
@@ -71,12 +72,12 @@ public class UploadMateri extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 materiTitle = title.getText().toString();
-                desc = description.getText().toString();
+                desc = _description.getText().toString();
 
                 titles = RequestBody.create(MediaType.parse("multipart/form-data"), materiTitle);
-                descriptions = RequestBody.create(MediaType.parse("multipart/form-data"), desc);
+                description = RequestBody.create(MediaType.parse("multipart/form-data"), desc);
 
-                sendFile(requestFileBody, titles, descriptions);
+                sendFile(requestFileBody, titles, description);
 
 
 

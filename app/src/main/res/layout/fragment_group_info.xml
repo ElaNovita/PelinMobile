@@ -9,6 +9,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_marginTop="18dp"
         android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,28 +53,10 @@
             android:layout_marginTop="10dp"
             android:textStyle="bold"/>
         <TextView
-            android:id="@+id/classes"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/member"
-            android:text="Kelas : "
-            android:layout_marginTop="8dp"/>
-        <TextView
-            android:id="@+id/group_class"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:layout_below="@id/group_member"
-            android:layout_toRightOf="@id/classes"
-            android:text="A"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-        <TextView
             android:id="@+id/semester"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/classes"
+            android:layout_below="@id/group_member"
             android:layout_marginTop="8dp"
             android:textSize="15sp"
             android:text="Semester : "/>
@@ -81,8 +64,8 @@
             android:id="@+id/group_semester"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/group_class"
-            android:layout_marginTop="5dp"
+            android:layout_below="@id/group_member"
+            android:layout_marginTop="9dp"
             android:layout_toRightOf="@id/semester"
             android:text="8"
             android:textSize="15sp"

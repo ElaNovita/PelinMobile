@@ -18,9 +18,11 @@ import com.example.ela.pelinmobile.Adapter.AssigntListAdapter;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.AssigntDetail;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.ListTugas;
+import com.example.ela.pelinmobile.Fragment.GroupDetail.PassedAssignment;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.FragmentComunicator;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
+import com.example.ela.pelinmobile.Model.MyAssignment;
 import com.example.ela.pelinmobile.Model.TugasModel;
 import com.example.ela.pelinmobile.R;
 
@@ -37,7 +39,7 @@ import retrofit2.Response;
 public class AssigntFragment extends Fragment {
 
     private List<TugasModel> tugasModels;
-    String TAG = "respon";
+    String TAG = "respon", attachment;
     RecyclerView recyclerView;
     SwipeRefreshLayout refreshLayout;
     View inflated;
@@ -98,11 +100,11 @@ public class AssigntFragment extends Fragment {
 
     public void reqJson() {
         TugasInterface tugasInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(TugasInterface.class);
-        Call<List<TugasModel>> call = tugasInterface.getAllTugas();
-        call.enqueue(new Callback<List<TugasModel>>() {
+        Call<List<MyAssignment>> call = tugasInterface.getAllTugas();
+        call.enqueue(new Callback<List<MyAssignment>>() {
             @Override
-            public void onResponse(Call<List<TugasModel>> call, Response<List<TugasModel>> response) {
-                List<TugasModel> tugasModels = response.body();
+            public void onResponse(Call<List<MyAssignment>> call, Response<List<MyAssignment>> response) {
+                final List<MyAssignment> tugasModels = response.body();
 
                 Log.d(TAG, "onResponse: size " + tugasModels.size());
 
@@ -110,7 +112,7 @@ public class AssigntFragment extends Fragment {
 
 
 
-                for (TugasModel tugas : tugasModels) {
+                for (MyAssignment tugas : tugasModels) {
                     if (!tugas.isPassed()) {
                         counter.add(tugas.getId());
                     }
@@ -120,10 +122,76 @@ public class AssigntFragment extends Fragment {
 
                 AssigntListAdapter adapter = new AssigntListAdapter(tugasModels, getActivity(), new AssigntListAdapter.OnItemClickListener() {
                     @Override
-                    public void OnItemClick(TugasModel tugasModel) {
-                        //TODO change list tugas to tugas detail
-                        Intent intent = new Intent(getActivity(), ListTugas.class);
-                        startActivity(intent);
+                    public void OnItemClick(MyAssignment tugasModel, int position) {
+
+                        boolean isSubmitted = tugasModels.get(position).isSubmitted();
+                        boolean isPassed = tugasModels.get(position).isPassed();
+                        attachment = tugasModels.get(position).getFile();
+
+                        //TODO if server has been fixed, delete isPassed
+                        if (!isPassed) {
+                            if (!isSubmitted) {
+                                Intent intent = new Intent(getActivity(), AssigntDetail.class);
+                                intent.putExtra("groupId", tugasModels.get(position).getGroup().getId());
+                                intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                intent.putExtra("title", tugasModels.get(position).getTitle());
+                                intent.putExtra("content", tugasModels.get(position).getDescription());
+                                intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                intent.putExtra("isPassed", false);
+                                if (attachment == null) {
+                                    attachment = "";
+                                } else {
+                                    intent.putExtra("file", attachment);
+                                }
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(getActivity(), PassedAssignment.class);
+                                intent.putExtra("groupId", tugasModels.get(position).getGroup().getId());
+                                intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                intent.putExtra("title", tugasModels.get(position).getTitle());
+                                intent.putExtra("content", tugasModels.get(position).getDescription());
+                                intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                intent.putExtra("isPassed", false);
+                                if (attachment == null) {
+                                    attachment = "";
+                                } else {
+                                    intent.putExtra("file", attachment);
+                                }
+                                startActivity(intent);
+                            }
+                        } else {
+                            if (!isSubmitted) {
+                                Intent intent = new Intent(getActivity(), PassedAssignment.class);
+                                intent.putExtra("groupId", tugasModels.get(position).getGroup().getId());
+                                intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                intent.putExtra("title", tugasModels.get(position).getTitle());
+                                intent.putExtra("content", tugasModels.get(position).getDescription());
+                                intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                intent.putExtra("isPassed", true);
+                                if (attachment == null) {
+                                    attachment = "";
+                                } else {
+                                    intent.putExtra("file", attachment);
+                                }
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(getActivity(), PassedAssignment.class);
+                                intent.putExtra("groupId", tugasModels.get(position).getGroup().getId());
+                                intent.putExtra("tugasId", tugasModels.get(position).getId());
+                                intent.putExtra("title", tugasModels.get(position).getTitle());
+                                intent.putExtra("content", tugasModels.get(position).getDescription());
+                                intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                intent.putExtra("isPassed", true);
+                                if (attachment == null) {
+                                    attachment = "";
+                                } else {
+                                    intent.putExtra("file", attachment);
+                                }
+                                startActivity(intent);
+                            }
+                        }
+
+
                     }
                 });
 
@@ -136,7 +204,7 @@ public class AssigntFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<TugasModel>> call, Throwable t) {
+            public void onFailure(Call<List<MyAssignment>> call, Throwable t) {
                 Log.d(TAG, "onFailure: ", t);
 
                 refreshLayout.setRefreshing(false);

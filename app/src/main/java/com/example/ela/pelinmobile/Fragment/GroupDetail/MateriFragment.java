@@ -20,15 +20,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.MateriAdapter;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.MateriInterface;
 import com.example.ela.pelinmobile.Model.MateriModel;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 import com.example.ela.pelinmobile.UploadMateri;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +59,7 @@ public class MateriFragment extends Fragment {
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
     int id = 1;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
 
     public MateriFragment() {
@@ -134,10 +138,16 @@ public class MateriFragment extends Fragment {
 
                     adapter = new MateriAdapter(materiModels, getActivity());
 
-                    adapter.setOnItemClickListener(new MateriAdapter.OnItemClickListener() {
+                    adapter.setOnItemClickListener(new OnItemClickListener() {
                         @Override
-                        public void OnItemClick(View view, final int position, boolean isLongClick) {
-                            String url = materiModels.get(position).getFileModels().get(0).getFile();
+                        public void onItemClick(View view, final int position, boolean isLongClick) {
+                            String url;
+                            if (materiModels.get(position).getFileModels().size() != 0) {
+                                //TODO why get(position) on getfilesmodel return error?
+                                url = materiModels.get(position).getFileModels().get(position).getFile();
+                            } else {
+                                url = "";
+                            }
                             bundle = new Bundle();
                             bundle.putString("url", url);
                             materiId = materiModels.get(position).getId();
@@ -160,8 +170,17 @@ public class MateriFragment extends Fragment {
                                 }
 
                             } else {
-//                                Intent intent = new Intent(getActivity(), MateriDetail.class);
-//                                intent.putExtra("")
+                                Intent intent = new Intent(getActivity(), MateriDetail.class);
+                                intent.putExtra("title", materiModels.get(position).getTitle());
+                                try {
+                                    intent.putExtra("date", cdf.getTimeAgo(materiModels.get(position).getCreatedAt()));
+                                } catch (ParseException e) {
+                                    intent.putExtra("date", "");
+                                }
+                                intent.putExtra("desc", materiModels.get(position).getDescription());
+                                intent.putExtra("groupId", groupId);
+                                intent.putExtra("materiId", materiModels.get(position).getId());
+                                startActivity(intent);
                             }
 
                         }
