@@ -125,8 +125,8 @@ public class DiskusiFragment extends Fragment {
 
     public void showDialog() {
         FragmentManager fragmentManager = getFragmentManager();
-        CreatePost createPost = CreatePost.newInstance("Enter Post");
-        createPost.show(fragmentManager, "Enter Post");
+        CreatePost createPost = CreatePost.newInstance("Create New Post");
+        createPost.show(fragmentManager, "Create New Post");
         createPost.setArguments(bundle);
     }
 

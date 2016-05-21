@@ -116,7 +116,7 @@ public class MemberFragment extends Fragment {
 
     private void kick(String nim) {
         RequestInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(RequestInterface.class);
-        Call<ApproveModel> call = service.kick(4, nim);
+        Call<ApproveModel> call = service.kick(groupId, nim);
         call.enqueue(new Callback<ApproveModel>() {
             @Override
             public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {
@@ -139,8 +139,8 @@ public class MemberFragment extends Fragment {
             public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
                 List<RequestModel> requestModels = response.body();
 
-                if (requestModels == null) {
-                    linearLayout.setVisibility(View.GONE);
+                if (requestModels.size() == 0) {
+                    confirmAll.setVisibility(View.GONE);
                 }
 
                 ConfirmAdapter adapters = new ConfirmAdapter(requestModels, getActivity(), groupId);

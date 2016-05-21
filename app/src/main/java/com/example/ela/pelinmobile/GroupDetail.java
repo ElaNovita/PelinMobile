@@ -8,11 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,12 +44,10 @@ import retrofit2.Response;
 /**
  * Created by ela on 18/03/16.
  */
-public class GroupDetail extends BaseDrawer {
+public class GroupDetail extends AppCompatActivity {
     @Bind(R.id.drawerLayout)
     DrawerLayout drawerLayout;
-    @Bind(R.id.tablayout)
     TabLayout tabLayout;
-    @Bind(R.id.tabViewPager)
     ViewPager tabViewPager;
     int groupId;
     TabHost tabHost;
@@ -69,7 +69,8 @@ public class GroupDetail extends BaseDrawer {
 
         Log.d(TAG, Integer.toString(groupId));
 
-
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabViewPager = (ViewPager) findViewById(R.id.tabViewPager);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,7 +90,6 @@ public class GroupDetail extends BaseDrawer {
         tabViewPager.setAdapter(new GroupDetailAdapter(getSupportFragmentManager(), bundle));
         setupViewPager(tabViewPager);
         tabLayout.setupWithViewPager(tabViewPager);
-        setupDrawerContent(navigationView);
         setTabIcon();
 
         Log.d(TAG, "onCreate: bundle " + bundle + groupTitle);
@@ -182,24 +182,32 @@ public class GroupDetail extends BaseDrawer {
                 this.finish();
 
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_settings);
-        MenuItem item1 = menu.findItem(R.id.leave);
+
+        MenuItem item2 = menu.findItem(R.id.leave);
         MenuItem item3 = menu.findItem(R.id.edit);
-        item.setTitle(R.string.about);
-        item1.setTitle("Leave Group");
         if (isOwner) {
             item3.setTitle("Edit Group");
+            item2.setVisible(false);
         } else {
             item3.setVisible(false);
         }
+
         return super.onPrepareOptionsMenu(menu);
+
     }
+
 
 
 
@@ -224,13 +232,6 @@ public class GroupDetail extends BaseDrawer {
         //TODO gmn biar ga nullpaonter soalnya soalnya get valuenya setelah reqJson
         android.app.FragmentManager fragmentManager = getFragmentManager();
 
-        Bundle bundles = new Bundle();
-////        bundles.putBundle();
-//        bundles.putString("group", "groupTitle");
-//        bundles.putString("dosen", "nmDosen");
-//        bundles.putInt("semester", 2);
-//        bundles.putString("desc", "desc");
-//        bundles.putInt("member", 2);
         GroupInfo groupInfo = GroupInfo.newInstance("Group Info", groupTitle, nmDosen, desc, member, semester);
         groupInfo.show(fragmentManager, "title");
     }

@@ -29,7 +29,7 @@
         <activity android:name=".Profile"
             android:theme="@style/CustomTheme"/>
         <activity android:name=".GroupDetail"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Collapsing" android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

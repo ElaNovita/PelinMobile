@@ -144,30 +144,4 @@ public class BaseAcitivty extends AppCompatActivity {
         }
 
     }
-
-//    public void reqUser() {
-//
-//        final TextView username = (TextView) findViewById(R.id.user_nav_name);
-//
-//        MyInterface myInterface = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MyInterface.class);
-//        Call<User> call = myInterface.getUser();
-//        call.enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(Call<User> call, Response<User> response) {
-//                try {
-//                    User user = response.body();
-//                    String name = "nama";
-//                    Log.d("respon", "onResponse: " + user.getName());
-//                } catch (Exception e) {
-//                    Log.e("respon", "onResponse: ", e);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<User> call, Throwable t) {
-//                Log.e("respon", "onFailure: ", t);
-//            }
-//        });
-//
-//    }
 }
