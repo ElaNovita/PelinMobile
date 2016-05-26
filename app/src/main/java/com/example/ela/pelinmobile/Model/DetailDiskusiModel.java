@@ -17,6 +17,8 @@ public class DetailDiskusiModel {
     @SerializedName("is_voted")
     boolean isVoted;
 
+    PhotoModel photo;
+
     User user;
     int id;
 
@@ -66,5 +68,13 @@ public class DetailDiskusiModel {
 
     public void setVoted(boolean voted) {
         isVoted = voted;
+    }
+
+    public PhotoModel getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoModel photo) {
+        this.photo = photo;
     }
 }

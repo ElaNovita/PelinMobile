@@ -14,12 +14,6 @@
         android:layout_marginTop="20dp"/>
     <EditText
         android:layout_marginTop="8dp"
-        android:id="@+id/group_classes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Kelas"/>
-    <EditText
-        android:layout_marginTop="8dp"
         android:id="@+id/group_semester"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,16 +23,29 @@
         android:id="@+id/jurusan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Semester"/>
+        android:hint="Jurusan"/>
     <EditText
         android:id="@+id/group_desc"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:hint="Group Description"/>
-    <Button
-        android:id="@+id/btn_create"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create"
-        android:layout_marginTop="8dp"/>
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Create"
+            android:layout_marginTop="8dp"/>
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
 </LinearLayout>

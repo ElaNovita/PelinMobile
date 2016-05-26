@@ -58,10 +58,10 @@ public class DiskusiFragment extends Fragment {
     AVLoadingIndicatorView load;
     View inflated;
     Button kick;
-    TextView fail;
+    TextView fail, empty;
     DiskusiAdapter adapter;
     Date hasil;
-    String result;
+    String result, groupTitle;
     boolean isOwner, isTeacher;
 
     public DiskusiFragment() {
@@ -73,12 +73,14 @@ public class DiskusiFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         groupId = getArguments().getInt("groupId");
+        groupTitle = getArguments().getString("groupTitle");
 
         reqJson();
 
         bundle = new Bundle();
 
         bundle.putInt("groupId", groupId);
+        bundle.putString("groupTitle", groupTitle);
 
         MySharedPreferences mf = new MySharedPreferences(getActivity());
         isTeacher = mf.getStatus();
@@ -98,6 +100,7 @@ public class DiskusiFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         kick = (Button) inflated.findViewById(R.id.kick);
         fail = (TextView) inflated.findViewById(R.id.failed);
+        empty = (TextView) inflated.findViewById(R.id.empty);
 
         FloatingActionButton fab = (FloatingActionButton) inflated.findViewById(R.id.addDiskusi);
 
@@ -140,6 +143,12 @@ public class DiskusiFragment extends Fragment {
                     final List<DiskusiModel> diskusiModels = response.body();
 
                     postId = new ArrayList<Integer>();
+
+                    if (diskusiModels.size() == 0) {
+                        empty.setVisibility(View.VISIBLE);
+                    } else {
+                        empty.setVisibility(View.GONE);
+                    }
 
 
                     Log.d(TAG, "onResponse: date " + result);

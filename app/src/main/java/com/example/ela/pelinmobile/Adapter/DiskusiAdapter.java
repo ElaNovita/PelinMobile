@@ -72,6 +72,7 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
         Log.d("respon", "onBindViewHolder: photo " + diskusis.get(position).getUser().getPhoto().getSmall());
 
         try {
+            //TODO menitnya salah :o
             created = cdf.format(diskusis.get(position).getCreatedAt());
             holder.dSendAt.setText(created);
             Log.d("respon", "onBindViewHolder: format " + cdf.format(diskusis.get(position).getCreatedAt()));

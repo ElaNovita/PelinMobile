@@ -3,6 +3,7 @@ package com.example.ela.pelinmobile.Adapter;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     public MemberAdapter(Context context, List<MemberModel> members) {
         this.members = members;
+        this.context = context;
     }
 
     @Override
@@ -64,8 +66,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.username.setText(members.get(position).getName());
-//        holder.userImg.setImageResource(members.get(position).userImg);
-
+        Log.d("photo", "onBindViewHolder: " + members.get(position).getPhoto().getSmall());
+        Glide.with(context).load(members.get(position).getPhoto().getMedium()).into(holder.userImg);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

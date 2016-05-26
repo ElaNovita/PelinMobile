@@ -30,12 +30,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.ela.pelinmobile.Adapter.GroupListAdapter;
 import com.example.ela.pelinmobile.AllGroups;
+import com.example.ela.pelinmobile.EditGroup;
 import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
@@ -68,10 +70,11 @@ public class GroupListFragment extends Fragment {
     ArrayList<Integer> groupId;
     String TAG = "respon";
     View inflated;
-    TextView failed, nogroup;
+    TextView failed, nogroup, cancel;
     SwipeRefreshLayout refreshLayout;
-    Button kick;
+    LinearLayout kick;
     GroupListAdapter adapter;
+    ImageView delete, edit;
     boolean isTeacher;
 
     private List<GroupModel> groups;
@@ -86,6 +89,7 @@ public class GroupListFragment extends Fragment {
 
         MySharedPreferences mf = new MySharedPreferences(getActivity());
         isTeacher = mf.getStatus();
+        Log.d(TAG, "onCreate: status " + isTeacher);
 
 //        stopAnim();
 
@@ -101,8 +105,11 @@ public class GroupListFragment extends Fragment {
         recyclerView = (RecyclerView) inflated.findViewById(R.id.groupRv);
         failed = (TextView) inflated.findViewById(R.id.failed);
         refreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
-        kick = (Button) inflated.findViewById(R.id.kick);
+        kick = (LinearLayout) inflated.findViewById(R.id.kick);
         nogroup = (TextView) inflated.findViewById(R.id.nogroup);
+        delete = (ImageView) inflated.findViewById(R.id.delete);
+        edit = (ImageView) inflated.findViewById(R.id.edit);
+        cancel = (TextView) inflated.findViewById(R.id.cancel);
 
 
         reqJson();
@@ -194,12 +201,29 @@ public class GroupListFragment extends Fragment {
                             if (isLongClick) {
                                 if (isTeacher) {
                                     kick.setVisibility(View.VISIBLE);
-                                    kick.setText("Delete " + groups.get(position).getTitle() + "?");
-                                    kick.setOnClickListener(new View.OnClickListener() {
+                                    delete.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             DeleteGroup(groupId);
                                             adapter.removeItem(position);
+                                            kick.setVisibility(View.GONE);
+                                        }
+                                    });
+                                    edit.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getActivity(), EditGroup.class);
+                                            intent.putExtra("groupId", groupId);
+                                            intent.putExtra("groupTitle", groups.get(position).getTitle());
+                                            intent.putExtra("semester", groups.get(position).getSemester());
+                                            intent.putExtra("jurusan", groups.get(position).getMajor());
+                                            startActivity(intent);
+                                            kick.setVisibility(View.GONE);
+                                        }
+                                    });
+                                    cancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
                                             kick.setVisibility(View.GONE);
                                         }
                                     });
@@ -211,6 +235,8 @@ public class GroupListFragment extends Fragment {
                                 Intent intent = new Intent(getActivity(), GroupDetail.class);
                                 intent.putExtra("groupId", groupId);
                                 intent.putExtra("groupTitle", groups.get(position).getTitle());
+                                intent.putExtra("semester", groups.get(position).getSemester());
+                                intent.putExtra("jurusan", groups.get(position).getMajor());
                                 intent.putExtra("owner", groups.get(position).isOwner());
                                 startActivity(intent);
                                 Log.d(TAG, "onItemClick: id " + groupId);

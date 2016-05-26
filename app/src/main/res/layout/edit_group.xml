@@ -42,12 +42,6 @@
             android:layout_marginTop="20dp"/>
         <EditText
             android:layout_marginTop="8dp"
-            android:id="@+id/group_classes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Kelas"/>
-        <EditText
-            android:layout_marginTop="8dp"
             android:id="@+id/group_semester"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +51,7 @@
             android:id="@+id/jurusan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Semester"/>
+            android:hint="Jurusan"/>
         <EditText
             android:id="@+id/group_desc"
             android:layout_width="match_parent"

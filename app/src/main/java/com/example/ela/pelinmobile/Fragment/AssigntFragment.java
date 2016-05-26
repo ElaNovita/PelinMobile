@@ -106,7 +106,6 @@ public class AssigntFragment extends Fragment {
             public void onResponse(Call<List<MyAssignment>> call, Response<List<MyAssignment>> response) {
                 final List<MyAssignment> tugasModels = response.body();
 
-                Log.d(TAG, "onResponse: size " + tugasModels.size());
 
                 ArrayList<Integer> counter = new ArrayList<Integer>();
 

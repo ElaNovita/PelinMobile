@@ -102,6 +102,7 @@ public class MateriDetail extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<MateriModel>> call, Throwable t) {
+                //TODO error here
                 Log.e("respon", "materidetail/onFailure: ", t);
             }
         });

@@ -5,6 +5,7 @@ package com.example.ela.pelinmobile.Model;
  */
 public class Student {
     String major, nim, name;
+    PhotoModel photo;
 
     public String getMajor() {
         return major;
@@ -28,5 +29,13 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public PhotoModel getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoModel photo) {
+        this.photo = photo;
     }
 }

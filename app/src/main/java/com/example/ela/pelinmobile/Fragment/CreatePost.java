@@ -37,7 +37,7 @@ public class CreatePost extends DialogFragment {
 
     ImageView create;
     EditText post;
-    String postTxt, TAG = "respon";
+    String postTxt, TAG = "respon", groupTitle;
     Bundle bundle;
     int postId;
 
@@ -67,7 +67,8 @@ public class CreatePost extends DialogFragment {
 
         Bundle args = getArguments();
         final int groupId = args.getInt("groupId");
-        Log.d("groupId", Integer.toString(groupId));
+        groupTitle = args.getString("groupTitle");
+        Log.d("groupId", groupTitle);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +80,7 @@ public class CreatePost extends DialogFragment {
 
                 Intent intent = new Intent(getActivity(), GroupDetail.class);
                 intent.putExtra("groupId", groupId);
+                intent.putExtra("groupTitle", groupTitle);
                 startActivity(intent);
 
                 dismiss();

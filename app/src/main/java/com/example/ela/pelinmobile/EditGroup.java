@@ -23,23 +23,31 @@ import retrofit2.Response;
 public class EditGroup extends AppCompatActivity {
     EditText title, kelas, semester, jurusan, desc;
     Button save;
-    int groupId;
-    String groupTitle;
+    int groupId, _semester;
+    String groupTitle, _jurusan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_group);
 
+        getSupportActionBar().setTitle("Edit Group");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         groupId = getIntent().getIntExtra("groupId", 0);
         groupTitle = getIntent().getStringExtra("groupTitle");
+        _jurusan = getIntent().getStringExtra("jurusan");
+        _semester = getIntent().getIntExtra("semester", 1);
 
         title = (EditText) findViewById(R.id.group_name);
-        kelas = (EditText) findViewById(R.id.group_classes);
-        semester = (EditText) findViewById(R.id.group_semester);
         jurusan = (EditText) findViewById(R.id.jurusan);
         desc = (EditText) findViewById(R.id.group_desc);
         save = (Button) findViewById(R.id.save);
+        semester = (EditText) findViewById(R.id.group_semester);
+
+        title.setText(groupTitle);
+        jurusan.setText(_jurusan);
+        semester.setText(Integer.toString(_semester));
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -53,7 +53,7 @@ public class GroupDetail extends AppCompatActivity {
     TabHost tabHost;
     Bundle bundle;
     int semester, member;
-    String groupTitle, nmDosen, desc;
+    String groupTitle, nmDosen, desc, _jurusan;
     boolean isOwner;
 
     private String TAG = "respon";
@@ -65,6 +65,8 @@ public class GroupDetail extends AppCompatActivity {
 
         groupId = getIntent().getIntExtra("groupId", 0);
         groupTitle = getIntent().getStringExtra("groupTitle");
+        _jurusan = getIntent().getStringExtra("jurusan");
+        semester = getIntent().getIntExtra("semester", 1);
         isOwner = getIntent().getBooleanExtra("owner", false);
 
         Log.d(TAG, Integer.toString(groupId));
@@ -176,6 +178,8 @@ public class GroupDetail extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), EditGroup.class);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("groupTitle", groupTitle);
+                intent.putExtra("semester", semester);
+                intent.putExtra("jurusan", _jurusan);
                 startActivity(intent);
             case R.id.leave:
                 leave(groupId);
@@ -257,11 +261,9 @@ public class GroupDetail extends AppCompatActivity {
             public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
                 GroupModel group = response.body();
 
-                Log.d(TAG, "onResponse: title " + group.getTitle());
 
                 nmDosen = group.getTeacher().getName();
                 member = group.getMember();
-                semester = group.getSemester();
                 desc = group.getDescription();
             }
 

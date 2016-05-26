@@ -26,7 +26,7 @@ public class UserDetail extends AppCompatActivity {
     int userId;
     TextView name, nim, status, major, email, phone, majorTxt;
     ImageView image, majorIcon;
-    String _name, _nim, _status, _major, _email, _phone;
+    String _name, _nim, _status, _major, _email, _phone, username;
     boolean isTeacher;
 
     @Override
@@ -35,6 +35,7 @@ public class UserDetail extends AppCompatActivity {
         setContentView(R.layout.user_detail);
 
         userId = getIntent().getIntExtra("userId", 0);
+        username = getIntent().getStringExtra("username");
 
         reqJson();
 
@@ -47,6 +48,8 @@ public class UserDetail extends AppCompatActivity {
         majorTxt = (TextView) findViewById(R.id.majorTxt);
         majorIcon = (ImageView) findViewById(R.id.majorIcon);
         image = (ImageView) findViewById(R.id.img);
+
+        name.setText(username);
     }
 
     @Override
@@ -72,7 +75,6 @@ public class UserDetail extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 User user = response.body();
 
-                name.setText(user.getName());
                 status.setText("I am a " + user.getStatus());
 
                 if (user.isTeacher()) {

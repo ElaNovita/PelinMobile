@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.DiskusiDetail;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Model.DiskusiModel;
 import com.example.ela.pelinmobile.Model.ReplyModel;
 import com.example.ela.pelinmobile.R;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -24,6 +26,7 @@ public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdap
     private List<ReplyModel> detailDiskusis;
     Context context;
     static ImageView img;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     public DiskusiDetailAdapter(List<ReplyModel> detailDiskusis, Context context) {
         this.detailDiskusis = detailDiskusis;
@@ -47,7 +50,11 @@ public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdap
 
         holder.nama.setText(detailDiskusis.get(position).getUser().getName());
         holder.content.setText(detailDiskusis.get(position).getText());
-        holder.time.setText(detailDiskusis.get(position).getCreatedAt());
+        try {
+            holder.time.setText(cdf.format(detailDiskusis.get(position).getCreatedAt()));
+        } catch (ParseException e) {
+            //
+        }
         Glide.with(context).load(detailDiskusis.get(position).getUser().getPhoto().getSmall()).into(img);
     }
 

@@ -65,7 +65,6 @@ public class AllGroups extends AppCompatActivity implements SearchView.OnQueryTe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        inflater.inflate(R.menu.searh_view, menu);
         getMenuInflater().inflate(R.menu.searh_view, menu);
 
         final MenuItem item = menu.findItem(R.id.action_search);

@@ -31,8 +31,8 @@ import retrofit2.Response;
  */
 public class CreateGroupDialog extends DialogFragment {
 
-    EditText grouptitle, classes, group_smster, group_desc, jurusan;
-    Button create;
+    EditText grouptitle, group_smster, group_desc, jurusan;
+    Button create, cancel;
 
     String title;
 
@@ -61,42 +61,59 @@ public class CreateGroupDialog extends DialogFragment {
         View inflated = inflater.inflate(R.layout.create_group, container);
         create = (Button) inflated.findViewById(R.id.btn_create);
         grouptitle = (EditText) inflated.findViewById(R.id.group_name);
-        classes = (EditText) inflated.findViewById(R.id.group_classes);
         group_smster = (EditText) inflated.findViewById(R.id.group_semester);
         group_desc = (EditText) inflated.findViewById(R.id.group_desc);
         jurusan = (EditText) inflated.findViewById(R.id.jurusan);
+        cancel = (Button) inflated.findViewById(R.id.cancel);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 title = grouptitle.getText().toString();
+                String semester = group_smster.getText().toString();
+                String major = jurusan.getText().toString();
 
-                GroupInterface groupInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(GroupInterface.class);
+                if (title.matches("")) {
+                    grouptitle.setError("Nama Group Tidak Boleh Kosong");
+                } else if (semester.matches("")) {
+                    group_smster.setError("Semester Tidak Boleh Kosong");
+                } else if (major.matches("")) {
+                    jurusan.setError("Jurusan Tidak Boleh Kosong");
+                } else {
+                    GroupInterface groupInterface = new RetrofitBuilder(getActivity()).getRetrofit().create(GroupInterface.class);
 
-                GroupModel groupModel = new GroupModel();
-                groupModel.setTitle(title);
-                groupModel.setMajor(jurusan.getText().toString());
-                groupModel.setSemester(Integer.parseInt(group_smster.getText().toString()));
+                    GroupModel groupModel = new GroupModel();
+                    groupModel.setTitle(title);
+                    groupModel.setMajor(jurusan.getText().toString());
+                    groupModel.setSemester(Integer.parseInt(group_smster.getText().toString()));
 
-                Call<GroupModel> call = groupInterface.createGroup(groupModel);
-                call.enqueue(new Callback<GroupModel>() {
-                    @Override
-                    public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
-                        GroupModel group = response.body();
-                        Log.d("respon", group.getTitle());
-                    }
+                    Call<GroupModel> call = groupInterface.createGroup(groupModel);
+                    call.enqueue(new Callback<GroupModel>() {
+                        @Override
+                        public void onResponse(Call<GroupModel> call, Response<GroupModel> response) {
+                            GroupModel group = response.body();
+                            Log.d("respon", group.getTitle());
+                        }
 
-                    @Override
-                    public void onFailure(Call<GroupModel> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<GroupModel> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
 
 
-                Intent intent = new Intent(getActivity(), GroupDetail.class);
-                startActivity(intent);
-                dismiss();
+                    Intent intent = new Intent(getActivity(), GroupDetail.class);
+                    startActivity(intent);
+                    dismiss();
+                }
             }
         });
         return inflated;

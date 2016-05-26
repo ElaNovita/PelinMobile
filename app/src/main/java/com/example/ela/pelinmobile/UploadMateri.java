@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class UploadMateri extends AppCompatActivity {
     String materiTitle, desc, groupTitle;
     MultipartBody.Part requestFileBody;
     RequestBody titles, description;
+    ImageView attachIcon;
     int groupId;
 
     @Override
@@ -57,6 +59,7 @@ public class UploadMateri extends AppCompatActivity {
         upMateri = (Button) findViewById(R.id.upMateri);
         title = (EditText) findViewById(R.id.materi_title);
         _description = (EditText) findViewById(R.id.desc);
+        attachIcon = (ImageView) findViewById(R.id.attachIcon);
 
         upMateri.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +115,7 @@ public class UploadMateri extends AppCompatActivity {
                     requestFileBody = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
 
                     btnSendMateri.setVisibility(View.VISIBLE);
+                    attachIcon.setVisibility(View.VISIBLE);
                 }
                 break;
         }
@@ -138,8 +142,9 @@ public class UploadMateri extends AppCompatActivity {
         call.enqueue(new Callback<MateriModel>() {
             @Override
             public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
-                Log.d("respon", "onResponse: respon " + response.code());
-                Log.d("respon", "onClick: description" + response.body().getDescription());
+
+                finish();
+
                 Toast.makeText(getApplicationContext(), "Materi Sudah di Upload", Toast.LENGTH_SHORT).show();
             }
 

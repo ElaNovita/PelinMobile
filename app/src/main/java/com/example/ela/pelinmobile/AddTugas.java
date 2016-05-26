@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
 
     TextView TextuploadMateri, txtTime, txtDate;
     Button btnSendMateri, upMateri, dueTime, dueDate;
+    ImageView attach, attach1, attach2;
     private static final int PICKFILE_RESULT_CODE = 1;
     MultipartBody.Part requestFileBody;
     EditText title, description;
@@ -61,6 +64,9 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
         TextuploadMateri = (TextView) findViewById(R.id.uploadMateri);
         txtTime = (TextView) findViewById(R.id.dueTime);
         txtDate = (TextView) findViewById(R.id.dueDate);
+        attach = (ImageView) findViewById(R.id.attachIcon);
+        attach1 = (ImageView) findViewById(R.id.attachIcon1);
+        attach2 = (ImageView) findViewById(R.id.attachIcon2);
 
         btnSendMateri = (Button) findViewById(R.id.sendMateri);
         upMateri = (Button) findViewById(R.id.upMateri);
@@ -193,6 +199,7 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        //TODO fix the displayed time
         String time = Integer.toString(hourOfDay) + "-" + Integer.toString(minute);
         txtTime.setText(time);
 

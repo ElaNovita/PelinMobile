@@ -13,6 +13,7 @@
     import android.widget.ImageView;
     import android.widget.TextView;
 
+    import com.example.ela.pelinmobile.Helper.MySharedPreferences;
     import com.example.ela.pelinmobile.Helper.RealPathUtil;
     import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
     import com.example.ela.pelinmobile.Interface.UserInterface;
@@ -42,10 +43,12 @@
         private static final int PICKFILE_RESULT_CODE = 1;
         String TAG = "respon";
 
+
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.edit_profile);
+
 
             nm_file = (TextView) findViewById(R.id.nm_file);
             name = (EditText) findViewById(R.id.name);
@@ -135,6 +138,11 @@
             call.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
+
+                    MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
+
+                    mf.setUsername(response.body().getName());
+                    mf.setUserImage(response.body().getPhoto().getMedium());
 
                     Log.d("respon", "onResponse: edt " + response.code());
                     Log.d("respon", "onResponse: req " + name);

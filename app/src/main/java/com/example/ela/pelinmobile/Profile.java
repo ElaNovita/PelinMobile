@@ -63,7 +63,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
+        final MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
 
         context = getApplicationContext();
 
@@ -75,7 +75,6 @@ public class Profile extends AppCompatActivity {
         failed = (TextView) findViewById(R.id.failed);
         user_img = (ImageView) findViewById(R.id.user_photo);
 
-        Glide.with(this).load(mf.getUserImage()).into(user_img);
         username.setText(mf.getUsername());
 
         info.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +82,7 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserDetail.class);
                 intent.putExtra("userId", userId);
+                intent.putExtra("username", mf.getUsername());
                 startActivity(intent);
             }
         });
@@ -141,6 +141,8 @@ public class Profile extends AppCompatActivity {
                     }
                     userId = user.getId();
                     kode.setText(nik);
+
+                    Glide.with(Profile.this).load(user.getPhoto().getMedium()).into(user_img);
 
                     edit.setOnClickListener(new View.OnClickListener() {
                         @Override

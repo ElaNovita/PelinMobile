@@ -134,7 +134,7 @@ public class Login extends AppCompatActivity {
 
                 boolean isTeacher = response.body().isTeacher();
                 String username = response.body().getName();
-                String imageUrl = response.body().getPhoto().getSmall();
+                String imageUrl = response.body().getPhoto().getMedium();
 
                 MySharedPreferences mf = new MySharedPreferences(getApplicationContext());
                 mf.setStatus(isTeacher);

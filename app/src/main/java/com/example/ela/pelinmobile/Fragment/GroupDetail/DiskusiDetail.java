@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.DiskusiAdapter;
 import com.example.ela.pelinmobile.Adapter.DiskusiDetailAdapter;
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.DiskusiInterface;
 import com.example.ela.pelinmobile.Interface.ReplyInterface;
@@ -23,6 +25,7 @@ import com.example.ela.pelinmobile.Model.ReplyModel;
 import com.example.ela.pelinmobile.Model.VoteModel;
 import com.example.ela.pelinmobile.R;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +49,7 @@ public class DiskusiDetail extends AppCompatActivity {
     boolean voted;
     TextView replyCount, senderName, createdAt, content, postReply, likeCount;
     DiskusiAdapter adapter;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,12 @@ public class DiskusiDetail extends AppCompatActivity {
                 DetailDiskusiModel diskusi = response.body();
                 counter = diskusi.getVotesCount();
                 senderName.setText(diskusi.getUser().getName());
-                createdAt.setText(diskusi.getCreatedAt());
+                Glide.with(getApplicationContext()).load(diskusi.getUser().getPhoto().getSmall()).into(sender);
+                try {
+                    createdAt.setText(cdf.format(diskusi.getCreatedAt()));
+                } catch (ParseException e) {
+                    //
+                }
                 content.setText(diskusi.getText());
                 setCountText(counter);
 

@@ -9,6 +9,7 @@ public class MemberModel {
     Student student;
     int id;
     boolean isMe;
+    PhotoModel photo;
 
     public String getStatus() {
         return status;
@@ -60,6 +61,14 @@ public class MemberModel {
 
     public boolean isMe() {
         return isMe;
+    }
+
+    public PhotoModel getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoModel photo) {
+        this.photo = photo;
     }
 
     public void setMe(boolean me) {
