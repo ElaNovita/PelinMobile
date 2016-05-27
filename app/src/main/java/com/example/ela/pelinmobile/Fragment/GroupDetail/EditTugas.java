@@ -11,14 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
 import com.example.ela.pelinmobile.Model.SubmitModel;
 import com.example.ela.pelinmobile.R;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -33,11 +38,11 @@ import retrofit2.Response;
 /**
  * Created by e on 13/05/16.
  */
-public class EditTugas extends AppCompatActivity {
+public class EditTugas extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     String title, desc, due, file;
     EditText txtTitle, txtDesc;
-    TextView txtFileName, txtDate, txtTime;
+    TextView txtFileName, txtDate, txtTime, dueDate;
     Button selectFile, selectDate, selectTime, send;
     CustomDateFormatter cdf = new CustomDateFormatter();
     MultipartBody.Part requestFileBody;
@@ -60,6 +65,7 @@ public class EditTugas extends AppCompatActivity {
         selectFile = (Button) findViewById(R.id.select_file);
         selectDate = (Button) findViewById(R.id.selectDate);
         selectTime = (Button) findViewById(R.id.selectTime);
+        dueDate = (TextView) findViewById(R.id.dueDate);
 
         title = getIntent().getStringExtra("title");
         desc = getIntent().getStringExtra("desc");
@@ -73,7 +79,12 @@ public class EditTugas extends AppCompatActivity {
 
         txtTitle.setText(title);
         txtDesc.setText(desc);
-        txtDate.setText(due);
+        try {
+            dueDate.setText(cdf.format(due));
+        } catch (ParseException e) {
+            //
+        }
+        txtFileName.setText(file);
 
         _title = RequestBody.create(MediaType.parse("multipart/form-data"), title);
         _desc = RequestBody.create(MediaType.parse("multipart/form-data"), desc);
@@ -85,6 +96,20 @@ public class EditTugas extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("file/*");
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
+            }
+        });
+
+        selectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDate();
+            }
+        });
+
+        selectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTime();
             }
         });
 
@@ -106,6 +131,11 @@ public class EditTugas extends AppCompatActivity {
                 _due = RequestBody.create(MediaType.parse("multipart/form-data"), hasil);
 
                 reqJson(groupId, assignId);
+
+                Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupTitle", getIntent().getStringExtra("groupTitle"));
+                startActivity(intent);
 
             }
         });
@@ -153,5 +183,48 @@ public class EditTugas extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = Integer.toString(dayOfMonth) + "-" + Integer.toString(monthOfYear) + "-" + Integer.toString(year);
+        txtDate.setText(date);
+
+        calendar.set(year, monthOfYear , dayOfMonth);
+
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        //TODO fix the displayed time
+        String time = Integer.toString(hourOfDay) + "-" + Integer.toString(minute);
+        txtTime.setText(time);
+
+        //TODO why get wrong time?
+        calendar.set(Calendar.HOUR, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+
+    }
+
+    private void showDate() {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dialog = DatePickerDialog.newInstance(
+                this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH));
+        dialog.show(getFragmentManager(), "DatePickerDialog");
+    }
+
+    private void showTime() {
+        Calendar now = Calendar.getInstance();
+        TimePickerDialog dialog = TimePickerDialog.newInstance(
+                this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                now.get(Calendar.SECOND),
+                true
+        );
+        dialog.show(getFragmentManager(), "TimePickerDialog");
     }
 }

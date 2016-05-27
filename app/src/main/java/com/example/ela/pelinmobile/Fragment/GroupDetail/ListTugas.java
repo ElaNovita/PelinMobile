@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Fragment.GroupDetail;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.example.ela.pelinmobile.Adapter.ListTugasAdapter;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.Interface.TugasInterface;
 import com.example.ela.pelinmobile.Model.Submitted;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -65,10 +67,19 @@ public class ListTugas extends AppCompatActivity {
         call.enqueue(new Callback<List<Submitted>>() {
             @Override
             public void onResponse(Call<List<Submitted>> call, Response<List<Submitted>> response) {
-                List<Submitted> submittedList = response.body();
+                final List<Submitted> submittedList = response.body();
                 Log.d("respon", "onResponse: submit " + response.code());
 
-                ListTugasAdapter adapter = new ListTugasAdapter(submittedList, getApplicationContext());
+                ListTugasAdapter adapter = new ListTugasAdapter(submittedList, getApplicationContext(), new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position, boolean isLongClick) {
+                        String url = submittedList.get(position).getFile();
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
+                    }
+                });
                 recyclerView.setAdapter(adapter);
             }
 

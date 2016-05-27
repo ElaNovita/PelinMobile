@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
 import com.example.ela.pelinmobile.R;
+
+import java.text.ParseException;
 
 /**
  * Created by e on 28/05/16.
@@ -14,6 +17,7 @@ public class DetailTugasDosen extends AppCompatActivity {
 
     String TAG = "Respon";
     TextView title, desc, attach, due;
+    CustomDateFormatter cdf = new CustomDateFormatter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +35,10 @@ public class DetailTugasDosen extends AppCompatActivity {
         title.setText(getIntent().getStringExtra("title"));
         desc.setText(getIntent().getStringExtra("desc"));
         attach.setText(getIntent().getStringExtra("attach"));
-        due.setText(getIntent().getStringExtra("due"));
+        try {
+            due.setText(cdf.format(getIntent().getStringExtra("due")));
+        } catch (ParseException e) {
+            //
+        }
     }
 }

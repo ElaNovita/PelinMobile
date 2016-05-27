@@ -25,6 +25,8 @@ import java.util.List;
  */
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
+    //TODO fix the request join design
+
     private List<MemberModel> members;
     private Fragment fragment;
     Button kick;

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.ListTugas;
 import com.example.ela.pelinmobile.Model.Submitted;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -25,18 +26,18 @@ public class ListTugasAdapter extends RecyclerView.Adapter<ListTugasAdapter.View
 
     private List<Submitted> tugases;
     static CardView cardView;
+    static OnItemClickListener listener;
     Context context;
 
 
-    public ListTugasAdapter(List<Submitted> tugases, Context context) {
+    public ListTugasAdapter(List<Submitted> tugases, Context context, OnItemClickListener listener) {
+        this.listener = listener;
         this.tugases = tugases;
         this.context = context;
     }
 
     @Override
     public int getItemCount() {
-        //TODO ini knp eror? :'v
-        //TODO server eror
         return tugases.size();
     }
 
@@ -69,6 +70,15 @@ public class ListTugasAdapter extends RecyclerView.Adapter<ListTugasAdapter.View
             desc = (TextView) itemView.findViewById(R.id.desc);
             download = (ImageView) itemView.findViewById(R.id.download);
             nim = (TextView) itemView.findViewById(R.id.nim);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(v, getLayoutPosition(), false);
+                    }
+                }
+            });
         }
     }
 

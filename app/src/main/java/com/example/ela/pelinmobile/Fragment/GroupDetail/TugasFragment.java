@@ -169,12 +169,19 @@ public class TugasFragment extends Fragment {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent = new Intent(getActivity(), EditTugas.class);
+                                            intent.putExtra("groupTitle", groupTitle);
                                             intent.putExtra("title", tugasModels.get(position).getTitle());
                                             intent.putExtra("desc", tugasModels.get(position).getDescription());
                                             intent.putExtra("due", tugasModels.get(position).getDueDate());
-                                            intent.putExtra("file", tugasModels.get(position).getFile());
                                             intent.putExtra("groupId", groupId);
                                             intent.putExtra("assignId", tugasModels.get(position).getId());
+
+                                            if (tugasModels.get(position).getFile() != null) {
+                                                intent.putExtra("file", tugasModels.get(position).getFile());
+                                            } else {
+                                                intent.putExtra("file", "No File");
+                                            }
+
                                             startActivity(intent);
                                             menus.setVisibility(View.GONE);
 
