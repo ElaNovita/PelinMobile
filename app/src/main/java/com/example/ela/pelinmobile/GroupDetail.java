@@ -233,7 +233,6 @@ public class GroupDetail extends AppCompatActivity {
     }
 
     public void showDialog() {
-        //TODO gmn biar ga nullpaonter soalnya soalnya get valuenya setelah reqJson
         android.app.FragmentManager fragmentManager = getFragmentManager();
 
         GroupInfo groupInfo = GroupInfo.newInstance("Group Info", groupTitle, nmDosen, desc, member, semester);

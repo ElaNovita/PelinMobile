@@ -142,7 +142,13 @@ public class Profile extends AppCompatActivity {
                     userId = user.getId();
                     kode.setText(nik);
 
-                    Glide.with(Profile.this).load(user.getPhoto().getMedium()).into(user_img);
+                    String img = user.getPhoto().getMedium();
+
+                    if (img != null) {
+                        Glide.with(Profile.this).load(img).into(user_img);
+                    } else {
+                        user_img.setImageResource(R.drawable.eren);
+                    }
 
                     edit.setOnClickListener(new View.OnClickListener() {
                         @Override

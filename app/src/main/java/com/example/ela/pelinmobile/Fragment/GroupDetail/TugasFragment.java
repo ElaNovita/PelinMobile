@@ -147,6 +147,8 @@ public class TugasFragment extends Fragment {
                             String due = tugasModels.get(position).getDueDate();
                             boolean isPassed = tugasModels.get(position).isPassed();
                             boolean isSubmitted = tugasModels.get(position).isSubmitted();
+
+                            Log.d("respon", "onItemClick: " + isSubmitted);
 //                            boolean isSubmitted = true;
 
                             if (isLongClick) {
@@ -178,6 +180,23 @@ public class TugasFragment extends Fragment {
 
                                         }
                                     });
+                                    info.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getActivity(), DetailTugasDosen.class);
+                                            intent.putExtra("groupTitle", groupTitle);
+                                            intent.putExtra("title", tugasModels.get(position).getTitle());
+                                            intent.putExtra("desc", tugasModels.get(position).getDescription());
+                                            intent.putExtra("due", tugasModels.get(position).getDueDate());
+                                            if (!attachment.matches("")) {
+                                                intent.putExtra("attach", attachment);
+                                            } else {
+                                                intent.putExtra("attach", "No attachment");
+                                            }
+                                            startActivity(intent);
+                                            menus.setVisibility(View.GONE);
+                                        }
+                                    });
                                 } else {
                                     Toast.makeText(getActivity(), tugasModels.get(position).getTitle(), Toast.LENGTH_SHORT).show();
                                 }
@@ -206,6 +225,7 @@ public class TugasFragment extends Fragment {
                                             }
                                             startActivity(intent);
                                         } else {
+                                            Log.d("respon", "onItemClick: submit " + isSubmitted);
                                             Intent intent = new Intent(getActivity(), PassedAssignment.class);
                                             intent.putExtra("groupId", groupId);
                                             intent.putExtra("tugasId", tugasModels.get(position).getId());

@@ -1,13 +1,16 @@
 package com.example.ela.pelinmobile.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Fragment.NotifFragment;
+import com.example.ela.pelinmobile.Model.NotifModel;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -17,12 +20,14 @@ import java.util.List;
  */
 public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.ViewHolder> {
 
-    List<NotifFragment.Notif> notifs;
+    List<NotifModel> notifs;
     OnItemClickListener listener;
+    Context context;
 
-    public NotifListAdapter(List<NotifFragment.Notif> notifs, OnItemClickListener listener) {
+    public NotifListAdapter(List<NotifModel> notifs, Context context, OnItemClickListener listener) {
         this.notifs = notifs;
         this.listener = listener;
+        this.context = context;
     }
 
     @Override
@@ -40,31 +45,42 @@ public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(notifs.get(position), listener);
-        holder.title.setText(notifs.get(position).title);
-        holder.content.setText(notifs.get(position).content);
+
+        String name = notifs.get(position).getActor().getName();
+        String verbs = notifs.get(position).getVerb();
+        String target = notifs.get(position).getTarget().getTitle();
+
+        holder.title.setText(name + " " + verbs + " " + target);
+
+        if (notifs.get(position).isUnread()) {
+            holder.read.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        } else {
+            holder.read.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, content;
+        TextView title;
+        LinearLayout read;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.notifTitle);
-            content = (TextView) itemView.findViewById(R.id.notifContent);
+            read = (LinearLayout) itemView.findViewById(R.id.read);
         }
 
-        public void bind(final NotifFragment.Notif notif, final OnItemClickListener listener) {
+        public void bind(final NotifModel notif, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(notif);
+                    listener.OnItemClick(notif, getLayoutPosition());
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(NotifFragment.Notif notif);
+        void OnItemClick(NotifModel notif, int position);
     }
 }

@@ -4,7 +4,7 @@ package com.example.ela.pelinmobile.Model;
  * Created by e on 11/05/16.
  */
 public class FileModel {
-    int id;
+    int id, size;
     String file, name;
 
     public int getId() {
@@ -29,5 +29,13 @@ public class FileModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

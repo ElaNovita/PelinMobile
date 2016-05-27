@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Interface;
 
 import com.example.ela.pelinmobile.Model.MyAssignment;
+import com.example.ela.pelinmobile.Model.SingleSubmit;
 import com.example.ela.pelinmobile.Model.SubmitModel;
 import com.example.ela.pelinmobile.Model.Submitted;
 import com.example.ela.pelinmobile.Model.TugasModel;
@@ -59,6 +60,9 @@ public interface TugasInterface {
                                 @Part("title") RequestBody title,
                                 @Part("description") RequestBody desc,
                                 @Part("due_date") RequestBody dueDate);
+
+    @GET("groups/{groupId}/assignments/{assignId}/submitted")
+    Call<SingleSubmit> getSingleSubmit(@Path("groupId") int groupId, @Path("assignId") int assignId);
 
 //    @GET("groups/{groupId}/assignments/{asignId}/")
 }

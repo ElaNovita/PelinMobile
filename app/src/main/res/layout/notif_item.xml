@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#dedede">
+    <LinearLayout
+        android:id="@+id/read"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark"/>
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="30"
         android:layout_height="110dp"
         android:padding="16dp"
         android:background="@drawable/border"
@@ -20,14 +28,5 @@
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"/>
-            <TextView
-                android:id="@+id/notifContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ini adalah isi notifikasi terbaru"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="16dp"
-                android:layout_below="@id/notifTitle"/>
         </RelativeLayout>
 </LinearLayout>

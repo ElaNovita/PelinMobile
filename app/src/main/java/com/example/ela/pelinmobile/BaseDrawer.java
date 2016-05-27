@@ -56,7 +56,13 @@ public class BaseDrawer extends BaseAcitivty {
 
         String userImage = mf.getUserImage();
 
-        Glide.with(getApplicationContext()).load(userImage).into(imageView);
+        if (userImage != null) {
+            Glide.with(getApplicationContext()).load(userImage).into(imageView);
+        } else {
+            imageView.setImageResource(R.drawable.eren);
+        }
+
+
         textView.setText(mf.getUsername());
     }
 

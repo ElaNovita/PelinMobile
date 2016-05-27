@@ -141,15 +141,6 @@ public class MateriFragment extends Fragment {
                     adapter.setOnItemClickListener(new OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
-                            String url;
-                            if (materiModels.get(position).getFileModels().size() != 0) {
-                                //TODO why get(position) on getfilesmodel return error?
-                                url = materiModels.get(position).getFileModels().get(position).getFile();
-                            } else {
-                                url = "";
-                            }
-                            bundle = new Bundle();
-                            bundle.putString("url", url);
                             materiId = materiModels.get(position).getId();
 
                             if (isLongClick) {

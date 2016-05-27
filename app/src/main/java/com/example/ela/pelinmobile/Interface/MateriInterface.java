@@ -37,6 +37,6 @@ public interface MateriInterface {
     Call<ResponseBody> deleteMateri(@Path("groupId") int groupId, @Path("materiId") int materiId);
 
     @GET("groups/{groupId}/lessons/{materiId}")
-    Call<List<MateriModel>> getFiles(@Path("groupId") int groupId, @Path("materiId") int materiId);
+    Call<MateriModel> getFiles(@Path("groupId") int groupId, @Path("materiId") int materiId);
     
 }

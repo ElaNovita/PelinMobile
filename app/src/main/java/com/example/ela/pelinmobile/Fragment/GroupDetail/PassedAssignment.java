@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,7 +16,14 @@ import android.widget.TextView;
 
 import com.example.ela.pelinmobile.AssigntDetail;
 import com.example.ela.pelinmobile.Helper.CustomDateFormatter;
+import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.Interface.TugasInterface;
+import com.example.ela.pelinmobile.Model.SingleSubmit;
 import com.example.ela.pelinmobile.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by e on 16/05/16.
@@ -53,6 +61,8 @@ public class PassedAssignment extends AppCompatActivity {
         send = (Button) findViewById(R.id.btnSend);
         timer = (TextView) findViewById(R.id.timer);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+
+        reqJson();
 
         milis = cdf.getTimeRemain(dueDate);
 
@@ -122,5 +132,26 @@ public class PassedAssignment extends AppCompatActivity {
             timer.setText("Time is over");
             progressBar.setProgress(0);
         }
+    }
+
+    private void reqJson() {
+        TugasInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(TugasInterface.class);
+        Call<SingleSubmit> call = service.getSingleSubmit(groupId, tugasId);
+        call.enqueue(new Callback<SingleSubmit>() {
+            @Override
+            public void onResponse(Call<SingleSubmit> call, Response<SingleSubmit> response) {
+                SingleSubmit submit = response.body();
+
+                Log.d("respon", "onResponse: kode " + response.code());
+
+                desc.setText(submit.getText());
+                submittedFile.setText(submit.getFile());
+            }
+
+            @Override
+            public void onFailure(Call<SingleSubmit> call, Throwable t) {
+
+            }
+        });
     }
 }

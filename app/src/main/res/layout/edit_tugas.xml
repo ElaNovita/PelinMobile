@@ -8,87 +8,121 @@
         android:id="@+id/assignTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Judul"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/ic_title_black_24dp"
+        android:hint="Judul" />
+
     <EditText
         android:id="@+id/desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="4"
-        android:hint="Description..."/>
-    <RelativeLayout
+        android:drawableLeft="@drawable/ic_description_black_24dp"
+        android:hint="Description..."
+        android:lines="4" />
 
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="18dp">
+
+        <Button
+            android:id="@+id/select_file"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@drawable/ic_dns_black_24dp"
+            android:text="pilih file" />
+
+        <ImageView
+            android:id="@+id/attachIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@id/select_file"
+            android:src="@drawable/ic_attach_file_black_24dp" />
+
         <TextView
             android:id="@+id/file_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pilih File"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
-            android:layout_alignParentLeft="true"/>
-        <Button
-            android:id="@+id/select_file"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/file_name"
-            android:layout_marginLeft="12dp"
-            android:text="pilih file"/>
+            android:layout_toRightOf="@id/attachIcon"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/selectDate"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@drawable/ic_date_range_black_24dp"
+            android:text="Tanggal" />
+
+        <ImageView
+            android:id="@+id/attachIcon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@id/selectDate"
+            android:src="@drawable/ic_date_range_black_24dp"
+            android:layout_marginLeft="8dp"/>
+
         <TextView
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Due Date"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
-            android:layout_alignParentLeft="true"/>
-        <Button
-            android:id="@+id/selectDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/dueDate"
-            android:layout_marginLeft="12dp"
-            android:text="pilih Tanggal"/>
+            android:layout_toRightOf="@id/attachIcon1"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/selectTime"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@drawable/ic_access_time_black_24dp"
+            android:text="Jam" />
+
+        <ImageView
+            android:id="@+id/attachIcon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/selectTime"
+            android:src="@drawable/ic_access_time_black_24dp"/>
+
         <TextView
             android:id="@+id/txtTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Due Date"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
-            android:layout_alignParentLeft="true"/>
-        <Button
-            android:id="@+id/selectTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/dueTime"
-            android:layout_marginLeft="12dp"
-            android:text="pilih Jam"/>
+            android:layout_toRightOf="@id/attachIcon2" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
         android:text="Save Changes?"
-        android:layout_marginTop="16dp"/>
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

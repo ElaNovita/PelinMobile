@@ -52,16 +52,17 @@ public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(tugases.get(position).getTitle());
+        holder.dueTime.setText(tugases.get(position).getDueDate());
         if (tugases.get(position).isPassed()) {
             holder.passed.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
         } else {
             holder.passed.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
         }
-        try {
-            holder.dueTime.setText(cdf.getTimeLater(tugases.get(position).getDueDate()));
-        } catch (ParseException e) {
-            //
-        }
+//        try {
+//            holder.dueTime.setText(cdf.format(tugases.get(position).getDueDate()));
+//        } catch (ParseException e) {
+//            //
+//        }
 
 //        try {
 //            holder.dueTime.setText(cdf.getTimeLater(tugases.get(position).getDueDate()));

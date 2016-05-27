@@ -49,12 +49,11 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
     @Bind(R.id.navigationView)
     NavigationView navigationView;
 
-    private BadgeView badgeView;
-    public int buttonCounter = 1;
-    Button add, dec;
+    private BadgeView badgeView, notifBadge;
+    public int buttonCounter, badgePosition;
     String TAG = "respon";
     boolean isTeacher;
-    ImageView imageView;
+    ImageView imageView, notif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,29 +106,29 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
     };
 
     public void setUpTabIcon() {
-        tabLayout.getTabAt(0).setIcon(title[0]);
-
-//        tabLayout.getTabAt(1).setIcon(title[1]);
 
         Drawable drawable = getResources().getDrawable(title[1]);
+        Drawable drawable1 = getResources().getDrawable(title[2]);
+
         imageView = new ImageView(this);
+        notif = new ImageView(this);
+
         imageView.setImageDrawable(drawable);
+        notif.setImageDrawable(drawable1);
 
+        tabLayout.getTabAt(0).setIcon(title[0]);
         tabLayout.getTabAt(1).setCustomView(imageView);
-
-
-
-
-
-        tabLayout.getTabAt(2).setIcon(title[2]);
+        tabLayout.getTabAt(2).setCustomView(notif);
         tabLayout.getTabAt(3).setIcon(title[3]);
     }
 
     public void counter(int count) {
         if (count <= 0) {
             badgeView.hide();
+            notifBadge.hide();
         } else {
             badgeView.show();
+            notifBadge.show();
         }
     }
 
@@ -149,14 +148,19 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         TabLayout.Tab tab2 = tabLayout.getTabAt(2);
         imageView = new ImageView(this);
+        notif = new ImageView(this);
         tab.setCustomView(imageView);
+        tab2.setCustomView(notif);
         setupDrawerContent(navigationView);
 
         badgeView = new BadgeView(this, imageView);
+        notifBadge = new BadgeView(this, notif);
         counter(buttonCounter);
 
         badgeView.setText(Integer.toString(buttonCounter));
+        notifBadge.setText(" ");
         Log.d(TAG, "sendDataToActivity: " + value);
     }
+
 }
 

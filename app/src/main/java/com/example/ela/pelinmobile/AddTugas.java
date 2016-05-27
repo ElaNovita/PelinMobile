@@ -104,7 +104,6 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
 
                 sendFile(requestFileBody, titles, descriptions, iso);
 
-                Log.d("respon", "onClick: " + requestFileBody.toString());
 
                 Intent intent = new Intent(getApplicationContext(), GroupDetail.class);
                 intent.putExtra("groupId", groupId);
@@ -203,6 +202,7 @@ public class AddTugas extends AppCompatActivity implements DatePickerDialog.OnDa
         String time = Integer.toString(hourOfDay) + "-" + Integer.toString(minute);
         txtTime.setText(time);
 
+        //TODO why get wrong time?
         calendar.set(Calendar.HOUR, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
 

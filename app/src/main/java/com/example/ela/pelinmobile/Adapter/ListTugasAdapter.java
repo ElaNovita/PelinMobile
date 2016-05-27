@@ -35,6 +35,8 @@ public class ListTugasAdapter extends RecyclerView.Adapter<ListTugasAdapter.View
 
     @Override
     public int getItemCount() {
+        //TODO ini knp eror? :'v
+        //TODO server eror
         return tugases.size();
     }
 
