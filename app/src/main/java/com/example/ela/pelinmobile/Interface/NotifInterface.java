@@ -5,6 +5,7 @@ import com.example.ela.pelinmobile.Model.NotifModel;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -18,4 +19,7 @@ public interface NotifInterface {
 
     @GET("notifications/mark_read")
     Call<MarkReadModel> markRead();
+
+    @GET("notifications/clear")
+    Call<ResponseBody> clearNotif();
 }

@@ -162,7 +162,13 @@ public class OtherProfile extends AppCompatActivity {
 
                     username.setText(name);
                     kode.setText(nik);
-                    Glide.with(getApplicationContext()).load(user.getPhoto().getMedium()).into(user_img);
+
+                    if (user.getPhoto().getMedium() == null) {
+                        user_img.setImageResource(R.drawable.purple1);
+                    } else {
+                        Glide.with(getApplicationContext()).load(user.getPhoto().getMedium()).into(user_img);
+                    }
+
 
                 } catch (Exception e) {
                     Log.e(TAG, "gagal", e);

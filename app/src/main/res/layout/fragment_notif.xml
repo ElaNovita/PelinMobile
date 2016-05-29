@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="com.example.ela.pelinmobile.Fragment.NotifFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,6 +16,36 @@
             android:layout_height="match_parent"
             android:background="#E5EAED"/>
     </android.support.v4.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/mark"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mark as read"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"/>
+        <Button
+            android:id="@+id/clean"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="Bersihkan"
+            android:background="@color/colorPrimary"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/noNotif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tidak Ada Notifikasi"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
 
 
-</FrameLayout>
+</RelativeLayout>

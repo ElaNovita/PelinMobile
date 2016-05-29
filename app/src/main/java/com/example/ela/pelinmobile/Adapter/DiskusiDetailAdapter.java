@@ -55,7 +55,14 @@ public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdap
         } catch (ParseException e) {
             //
         }
-        Glide.with(context).load(detailDiskusis.get(position).getUser().getPhoto().getSmall()).into(img);
+
+        String imgUrl = detailDiskusis.get(position).getUser().getPhoto().getSmall();
+        if (imgUrl == null) {
+            img.setImageResource(R.drawable.purple1);
+        } else {
+            Glide.with(context).load(imgUrl).into(img);
+        }
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

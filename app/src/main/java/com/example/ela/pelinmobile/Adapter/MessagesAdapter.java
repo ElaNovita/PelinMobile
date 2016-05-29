@@ -64,7 +64,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             Log.d("respon", "onBindViewHolder: gagal " + e.getMessage());
         }
         if (messages.get(position).getTargetUser().getPhoto().getSmall() == null) {
-            holder.senderImg.setImageResource(R.drawable.eren);
+            holder.senderImg.setImageResource(R.drawable.purple1);
         } else {
             Glide.with(context).load(messages.get(position).getTargetUser().getPhoto().getSmall()).into(holder.senderImg);
         }

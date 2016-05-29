@@ -147,6 +147,7 @@ public class AssigntDetail extends AppCompatActivity {
                     namaFile.setText(name);
 
                     assigntSend.setVisibility(View.VISIBLE);
+                    namaFile.setVisibility(View.VISIBLE);
 
                     Uri uri = data.getData();
 

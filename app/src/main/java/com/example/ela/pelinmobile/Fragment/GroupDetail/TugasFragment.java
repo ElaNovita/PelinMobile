@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.TugasAdapter;
@@ -57,6 +58,7 @@ public class TugasFragment extends Fragment {
     boolean isOwner, isTeacher;
     LinearLayout menus;
     ImageView kick, edit, info;
+    TextView fail, empty;
 
     public TugasFragment() {
         // Required empty public constructor
@@ -91,6 +93,8 @@ public class TugasFragment extends Fragment {
         kick = (ImageView) inflated.findViewById(R.id.delete);
         edit = (ImageView) inflated.findViewById(R.id.edit);
         info = (ImageView) inflated.findViewById(R.id.detail);
+        fail = (TextView) inflated.findViewById(R.id.failed);
+        empty = (TextView) inflated.findViewById(R.id.empty);
 
         startAnim();
 
@@ -138,6 +142,11 @@ public class TugasFragment extends Fragment {
                     final List<TugasModel> tugasModels = response.body();
 
                     load.setVisibility(View.GONE);
+                    if (tugasModels.size() == 0) {
+                        empty.setVisibility(View.VISIBLE);
+                    } else {
+                        empty.setVisibility(View.GONE);
+                    }
 
                     adapter = new TugasAdapter(tugasModels, getActivity(), new OnItemClickListener() {
                         @Override
@@ -298,6 +307,7 @@ public class TugasFragment extends Fragment {
                     stopAnim();
                     swipeRefreshLayout.setRefreshing(false);
                     recyclerView.setAdapter(adapter);
+                    fail.setVisibility(View.GONE);
                 } catch (Exception e) {
                     Log.e("respon", "onResponse: ", e);
                 }
@@ -307,6 +317,7 @@ public class TugasFragment extends Fragment {
             public void onFailure(Call<List<TugasModel>> call, Throwable t) {
                 Log.e("respon", "onFailure: ", t);
                 load.setVisibility(View.GONE);
+                fail.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setRefreshing(false);
                 stopAnim();
             }

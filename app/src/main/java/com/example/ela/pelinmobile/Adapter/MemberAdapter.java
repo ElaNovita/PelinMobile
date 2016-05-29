@@ -69,7 +69,13 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.username.setText(members.get(position).getName());
         Log.d("photo", "onBindViewHolder: " + members.get(position).getPhoto().getSmall());
-        Glide.with(context).load(members.get(position).getPhoto().getMedium()).into(holder.userImg);
+        if (members.get(position).getPhoto().getMedium() != null) {
+            Glide.with(context).load(members.get(position).getPhoto().getMedium()).into(holder.userImg);
+        } else {
+//            holder.userImg.setImageResource(R.drawable.purple);
+            //TODO use bigger res img
+        }
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

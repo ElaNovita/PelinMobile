@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.AssigntListAdapter;
@@ -25,6 +27,7 @@ import com.example.ela.pelinmobile.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +37,8 @@ import retrofit2.Response;
  */
 public class NotifFragment extends Fragment {
     RecyclerView recyclerView;
+    NotifListAdapter adapter;
+    TextView empty;
 
 
     public NotifFragment() {
@@ -50,10 +55,32 @@ public class NotifFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflated = inflater.inflate(R.layout.fragment_notif, container, false);
+        Button mark = (Button) inflated.findViewById(R.id.mark);
+        Button clean = (Button) inflated.findViewById(R.id.clean);
+        empty = (TextView) inflated.findViewById(R.id.noNotif);
+
+
         recyclerView = (RecyclerView) inflated.findViewById(R.id.notifRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         reqJson();
+
+        mark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.markRead(adapter.lln);
+                markRead();
+            }
+        });
+
+        clean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.removeItem();
+                clear();
+            }
+        });
 
         return inflated;
     }
@@ -66,7 +93,13 @@ public class NotifFragment extends Fragment {
             public void onResponse(Call<List<NotifModel>> call, Response<List<NotifModel>> response) {
                 final List<NotifModel> notifModels = response.body();
 
-                NotifListAdapter adapter = new NotifListAdapter(notifModels, getActivity(), new NotifListAdapter.OnItemClickListener() {
+                if (notifModels.size() == 0) {
+                    empty.setVisibility(View.VISIBLE);
+                } else {
+                    empty.setVisibility(View.GONE);
+                }
+
+                adapter = new NotifListAdapter(notifModels, getActivity(), new NotifListAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(NotifModel notif, int position) {
                         Intent intent = new Intent(getActivity(), GroupDetail.class);
@@ -87,10 +120,8 @@ public class NotifFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
+    private void markRead() {
         NotifInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(NotifInterface.class);
         Call<MarkReadModel> call = service.markRead();
         call.enqueue(new Callback<MarkReadModel>() {
@@ -102,6 +133,23 @@ public class NotifFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MarkReadModel> call, Throwable t) {
+                Log.e("respon", "onFailure: ", t);
+            }
+        });
+    }
+
+    private void clear() {
+        NotifInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(NotifInterface.class);
+        Call<ResponseBody> call = service.clearNotif();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d("respon", "onResponse: cleared");
+                Toast.makeText(getActivity(), "Notifikasi sudah dibersihkan", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("respon", "onFailure: ", t);
             }
         });

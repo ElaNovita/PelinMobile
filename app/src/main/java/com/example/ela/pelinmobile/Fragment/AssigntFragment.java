@@ -43,7 +43,7 @@ public class AssigntFragment extends Fragment {
     RecyclerView recyclerView;
     SwipeRefreshLayout refreshLayout;
     View inflated;
-    TextView failed;
+    TextView failed, empty;
     private FragmentComunicator comunicator;
 
 
@@ -72,6 +72,7 @@ public class AssigntFragment extends Fragment {
         recyclerView = (RecyclerView) inflated.findViewById(R.id.assigntRv);
         refreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         failed = (TextView) inflated.findViewById(R.id.failed);
+        empty = (TextView) inflated.findViewById(R.id.empty);
 
         startAnim();
 
@@ -109,7 +110,11 @@ public class AssigntFragment extends Fragment {
 
                 ArrayList<Integer> counter = new ArrayList<Integer>();
 
-
+                if (tugasModels.size() == 0) {
+                    empty.setVisibility(View.VISIBLE);
+                } else {
+                    empty.setVisibility(View.GONE);
+                }
 
                 for (MyAssignment tugas : tugasModels) {
                     if (!tugas.isPassed()) {

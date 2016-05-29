@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Fragment.GroupDetail.ConfirmMember;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
 import com.example.ela.pelinmobile.HomeDosen;
@@ -73,6 +75,12 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
                 removeItem(position);
             }
         });
+
+        String img = users.get(position).getUser().getPhoto().getSmall();
+        if (img != null) {
+            Glide.with(context).load(img).into(holder.userImg);
+        } else
+            holder.userImg.setImageResource(R.drawable.eren);
     }
 
 
@@ -80,6 +88,7 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, nim, id;
+        ImageView userImg;
         ImageButton confirm, reject;
 
         public ViewHolder(final View itemView) {
@@ -90,6 +99,7 @@ public class ConfirmAdapter extends RecyclerView.Adapter<ConfirmAdapter.ViewHold
             id = (TextView) itemView.findViewById(R.id.itemPosition);
             confirm = (ImageButton) itemView.findViewById(R.id.confirm);
             reject = (ImageButton) itemView.findViewById(R.id.reject);
+            userImg = (ImageView) itemView.findViewById(R.id.userImg);
 
         }
 

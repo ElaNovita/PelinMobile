@@ -10,7 +10,7 @@
         android:layout_height="125dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/sei"
+        android:src="@drawable/eren"
         android:adjustViewBounds="true"/>
     <LinearLayout
         android:id="@+id/wrap"

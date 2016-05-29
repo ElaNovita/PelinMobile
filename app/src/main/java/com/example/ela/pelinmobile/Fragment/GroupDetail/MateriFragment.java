@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ela.pelinmobile.Adapter.MateriAdapter;
@@ -49,6 +50,7 @@ public class MateriFragment extends Fragment {
     RecyclerView recyclerView;
     MateriAdapter adapter;
     Button delete;
+    TextView fail, empty;
     SwipeRefreshLayout swipeRefreshLayout;
     AVLoadingIndicatorView load;
     View inflated;
@@ -94,6 +96,8 @@ public class MateriFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         load = (AVLoadingIndicatorView) inflated.findViewById(R.id.load);
+        fail = (TextView) inflated.findViewById(R.id.failed);
+        empty = (TextView) inflated.findViewById(R.id.empty);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) inflated.findViewById(R.id.addMateri);
 
@@ -138,6 +142,12 @@ public class MateriFragment extends Fragment {
 
                     adapter = new MateriAdapter(materiModels, getActivity());
 
+                    if (materiModels.size() == 0) {
+                        empty.setVisibility(View.VISIBLE);
+                    } else {
+                        empty.setVisibility(View.GONE);
+                    }
+
                     adapter.setOnItemClickListener(new OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, final int position, boolean isLongClick) {
@@ -178,6 +188,7 @@ public class MateriFragment extends Fragment {
                     });
 
                     stopAnim();
+                    fail.setVisibility(View.GONE);
                     recyclerView.setAdapter(adapter);
                     swipeRefreshLayout.setRefreshing(false);
                 } catch (Exception e) {
@@ -188,6 +199,7 @@ public class MateriFragment extends Fragment {
             @Override
             public void onFailure(Call<List<MateriModel>> call, Throwable t) {
                 Log.e("respon", "onFailure: ", t);
+                fail.setVisibility(View.VISIBLE);
                 stopAnim();
                 swipeRefreshLayout.setRefreshing(false);
             }

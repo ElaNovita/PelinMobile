@@ -67,9 +67,14 @@ public class DiskusiAdapter extends RecyclerView.Adapter<DiskusiAdapter.ViewHold
         holder.dContent.setText(diskusis.get(position).getText());
         holder.dLike.setText(Integer.toString(diskusis.get(position).getVotesCount()));
         holder.dCount.setText(Integer.toString(diskusis.get(position).getCommentsCount()));
-        Glide.with(context).load(diskusis.get(position).getUser().getPhoto().getSmall()).into(dSenderImg);
 
-        Log.d("respon", "onBindViewHolder: photo " + diskusis.get(position).getUser().getPhoto().getSmall());
+        String imgUrl = diskusis.get(position).getUser().getPhoto().getSmall();
+
+        if (imgUrl == null) {
+            dSenderImg.setImageResource(R.drawable.purple1);
+        } else {
+            Glide.with(context).load(imgUrl).into(dSenderImg);
+        }
 
         try {
             //TODO menitnya salah :o

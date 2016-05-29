@@ -1,5 +1,6 @@
 package com.example.ela.pelinmobile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -125,10 +126,8 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
     public void counter(int count) {
         if (count <= 0) {
             badgeView.hide();
-            notifBadge.hide();
         } else {
             badgeView.show();
-            notifBadge.show();
         }
     }
 
@@ -156,9 +155,12 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
         badgeView = new BadgeView(this, imageView);
         notifBadge = new BadgeView(this, notif);
         counter(buttonCounter);
+        notifBadge.show();
+        //TODO if counter has been fixed, set show when counter > 0
 
         badgeView.setText(Integer.toString(buttonCounter));
-        notifBadge.setText(" ");
+        notifBadge.setText("0");
+        notifBadge.setTextColor(getResources().getColor(R.color.red));
         Log.d(TAG, "sendDataToActivity: " + value);
     }
 

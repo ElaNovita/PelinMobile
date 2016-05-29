@@ -35,10 +35,7 @@ public class MySharedPreferences extends Application {
         editor.commit();
     }
 
-    public void deleteToken() {
-        editor.clear();
-        editor.commit();
-    }
+
 
     public void setStatus(boolean status) {
         editor.putBoolean("status", status);
@@ -46,7 +43,7 @@ public class MySharedPreferences extends Application {
     }
 
     public String getUserImage() {
-        return sp.getString("url", "http://pelinapi-edsproject.rhcloud.com/static/media/__sized__/users/4/profile_eDLXe1i-thumbnail-100x100.jpg");
+        return sp.getString("url", null);
     }
 
     public void setUserImage(String url) {
@@ -65,4 +62,10 @@ public class MySharedPreferences extends Application {
     public SharedPreferences getSharedPreferences() {
         return this.sp;
     }
+
+    public void deleteToken() {
+        editor.clear();
+        editor.commit();
+    }
+
 }

@@ -46,7 +46,7 @@ public class MessagesFragment extends Fragment {
     MessagesAdapter adapter;
     String userId;
     SwipeRefreshLayout swipeRefreshLayout;
-    TextView failed;
+    TextView failed, empty;
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -67,6 +67,7 @@ public class MessagesFragment extends Fragment {
         recyclerView = (RecyclerView) inflated.findViewById(R.id.messageRv);
         swipeRefreshLayout = (SwipeRefreshLayout) inflated.findViewById(R.id.swipeRefresh);
         failed = (TextView) inflated.findViewById(R.id.failed);
+        empty = (TextView) inflated.findViewById(R.id.empty);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -107,6 +108,11 @@ public class MessagesFragment extends Fragment {
             public void onResponse(Call<List<MessageModel>> call, Response<List<MessageModel>> response) {
                 final List<MessageModel> messageModels = response.body();
 
+                if (messageModels.size() == 0) {
+                    empty.setVisibility(View.VISIBLE);
+                } else {
+                    empty.setVisibility(View.GONE);
+                }
 
                 adapter = new MessagesAdapter(messageModels, getActivity());
                 adapter.setOnItemClickListener(new MessagesAdapter.OnItemClickListener() {

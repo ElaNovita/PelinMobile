@@ -12,7 +12,9 @@
     import android.widget.EditText;
     import android.widget.ImageView;
     import android.widget.TextView;
+    import android.widget.Toast;
 
+    import com.bumptech.glide.Glide;
     import com.example.ela.pelinmobile.Helper.MySharedPreferences;
     import com.example.ela.pelinmobile.Helper.RealPathUtil;
     import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
@@ -63,6 +65,13 @@
             email.setText(getIntent().getStringExtra("email"));
             phone.setText(getIntent().getStringExtra("phone"));
             passowrd.setText(getIntent().getStringExtra("pass"));
+            String img = getIntent().getStringExtra("img");
+
+            if (img.matches("")) {
+                image.setImageResource(R.drawable.purple1);
+            } else {
+                Glide.with(this).load(getIntent().getStringExtra("img")).into(image);
+            }
 
             Log.d(TAG, "onCreate: name " + name.getText() + email.getText() + phone.getText());
 
@@ -93,7 +102,7 @@
 
                     Log.d("respon", "onClick: " + requestFileBody + reqName);
 
-                    Intent intent = new Intent(getApplicationContext(), Profile.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeDosen.class);
                     startActivity(intent);
                 }
             });
@@ -144,14 +153,14 @@
                     mf.setUsername(response.body().getName());
                     mf.setUserImage(response.body().getPhoto().getMedium());
 
-                    Log.d("respon", "onResponse: edt " + response.code());
-                    Log.d("respon", "onResponse: req " + name);
+                    Toast.makeText(getApplicationContext(), "Profil Berhasil diubah", Toast.LENGTH_LONG).show();
+
                     finish();
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Log.e("respon", "onFailure: gagal ", t);
+                    Toast.makeText(getApplicationContext(), "Profil Gagal diubah", Toast.LENGTH_LONG).show();
                 }
             });
         }

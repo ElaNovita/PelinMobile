@@ -67,6 +67,8 @@ public class Profile extends AppCompatActivity {
 
         context = getApplicationContext();
 
+        Log.d(TAG, "onCreate: user_img" + mf.getUserImage());
+
         kode = (TextView) findViewById(R.id.code);
         username = (TextView) findViewById(R.id.user_name);
         info = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.user_detail);
@@ -74,6 +76,9 @@ public class Profile extends AppCompatActivity {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         failed = (TextView) findViewById(R.id.failed);
         user_img = (ImageView) findViewById(R.id.user_photo);
+
+        info.setEnabled(false);
+        edit.setEnabled(false);
 
         username.setText(mf.getUsername());
 
@@ -142,13 +147,16 @@ public class Profile extends AppCompatActivity {
                     userId = user.getId();
                     kode.setText(nik);
 
-                    String img = user.getPhoto().getMedium();
+                    final String img = user.getPhoto().getMedium();
 
                     if (img != null) {
                         Glide.with(Profile.this).load(img).into(user_img);
                     } else {
-                        user_img.setImageResource(R.drawable.eren);
+                        user_img.setImageResource(R.drawable.purple1);
                     }
+
+                    edit.setEnabled(true);
+                    info.setEnabled(true);
 
                     edit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -158,6 +166,12 @@ public class Profile extends AppCompatActivity {
                             intent.putExtra("phone", user.getPhone());
                             intent.putExtra("email", user.getEmail());
                             intent.putExtra("pass", user.getPassword());
+                            if (img == null) {
+                                intent.putExtra("img", "");
+                            } else {
+                                intent.putExtra("img", img);
+                            }
+
                             startActivity(intent);
                             finish();
                         }

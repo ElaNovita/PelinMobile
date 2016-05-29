@@ -8,28 +8,41 @@
     android:layout_marginBottom="1dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
-        android:background="@drawable/border">
+        android:background="@drawable/border"
+        android:paddingBottom="8dp"
+        android:paddingTop="6dp">
+        <ImageView
+            android:id="@+id/userImg"
+            android:layout_gravity="bottom"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:src="@drawable/eren"
+            android:scaleType="fitXY" />
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="10"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="bottom">
             <TextView
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="6dp"
                 android:id="@+id/confimr_nm"
                 android:layout_width="match_parent"
-                android:textSize="15sp"
+                android:textSize="17sp"
                 android:layout_height="wrap_content"
                 android:text="Bahrul Hidayat"/>
             <TextView
                 android:id="@+id/confirm_nim"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1210520070"/>
+                android:text="1210520070"
+                android:textSize="15sp"/>
         </LinearLayout>
         <TextView
             android:id="@+id/itemPosition"
@@ -40,19 +53,17 @@
         <ImageButton
             android:id="@+id/confirm"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_gravity="bottom"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_check_black_24dp"/>
         <ImageButton
             android:id="@+id/reject"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_gravity="bottom"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close_black_24dp"/>
     </LinearLayout>
-
-
 
 </LinearLayout>

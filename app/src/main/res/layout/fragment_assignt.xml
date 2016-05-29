@@ -27,6 +27,14 @@
         android:visibility="gone"
         android:layout_gravity="center_vertical|center_horizontal"/>
 
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tidak Ada Tugas"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone"/>
+
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/load"
         android:layout_width="80dp"

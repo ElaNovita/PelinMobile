@@ -23,6 +23,7 @@ public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.View
     List<NotifModel> notifs;
     OnItemClickListener listener;
     Context context;
+    public LinearLayout lln;
 
     public NotifListAdapter(List<NotifModel> notifs, Context context, OnItemClickListener listener) {
         this.notifs = notifs;
@@ -49,9 +50,9 @@ public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.View
         String name = notifs.get(position).getActor().getName();
         String verbs = notifs.get(position).getVerb();
         String target = notifs.get(position).getTarget().getTitle();
+        lln = holder.read;
 
         holder.title.setText(name + " " + verbs + " " + target);
-
         if (notifs.get(position).isUnread()) {
             holder.read.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         } else {
@@ -70,6 +71,8 @@ public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.View
             read = (LinearLayout) itemView.findViewById(R.id.read);
         }
 
+
+
         public void bind(final NotifModel notif, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,4 +86,14 @@ public class NotifListAdapter extends RecyclerView.Adapter<NotifListAdapter.View
     public interface OnItemClickListener {
         void OnItemClick(NotifModel notif, int position);
     }
+
+    public void removeItem() {
+        notifs.clear();
+        notifyDataSetChanged();
+    }
+
+    public void markRead(LinearLayout read) {
+        read.setBackgroundResource(android.R.color.darker_gray);
+    }
+
 }

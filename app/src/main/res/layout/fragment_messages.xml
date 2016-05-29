@@ -23,6 +23,15 @@
         android:textSize="15sp"
         android:visibility="gone"
         android:layout_gravity="center_vertical|center_horizontal"/>
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tidak Ada Pesan"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addMessage"
         android:layout_width="wrap_content"

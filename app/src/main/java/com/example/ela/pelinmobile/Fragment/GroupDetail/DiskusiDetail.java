@@ -82,7 +82,14 @@ public class DiskusiDetail extends AppCompatActivity {
                 DetailDiskusiModel diskusi = response.body();
                 counter = diskusi.getVotesCount();
                 senderName.setText(diskusi.getUser().getName());
-                Glide.with(getApplicationContext()).load(diskusi.getUser().getPhoto().getSmall()).into(sender);
+                String imgUrl = diskusi.getUser().getPhoto().getSmall();
+
+                if (imgUrl == null) {
+                    sender.setImageResource(R.drawable.purple1);
+                } else {
+                    Glide.with(getApplicationContext()).load(imgUrl).into(sender);
+                }
+
                 try {
                     createdAt.setText(cdf.format(diskusi.getCreatedAt()));
                 } catch (ParseException e) {

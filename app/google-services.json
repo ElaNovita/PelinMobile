@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "710498479634",
+    "firebase_url": "https://project-8348211551651247338.firebaseio.com",
+    "project_id": "project-8348211551651247338",
+    "storage_bucket": "project-8348211551651247338.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710498479634:android:e4178f831f8cc1a5",
+        "android_client_info": {
+          "package_name": "com.example.ela.pelinmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710498479634-7vjojicmg3fb5in5g9dpphgvchqnnq8o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ela.pelinmobile",
+            "certificate_hash": "612AACA1FF9F94FA8F30D498A5225A581014C446"
+          }
+        },
+        {
+          "client_id": "710498479634-eel6u74mhecss3e6iq2jqidp75eh0cmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrwo9iHgANTCuiHZ61yS8vJZu3waNpZ0k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710498479634-eel6u74mhecss3e6iq2jqidp75eh0cmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,4 +8,5 @@
     <color name="white">#fff</color>
     <color name="mdtp_accent_color">#009688</color>
     <color name="mdtp_accent_color_dark">#00796b</color>
+    <color name="red">#CCFF0000</color>
 </resources>

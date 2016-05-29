@@ -7,91 +7,119 @@
         android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="title"
-                android:layout_marginTop="28dp"
-                android:id="@+id/assigntTitle"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_alignParentTop="true"/>
-            <TextView
-                android:text="detail"
-                android:id="@+id/assigntContent"
+                android:background="@color/colorPrimary">
+                <TextView
+                    android:text="title"
+                    android:layout_marginTop="28dp"
+                    android:id="@+id/assigntTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_alignParentTop="true"/>
+                <TextView
+                    android:text="detail"
+                    android:id="@+id/assigntContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="12dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_below="@id/assigntTitle"/>
+                <ImageView
+                    android:id="@+id/attachImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_attach_file_black_24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/assigntContent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:id="@+id/attachment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/assigntContent"
+                    android:layout_toRightOf="@id/attachImg"
+                    android:text="NamaFile.docx"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"/>
+            </RelativeLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"
-                android:textSize="16sp"
-                android:layout_below="@id/assigntTitle"/>
-            <ImageView
-                android:id="@+id/attachImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_attach_file_black_24dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/assigntContent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"/>
-            <TextView
-                android:id="@+id/attachment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/assigntContent"
-                android:layout_toRightOf="@id/attachImg"
-                android:text="NamaFile.docx"
-                android:textColor="@android:color/holo_blue_dark"
-                android:layout_marginTop="20dp"/>
-        </RelativeLayout>
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/timer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:textSize="24sp"/>
+                <ProgressBar
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="100"
+                    android:layout_marginBottom="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
-    <TextView
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/timer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="32dp"
-        android:textSize="24sp"/>
-    <ProgressBar
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:max="100"
-        android:progress="100"
-        android:layout_marginBottom="16dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="12dp">
+        android:layout_height="90dp">
+        <TextView
+            android:id="@+id/collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Kumpulkan Tugas"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/uploadImg"
+            android:text="pilih file"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@drawable/ic_dns_black_24dp"
+            android:layout_width="130dp"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@id/collect"
+            android:layout_marginTop="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/nmFile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_alignParentLeft="true"
             android:text="Pilih file"
-            android:layout_marginTop="24dp"/>
-        <Button
-            android:id="@+id/uploadImg"
-            android:layout_gravity="center"
-            android:text="pilih file"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/nmFile"
-            android:layout_marginLeft="8dp"/>
+            android:textSize="15sp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/uploadImg"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="8dp"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/ic_attach_file_black_24dp"/>
     </RelativeLayout>
     <EditText
         android:layout_marginLeft="8dp"
