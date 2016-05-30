@@ -5,7 +5,7 @@ package com.example.ela.pelinmobile.Model;
  */
 public class Actor {
     String name;
-    PhotoModel photoModel;
+    PhotoModel photo;
 
     public String getName() {
         return name;
@@ -15,11 +15,11 @@ public class Actor {
         this.name = name;
     }
 
-    public PhotoModel getPhotoModel() {
-        return photoModel;
+    public PhotoModel getPhoto() {
+        return photo;
     }
 
-    public void setPhotoModel(PhotoModel photoModel) {
-        this.photoModel = photoModel;
+    public void setPhoto(PhotoModel photo) {
+        this.photo = photo;
     }
 }

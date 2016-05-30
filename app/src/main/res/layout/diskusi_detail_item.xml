@@ -23,7 +23,7 @@
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@id/senderImg"
         android:text="Ciel Phantomhive"
-        android:textSize="13sp"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="2dp"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:text="Mon 9.40 AM" />
 
     <TextView
@@ -47,7 +47,8 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/senderImg"
         android:padding="2dp"
-        android:textSize="11sp"
+        android:textSize="13sp"
+        android:lineSpacingExtra="4dp"
         android:text="@string/message_display" />
 
 </RelativeLayout>

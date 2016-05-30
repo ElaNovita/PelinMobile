@@ -48,7 +48,7 @@ public class DiskusiDetail extends AppCompatActivity {
     ImageView sendreply, like, sender;
     boolean voted;
     TextView replyCount, senderName, createdAt, content, postReply, likeCount;
-    DiskusiAdapter adapter;
+    DiskusiDetailAdapter adapter;
     CustomDateFormatter cdf = new CustomDateFormatter();
 
     @Override
@@ -132,7 +132,10 @@ public class DiskusiDetail extends AppCompatActivity {
 
                 txtContent = postReply.getText().toString();
                 replyModel.setText(txtContent);
+//                adapter.addItem(replyModel);
+                //TODO how to create realtime-like on send comment
                 postReply.setText("");
+
 
                 ReplyInterface replyInterface1 = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(ReplyInterface.class);
                 Call<ReplyModel> call1 = replyInterface1.postReply(groupId, postId, replyModel);
@@ -206,7 +209,7 @@ public class DiskusiDetail extends AppCompatActivity {
 
                 replyCount.setText(Integer.toString(replySize));
 
-                DiskusiDetailAdapter adapter = new DiskusiDetailAdapter(replyModels, getApplicationContext());
+                adapter = new DiskusiDetailAdapter(replyModels, getApplicationContext());
                 recyclerView.setAdapter(adapter);
 
                 stopAnim();

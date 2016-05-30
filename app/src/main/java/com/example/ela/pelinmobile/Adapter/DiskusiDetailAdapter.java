@@ -79,5 +79,8 @@ public class DiskusiDetailAdapter extends RecyclerView.Adapter<DiskusiDetailAdap
 
     }
 
+    public void addItem(ReplyModel replyModel) {
+        this.detailDiskusis.add(replyModel);
+    }
 
 }
