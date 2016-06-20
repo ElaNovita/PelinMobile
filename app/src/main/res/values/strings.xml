@@ -20,4 +20,7 @@ You’ll first need an interface that specifies listener’s behaviour. In this 
     <string name="backdrop_title">LOVE MUSIC</string>
     <string name="backdrop_subtitle">This season top 20 albums</string>
     <string name="banner">Welcome to e-Learning Stmik Bumigora Mataram</string>
+    <string name="player_error">Error initializing YouTube player</string>
+    <string name="seek_to">Jump To</string>
+    <string name="seek_to_hint">Seconds</string>
 </resources>

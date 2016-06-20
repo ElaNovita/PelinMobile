@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_search_black_24dp"
             android:title="Cari Grup"/>
         <item
+            android:id="@+id/video"
+            android:icon="@drawable/ic_ondemand_video_black_24dp"
+            android:title="Video"/>
+        <item
             android:id="@+id/logout"
             android:title="Logout"
             android:icon="@drawable/ic_exit_to_app_black_24dp"/>

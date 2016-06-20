@@ -65,6 +65,12 @@
                         android:textAlignment="center"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"/>
+                    <Button
+                        android:id="@+id/login"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Masuk Kelas"/>
                 </LinearLayout>
             </RelativeLayout>
             <android.support.v7.widget.Toolbar
@@ -75,4 +81,5 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
     <include layout="@layout/vid_content"/>
+
 </android.support.design.widget.CoordinatorLayout>

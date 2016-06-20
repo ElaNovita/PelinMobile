@@ -68,14 +68,17 @@
         <activity android:name=".Fragment.GroupDetail.EditTugas" />
         <activity android:name=".Fragment.GroupDetail.PassedAssignment" />
         <activity android:name=".Fragment.GroupDetail.DetailTugasDosen" />
-        <activity android:name=".VidoeActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".VideoActivity" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".VideoPlayer"/>
+        <activity android:name=".ListVideo"/>
 
     </application>
+
 
 </manifest>

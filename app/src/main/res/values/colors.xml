@@ -11,4 +11,6 @@
     <color name="red">#CCFF0000</color>
     <color name="shadow">#555555</color>
     <color name="title">#777777</color>
+    <color name="tag">#C2C0C0</color>
+    <color name="tag_text">#4c4c4c</color>
 </resources>

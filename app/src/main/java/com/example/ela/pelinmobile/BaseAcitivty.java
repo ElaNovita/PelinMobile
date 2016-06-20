@@ -1,29 +1,18 @@
 package com.example.ela.pelinmobile;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.ela.pelinmobile.Helper.MySharedPreferences;
-import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
-import com.example.ela.pelinmobile.Interface.MyInterface;
-import com.example.ela.pelinmobile.Model.Group;
-import com.example.ela.pelinmobile.Model.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by ela on 13/03/16.
@@ -117,8 +106,12 @@ public class BaseAcitivty extends AppCompatActivity {
                 break;
             case R.id.logout:
                 logout();
-                Intent intent2 = new Intent(BaseAcitivty.this, Login.class);
+                Intent intent2 = new Intent(BaseAcitivty.this, VideoActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.video:
+                Intent intent4 = new Intent(BaseAcitivty.this, VideoActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.home:
                 Intent intent3 = new Intent(BaseAcitivty.this, HomeDosen.class);

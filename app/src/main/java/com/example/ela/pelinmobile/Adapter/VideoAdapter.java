@@ -8,12 +8,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Model.Video;
+import com.example.ela.pelinmobile.OnItemClickListener;
 import com.example.ela.pelinmobile.R;
 
 import java.util.List;
@@ -25,11 +27,18 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     private Context context;
     private List<Video> videos;
+    private static OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public VideoAdapter(Context context, List<Video> videos) {
         this.videos = videos;
         this.context = context;
     }
+
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,45 +60,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
         Glide.with(context).load(video.getThumbnail()).into(holder.thumbnail);
 
-        holder.overflow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopUpMenu(holder.overflow);
-            }
-        });
     }
 
-    private void showPopUpMenu(View view) {
-        PopupMenu popupMenu = new PopupMenu(context, view);
-        MenuInflater inflater = popupMenu.getMenuInflater();
-        inflater.inflate(R.menu.menu_album, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new MyMenuItemClickListener());
-        popupMenu.show();
-    }
-
-    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        public MyMenuItemClickListener() {
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_add_favourite:
-                    Toast.makeText(context, "Add to favourite", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.action_play_next:
-                    Toast.makeText(context, "Play Next", Toast.LENGTH_SHORT).show();
-                    return true;
-                default:
-            }
-            return false;
-        }
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titles, count;
-        public ImageView thumbnail, overflow;
+        public ImageView thumbnail;
+        public Button detail;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -97,7 +74,18 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             titles = (TextView) itemView.findViewById(R.id.titles);
             count = (TextView) itemView.findViewById(R.id.count);
             thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
-            overflow = (ImageView) itemView.findViewById(R.id.overflow);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(v, getLayoutPosition(), false);
+                    } else {
+                        Toast.makeText(context, "salah", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
 
         }
     }
