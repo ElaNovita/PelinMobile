@@ -1,25 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:orientation="vertical">-->
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Video Player"-->
-        <!--android:textSize="18sp"-->
-        <!--android:layout_marginBottom="18dp"/>-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical">-->
-        <!--<VideoView-->
-            <!--android:id="@+id/video"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="250dp" />-->
-    <!--</LinearLayout>-->
-<!--</LinearLayout>-->
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -30,16 +9,65 @@
         android:id="@+id/youtube_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/youtube_view">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/titles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding"
+                android:paddingTop="@dimen/album_title_padding"
+                android:textColor="#4c4c4c"
+                android:text="title"
+                android:textSize="@dimen/album_title"/>
+            <TextView
+                android:id="@+id/divide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textSize="15sp"
+                android:paddingTop="10dp"
+                android:layout_toRightOf="@id/titles"/>
+            <TextView
+                android:id="@+id/user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding"
+                android:paddingTop="@dimen/album_title_padding"
+                android:layout_marginBottom="18dp"
+                android:textColor="#4c4c4c"
+                android:text="title"
+                android:layout_toRightOf="@id/divide"
+                android:textSize="@dimen/album_title"/>
+            <LinearLayout
+                android:id="@+id/tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/titles"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="8dp">
+            </LinearLayout>
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy"
+                android:paddingLeft="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding"
+                android:paddingTop="@dimen/album_title_padding"
+                android:paddingBottom="@dimen/album_title_padding"
+                android:layout_below="@id/titles"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
 
 </RelativeLayout>
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-<!--android:orientation="vertical">-->
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"/>-->
-
-<!--</LinearLayout>-->

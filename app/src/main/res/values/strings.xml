@@ -23,4 +23,5 @@ You’ll first need an interface that specifies listener’s behaviour. In this 
     <string name="player_error">Error initializing YouTube player</string>
     <string name="seek_to">Jump To</string>
     <string name="seek_to_hint">Seconds</string>
+    <string name="failed">Failed. Tap or Pull to Refresh</string>
 </resources>

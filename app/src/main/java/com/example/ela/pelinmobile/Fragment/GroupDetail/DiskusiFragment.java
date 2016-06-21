@@ -123,6 +123,13 @@ public class DiskusiFragment extends Fragment {
 
         }
 
+        fail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reqJson();
+            }
+        });
+
         return inflated;
     }
 

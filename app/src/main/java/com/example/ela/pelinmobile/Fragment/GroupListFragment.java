@@ -143,6 +143,13 @@ public class GroupListFragment extends Fragment {
             }
         });
 
+        failed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reqJson();
+            }
+        });
+
         return inflated;
     }
 

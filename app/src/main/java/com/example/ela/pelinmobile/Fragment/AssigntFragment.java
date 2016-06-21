@@ -88,6 +88,13 @@ public class AssigntFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        failed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reqJson();
+            }
+        });
+
         return inflated;
     }
 

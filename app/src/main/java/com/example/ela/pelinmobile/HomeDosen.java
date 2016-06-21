@@ -155,7 +155,7 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
         badgeView = new BadgeView(this, imageView);
         notifBadge = new BadgeView(this, notif);
         counter(buttonCounter);
-        notifBadge.show();
+//        notifBadge.show();
         //TODO if counter has been fixed, set show when counter > 0
 
         badgeView.setText(Integer.toString(buttonCounter));

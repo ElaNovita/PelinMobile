@@ -38,7 +38,7 @@ import retrofit2.Response;
 public class NotifFragment extends Fragment {
     RecyclerView recyclerView;
     NotifListAdapter adapter;
-    TextView empty;
+    TextView empty, failed;
 
 
     public NotifFragment() {
@@ -58,6 +58,7 @@ public class NotifFragment extends Fragment {
         Button mark = (Button) inflated.findViewById(R.id.mark);
         Button clean = (Button) inflated.findViewById(R.id.clean);
         empty = (TextView) inflated.findViewById(R.id.noNotif);
+        failed = (TextView) inflated.findViewById(R.id.failed);
 
 
         recyclerView = (RecyclerView) inflated.findViewById(R.id.notifRv);
@@ -79,6 +80,13 @@ public class NotifFragment extends Fragment {
             public void onClick(View v) {
                 adapter.removeItem();
                 clear();
+            }
+        });
+
+        failed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reqJson();
             }
         });
 
