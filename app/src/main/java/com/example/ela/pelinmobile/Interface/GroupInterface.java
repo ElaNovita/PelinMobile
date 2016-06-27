@@ -23,6 +23,9 @@ public interface GroupInterface {
     @GET("groups")
     Call<List<GroupModel>> getGroups();
 
+    @GET("public/groups")
+    Call<List<GroupModel>> getPublicGroups();
+
     @GET("groups/{groupId}")
     Call<GroupModel> getSingleGroup(@Path("groupId") int groupId);
 

@@ -38,5 +38,8 @@ public interface MateriInterface {
 
     @GET("groups/{groupId}/lessons/{materiId}")
     Call<MateriModel> getFiles(@Path("groupId") int groupId, @Path("materiId") int materiId);
+
+    @GET("public/groups/{groupId}/lessons")
+    Call<List<MateriModel>> getPublicMateri(@Path("groupId") int groupId);
     
 }

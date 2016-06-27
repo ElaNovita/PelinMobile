@@ -139,7 +139,7 @@ public class MemberFragment extends Fragment {
             public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
                 List<RequestModel> requestModels = response.body();
 
-                if (requestModels == null) {
+                if (requestModels.size() == 0) {
                     confirmAll.setVisibility(View.GONE);
                 }
 

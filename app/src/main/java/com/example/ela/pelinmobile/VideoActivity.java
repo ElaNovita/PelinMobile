@@ -29,6 +29,8 @@ import com.example.ela.pelinmobile.Model.Video;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+
 /**
  * Created by e on 31/05/16.
  */
@@ -38,7 +40,6 @@ public class VideoActivity extends AppCompatActivity {
     private VideoAdapter adapter;
     private List<Video> videos;
     Button login;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,16 +132,16 @@ public class VideoActivity extends AppCompatActivity {
                 R.drawable.jarkom,
                 R.drawable.rpl,};
 
-        Video a = new Video("General", 13, covers[0]);
+        Video a = new Video("General",  covers[0]);
         videos.add(a);
 
-        a = new Video("Multimedia", 8, covers[1]);
+        a = new Video("Multimedia", covers[1]);
         videos.add(a);
 
-        a = new Video("Jaringan Komputer", 11, covers[2]);
+        a = new Video("Jaringan Komputer", covers[2]);
         videos.add(a);
 
-        a = new Video("Rekayasa Perangkat Lunak", 12, covers[3]);
+        a = new Video("Rekayasa Perangkat Lunak", covers[3]);
         videos.add(a);
 
         adapter.notifyDataSetChanged();

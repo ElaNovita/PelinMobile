@@ -146,6 +146,7 @@ public class GroupListFragment extends Fragment {
         failed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                failed.setVisibility(View.GONE);
                 reqJson();
             }
         });
@@ -181,7 +182,7 @@ public class GroupListFragment extends Fragment {
                     final List<GroupModel> groups = response.body();
 
 //                    Log.d(TAG, "onResponse: " + groups.get(2).getId());
-                    if (groups == null) {
+                    if (groups.size() == 0) {
                         nogroup.setVisibility(View.VISIBLE);
                     } else {
                         nogroup.setVisibility(View.GONE);

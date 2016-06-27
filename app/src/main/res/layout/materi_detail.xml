@@ -28,7 +28,6 @@
                 android:layout_below="@id/bg"
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="24dp"
-                android:text="Materi Title"
                 android:textSize="24sp" />
 
             <TextView
@@ -37,8 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/materi_title"
                 android:layout_marginLeft="18dp"
-                android:layout_marginTop="4dp"
-                android:text="24 Mei 2016" />
+                android:layout_marginTop="4dp"/>
 
             <TextView
                 android:id="@+id/desc"
@@ -49,7 +47,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="18dp"
                 android:lineSpacingExtra="6dp"
-                android:text="@string/dummy"
                 android:textSize="15sp" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>

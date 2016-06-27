@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_group_add_white_24dp"/>
     <com.wang.avi.AVLoadingIndicatorView

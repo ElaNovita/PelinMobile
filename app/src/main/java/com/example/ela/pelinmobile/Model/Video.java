@@ -10,7 +10,7 @@ public class Video {
     public Video() {
     }
 
-    public Video(String name, int numOfSongs, int thumbnail) {
+    public Video(String name, int thumbnail) {
         this.name = name;
         this.numOfSongs = numOfSongs;
         this.thumbnail = thumbnail;
@@ -22,14 +22,6 @@ public class Video {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getNumOfSongs() {
-        return numOfSongs;
-    }
-
-    public void setNumOfSongs(int numOfSongs) {
-        this.numOfSongs = numOfSongs;
     }
 
     public int getThumbnail() {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.ela.pelinmobile.GroupDetail;
 import com.example.ela.pelinmobile.Helper.RetrofitBuilder;
+import com.example.ela.pelinmobile.HomeDosen;
 import com.example.ela.pelinmobile.Interface.GroupInterface;
 import com.example.ela.pelinmobile.Model.GroupModel;
 import com.example.ela.pelinmobile.R;
@@ -64,7 +65,7 @@ public class CreateGroupDialog extends DialogFragment {
         group_smster = (EditText) inflated.findViewById(R.id.group_semester);
         group_desc = (EditText) inflated.findViewById(R.id.group_desc);
         jurusan = (EditText) inflated.findViewById(R.id.jurusan);
-        cancel = (Button) inflated.findViewById(R.id.cancel);
+        cancel = (Button) inflated.findViewById(R.id.btn_cancel);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +111,7 @@ public class CreateGroupDialog extends DialogFragment {
                     });
 
 
-                    Intent intent = new Intent(getActivity(), GroupDetail.class);
+                    Intent intent = new Intent(getActivity(), HomeDosen.class);
                     startActivity(intent);
                     dismiss();
                 }
@@ -128,6 +129,8 @@ public class CreateGroupDialog extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
         );
+
+
 
     }
 }

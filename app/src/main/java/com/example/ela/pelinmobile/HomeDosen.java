@@ -50,11 +50,11 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
     @Bind(R.id.navigationView)
     NavigationView navigationView;
 
-    private BadgeView badgeView, notifBadge;
+    private BadgeView badgeView, notifBadge, messagebadge;
     public int buttonCounter, badgePosition;
     String TAG = "respon";
     boolean isTeacher;
-    ImageView imageView, notif;
+    ImageView imageView, notif, message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,17 +110,22 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
 
         Drawable drawable = getResources().getDrawable(title[1]);
         Drawable drawable1 = getResources().getDrawable(title[2]);
+        Drawable drawableMsg = getResources().getDrawable(title[3]);
 
         imageView = new ImageView(this);
         notif = new ImageView(this);
+        message = new ImageView(this);
+
 
         imageView.setImageDrawable(drawable);
         notif.setImageDrawable(drawable1);
+        message.setImageDrawable(drawableMsg);
+
 
         tabLayout.getTabAt(0).setIcon(title[0]);
         tabLayout.getTabAt(1).setCustomView(imageView);
         tabLayout.getTabAt(2).setCustomView(notif);
-        tabLayout.getTabAt(3).setIcon(title[3]);
+        tabLayout.getTabAt(3).setCustomView(message);
     }
 
     public void counter(int count) {
@@ -146,22 +151,30 @@ public class HomeDosen extends BaseDrawer implements FragmentComunicator{
         buttonCounter = value;
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         TabLayout.Tab tab2 = tabLayout.getTabAt(2);
-        imageView = new ImageView(this);
-        notif = new ImageView(this);
+
         tab.setCustomView(imageView);
         tab2.setCustomView(notif);
         setupDrawerContent(navigationView);
 
         badgeView = new BadgeView(this, imageView);
         notifBadge = new BadgeView(this, notif);
+        messagebadge = new BadgeView(this, message);
+
+        notifBadge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+
         counter(buttonCounter);
 //        notifBadge.show();
+//        messagebadge.show();
         //TODO if counter has been fixed, set show when counter > 0
+        //TODO Fix the endpoint, ini nnti kalo ngrequest lg, badgenya nambah jd bnyak
 
         badgeView.setText(Integer.toString(buttonCounter));
         notifBadge.setText("0");
         notifBadge.setTextColor(getResources().getColor(R.color.red));
-        Log.d(TAG, "sendDataToActivity: " + value);
+
+        messagebadge.setText("0");
+        messagebadge.setTextColor(getResources().getColor(R.color.red));
+//        Log.d(TAG, "sendDataToActivity: " + value);
     }
 
 }

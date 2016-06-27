@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by e on 16/04/16.
  */
 public class RetrofitBuilder {
-    public static final String BaseUrl = "http://pelinapi-edsproject.rhcloud.com/api/";
+    public static final String BaseUrl = "http://192.168.43.8:8000/api/";
     private Context _context;
 
     public RetrofitBuilder(Context context) {

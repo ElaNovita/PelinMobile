@@ -19,5 +19,6 @@ public class InstanceIdService extends FirebaseInstanceIdService {
         Log.d(TAG, "onTokenRefresh: " + token);
 
         // TODO: Implement this method to send any registration to your app's servers.
+
     }
 }

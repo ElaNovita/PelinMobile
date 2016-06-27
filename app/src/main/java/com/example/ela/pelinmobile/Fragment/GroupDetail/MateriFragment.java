@@ -57,9 +57,6 @@ public class MateriFragment extends Fragment {
     String groupTitle;
     boolean isOwner, isTeacher;
     Bundle bundle;
-    ImageView download, detail;
-    private NotificationManager notificationManager;
-    private NotificationCompat.Builder builder;
     int id = 1;
     CustomDateFormatter cdf = new CustomDateFormatter();
 

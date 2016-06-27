@@ -56,7 +56,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Video video = videos.get(position);
         holder.titles.setText(video.getName());
-        holder.count.setText(video.getNumOfSongs() + " videos");
 
         Glide.with(context).load(video.getThumbnail()).into(holder.thumbnail);
 
@@ -64,7 +63,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView titles, count;
+        public TextView titles;
         public ImageView thumbnail;
         public Button detail;
 
@@ -72,7 +71,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             super(itemView);
 
             titles = (TextView) itemView.findViewById(R.id.titles);
-            count = (TextView) itemView.findViewById(R.id.count);
             thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
 
             itemView.setOnClickListener(new View.OnClickListener() {

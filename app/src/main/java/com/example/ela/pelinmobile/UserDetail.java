@@ -100,7 +100,7 @@ public class UserDetail extends AppCompatActivity {
                 }
 
                 if (user.getPhoto().getSmall() == null) {
-                    image.setImageResource(R.drawable.eren);
+                    image.setImageResource(R.drawable.purple1);
                 } else {
                     Glide.with(getApplicationContext()).load(user.getPhoto().getSmall()).into(image);
                 }

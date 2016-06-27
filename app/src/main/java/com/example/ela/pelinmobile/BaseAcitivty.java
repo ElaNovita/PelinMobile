@@ -113,6 +113,10 @@ public class BaseAcitivty extends AppCompatActivity {
                 Intent intent4 = new Intent(BaseAcitivty.this, VideoActivity.class);
                 startActivity(intent4);
                 break;
+            case R.id.materi:
+                Intent intent5 = new Intent(BaseAcitivty.this, AllMateri.class);
+                startActivity(intent5);
+                break;
             case R.id.home:
                 Intent intent3 = new Intent(BaseAcitivty.this, HomeDosen.class);
                 startActivity(intent3);

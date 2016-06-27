@@ -8,23 +8,17 @@ import java.util.List;
  * Created by e on 17/06/16.
  */
 public class ListVidModel {
-    String title, description, users;
-
     List<String> category;
+    String description, title;
+    int id;
+    User user;
 
     @SerializedName("youtube_id")
     String youtubeId;
-
-    User user;
-
-    public ListVidModel() {
-    }
-
-    public ListVidModel(String title, String youtubeId, String users) {
-        this.title = title;
-        this.youtubeId = youtubeId;
-        this.users = users;
-    }
+    @SerializedName("created_at")
+    String createdAt;
+    @SerializedName("updated_at")
+    String updatedAt;
 
     public List<String> getCategory() {
         return category;
@@ -32,14 +26,6 @@ public class ListVidModel {
 
     public void setCategory(List<String> category) {
         this.category = category;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
@@ -50,12 +36,20 @@ public class ListVidModel {
         this.description = description;
     }
 
-    public String getYoutubeId() {
-        return youtubeId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setYoutubeId(String youtubeId) {
-        this.youtubeId = youtubeId;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -66,11 +60,27 @@ public class ListVidModel {
         this.user = user;
     }
 
-    public String getUsers() {
-        return users;
+    public String getYoutubeId() {
+        return youtubeId;
     }
 
-    public void setUsers(String users) {
-        this.users = users;
+    public void setYoutubeId(String youtubeId) {
+        this.youtubeId = youtubeId;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
