@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +20,8 @@ import com.example.ela.pelinmobile.Interface.MyInterface;
 import com.example.ela.pelinmobile.Model.LoginModel;
 import com.example.ela.pelinmobile.Model.TokenModel;
 import com.example.ela.pelinmobile.Model.User;
+import com.example.ela.pelinmobile.Service.InstanceIdService;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -81,6 +84,15 @@ public class Login extends AppCompatActivity {
                                 reqMe();
                                 stopAnim();
 
+//                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//                                Log.d(TAG, "onResponse: " + sp.getString("firebaseToken", "token kosong"));
+
+//                                if (FirebaseInstanceId.getInstance().getToken() != null) {
+                                RetrofitBuilder rb = new RetrofitBuilder(getApplicationContext());
+                                rb.sendTokenToServer(FirebaseInstanceId.getInstance().getToken());
+
+//                                }
+
                                 Intent intent = new Intent(Login.this, HomeDosen.class);
                                 startActivity(intent);
                                 finish();
@@ -88,7 +100,7 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Login Gagal, Coba Lagi", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "Login Gagal, Coba Lagi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Login Gagal 2, Coba Lagi", Toast.LENGTH_SHORT).show();
                         }
                     }
 

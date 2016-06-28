@@ -117,7 +117,7 @@ public class AssigntFragment extends Fragment {
 
                 ArrayList<Integer> counter = new ArrayList<Integer>();
 
-                if (tugasModels.size() == 0) {
+                if (tugasModels.size() == 0 || tugasModels == null) {
                     empty.setVisibility(View.VISIBLE);
                 } else {
                     empty.setVisibility(View.GONE);

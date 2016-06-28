@@ -1,6 +1,7 @@
 package com.example.ela.pelinmobile.Interface;
 
 import com.example.ela.pelinmobile.Model.FirebaseTokenModel;
+import com.example.ela.pelinmobile.Model.TokenModel;
 import com.example.ela.pelinmobile.Model.User;
 
 import retrofit2.Call;

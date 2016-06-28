@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.ela.pelinmobile.Adapter.VideoAdapter;
 import com.example.ela.pelinmobile.Helper.MySharedPreferences;
 import com.example.ela.pelinmobile.Model.Video;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class VideoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_activity);
+
+        Log.d("respon", "onCreate: token " + FirebaseInstanceId.getInstance().getToken());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

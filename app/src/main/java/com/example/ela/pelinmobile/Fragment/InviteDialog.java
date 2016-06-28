@@ -44,6 +44,9 @@ public class InviteDialog extends DialogFragment {
         username = (EditText) inflated.findViewById(R.id.username);
         invite = (ImageButton) inflated.findViewById(R.id.invite);
 
+        Bundle args = getArguments();
+        final int groupId = args.getInt("groupId");
+
 
         invite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +54,7 @@ public class InviteDialog extends DialogFragment {
 
                 user = username.getText().toString();
 
-                reqJson(user);
+                reqJson(user, groupId);
                 dismiss();
             }
         });
@@ -59,10 +62,10 @@ public class InviteDialog extends DialogFragment {
         return inflated;
     }
 
-    private void reqJson(String username) {
+    private void reqJson(String username, int groupId) {
 
         MemberInterface service = new RetrofitBuilder(getActivity()).getRetrofit().create(MemberInterface.class);
-        Call<ApproveModel> call = service.invite(4, username);
+        Call<ApproveModel> call = service.invite(groupId, username);
         call.enqueue(new Callback<ApproveModel>() {
             @Override
             public void onResponse(Call<ApproveModel> call, Response<ApproveModel> response) {

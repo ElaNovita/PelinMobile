@@ -68,4 +68,13 @@ public class MySharedPreferences extends Application {
         editor.commit();
     }
 
+    public void setFirebaseToken(String token) {
+        editor.putString("token", token);
+        editor.commit();
+    }
+
+    public String getFirebaseToken() {
+        return sp.getString("token", null);
+    }
+
 }

@@ -139,7 +139,12 @@ public class MemberFragment extends Fragment {
             public void onResponse(Call<List<RequestModel>> call, Response<List<RequestModel>> response) {
                 List<RequestModel> requestModels = response.body();
 
-                if (requestModels.size() == 0) {
+
+                if (isTeacher) {
+                    if (requestModels.size() == 0 || requestModels == null) {
+                        confirmAll.setVisibility(View.GONE);
+                    }
+                } else {
                     confirmAll.setVisibility(View.GONE);
                 }
 
@@ -182,8 +187,11 @@ public class MemberFragment extends Fragment {
     }
 
     private void showDialog() {
+        Bundle args = new Bundle();
+        args.putInt("groupId", groupId);
         FragmentManager fragmentManager = getFragmentManager();
         InviteDialog dialog = InviteDialog.newInstance("Enter Username");
+        dialog.setArguments(args);
         dialog.show(fragmentManager, "Enter Username");
     }
 

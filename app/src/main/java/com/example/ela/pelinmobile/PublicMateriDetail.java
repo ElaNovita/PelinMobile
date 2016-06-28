@@ -80,7 +80,7 @@ public class PublicMateriDetail extends AppCompatActivity {
 
     private void reqJson(int groupId, final int materiId) {
         MateriInterface service = new RetrofitBuilder(getApplicationContext()).getRetrofit().create(MateriInterface.class);
-        Call<MateriModel> call = service.getFiles(groupId, materiId);
+        Call<MateriModel> call = service.getPublicFiles(groupId, materiId);
         call.enqueue(new Callback<MateriModel>() {
             @Override
             public void onResponse(Call<MateriModel> call, Response<MateriModel> response) {
